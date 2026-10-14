@@ -280,5 +280,20 @@
   "appLockUnavailable": "Richte zuerst eine Bildschirmsperre auf dem Handy ein.",
   "lockedTitle": "Launenfuchs ist gesperrt",
   "unlock": "Entsperren",
-  "unlockReason": "Tagebuch entsperren"
+  "unlockReason": "Tagebuch entsperren",
+  "reportRow": "Bericht für jemand anderen",
+  "reportRowSubtitle": "HTML oder PDF für einen Zeitraum · Notizen standardmässig aus",
+  "reportTitle": "Stimmungsbericht",
+  "reportRange": "Zeitraum",
+  "reportRange3Months": "3 Monate",
+  "reportRangeCustom": "Eigener …",
+  "reportSections": "Abschnitte",
+  "reportIncludeNotes": "Notizen einschliessen",
+  "reportIncludeNotesHint": "Notizen sind das Privateste – sie bleiben draussen, ausser du schaltest das ein.",
+  "reportSaveHtml": "Als HTML speichern",
+  "reportSavePdf": "Als PDF speichern",
+  "reportHtmlHint": "HTML öffnet sich auf jedem Handy oder Laptop, funktioniert offline und passt sich dem Dunkelmodus an. PDF ist zum Drucken oder Anhängen.",
+  "reportGenerated": "Erstellt am {date} mit Launenfuchs – auf dem Handy, nichts hochgeladen.",
+  "reportSaved": "Bericht gespeichert ({size}).",
+  "reportFailed": "Bericht konnte nicht gespeichert werden: {error}"
 }

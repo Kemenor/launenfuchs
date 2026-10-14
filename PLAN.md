@@ -24,7 +24,7 @@ The model lives in [`design-concept.md`](./design-concept.md) — that doc owns 
 | Reminders | `flutter_local_notifications` + `timezone`; one daily, cancelled once today is logged |
 | Import | Daylio `.daylio` reader in `data/import/`: pure parser → **import plan** (the user's mapping applied) → one transaction. Mapping persisted for repeat imports. Tested against a fixture |
 | Backup | Fuchsbau pattern: ZIP (SQLite snapshot + JSON) with manifest; save dialog out, `flutter_file_dialog` in |
-| Report | **HTML + PDF from one source**: the report is a self-contained HTML string built from engine view models (inline CSS/JS, print stylesheet); PDF = `printing`'s `Printing.convertHtml` on that same HTML. Both written through the save dialog |
+| Report | **HTML + PDF from the same building blocks**: a self-contained HTML string (inline CSS + SVG, no scripts, no requests) and a PDF laid out with the `pdf` widgets from the same engine numbers and the same SVG charts (literal print colours), Atkinson Hyperlegible from fuchsbau. *(The first plan — `printing`'s `convertHtml` on the HTML — is deprecated and hangs on current Android: it relies on hidden print APIs. Found 2026-10-14 on the emulator.)* Both written through the save dialog |
 | l10n | en / de / fr / it from day one |
 | Keys | `INTEGER` autoincrement; days stored as ISO `TEXT` (`2026-10-14`) — a calendar date, not an instant |
 | App id | `ch.fuchsnest.launenfuchs`; landing page under fuchsnest.ch |
@@ -131,7 +131,7 @@ paywalled stats.
 
 - **One entry per day.** `entry.day UNIQUE`.
 - **Day cut-off 04:00 by default, a setting** (`setting.day_cutoff_hour`).
-- **Report: HTML and PDF**, the PDF rendered from the HTML.
+- **Report: HTML and PDF**, same sections, numbers and charts (see Decisions › Report for why the PDF isn't literally rendered from the HTML).
 - **Importing into a started journal: later.** v1 imports into an empty journal or
   replaces.
 - **"Option"** is the word (German UI: *Option*, never *Tag*).

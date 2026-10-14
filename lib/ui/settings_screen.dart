@@ -10,6 +10,7 @@ import '../domain/journal.dart';
 import 'app_lock.dart';
 import 'categories/categories_screen.dart';
 import 'import_screen.dart';
+import 'report_screen.dart';
 
 /// Settings (DESIGN_SYSTEM §2.4), in the shared Fuchsbau anatomy: uppercase
 /// section headers over cards. Phase 0: the day cut-off and appearance.
@@ -160,6 +161,14 @@ class SettingsScreen extends ConsumerWidget {
           FuchsbauSectionHeader(l10n.sectionData),
           FuchsbauSettingsCard(
             children: [
+              ListTile(
+                contentPadding: fuchsbauCardRowPadding,
+                leading: const Icon(Symbols.description_rounded),
+                title: Text(l10n.reportRow),
+                subtitle: Text(l10n.reportRowSubtitle),
+                trailing: const Icon(Symbols.chevron_right_rounded),
+                onTap: () => ReportScreen.open(context),
+              ),
               ListTile(
                 contentPadding: fuchsbauCardRowPadding,
                 leading: const Icon(Symbols.upload_file_rounded),

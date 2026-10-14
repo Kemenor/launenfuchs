@@ -280,5 +280,20 @@
   "appLockUnavailable": "Imposta prima un blocco schermo sul telefono.",
   "lockedTitle": "Launenfuchs è bloccato",
   "unlock": "Sblocca",
-  "unlockReason": "Sblocca il tuo diario"
+  "unlockReason": "Sblocca il tuo diario",
+  "reportRow": "Resoconto per qualcuno",
+  "reportRowSubtitle": "HTML o PDF per un periodo · note disattivate di default",
+  "reportTitle": "Resoconto dell'umore",
+  "reportRange": "Intervallo",
+  "reportRange3Months": "3 mesi",
+  "reportRangeCustom": "Personalizzato…",
+  "reportSections": "Sezioni",
+  "reportIncludeNotes": "Includi le note",
+  "reportIncludeNotesHint": "Le note sono la parte più privata: restano fuori a meno che tu non lo attivi.",
+  "reportSaveHtml": "Salva come HTML",
+  "reportSavePdf": "Salva come PDF",
+  "reportHtmlHint": "L'HTML si apre su qualsiasi telefono o portatile, offline, e segue la modalità scura. Il PDF serve per stampare o allegare.",
+  "reportGenerated": "Creato il {date} con Launenfuchs: sul telefono, nulla caricato.",
+  "reportSaved": "Resoconto salvato ({size}).",
+  "reportFailed": "Salvataggio non riuscito: {error}"
 }

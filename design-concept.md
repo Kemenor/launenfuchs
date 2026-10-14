@@ -275,7 +275,8 @@ source** (decided 2026-10-14):
 
 - **HTML** — a single self-contained file like the 2026-10-14 page: interactive
   tooltips, light/dark, opens on any phone or laptop, works offline.
-- **PDF** — rendered from that same HTML (print stylesheet), for printing or attaching.
+- **PDF** — the same sections, numbers and charts, laid out for print, for printing or
+  attaching.
 
 Saved via the system save dialog. Nothing is sent anywhere by the app.
 

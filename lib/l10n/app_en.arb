@@ -1366,5 +1366,80 @@
   "unlockReason": "Unlock your journal",
   "@unlockReason": {
     "description": "System prompt reason."
+  },
+  "reportRow": "Report for someone else",
+  "@reportRow": {
+    "description": "Settings row."
+  },
+  "reportRowSubtitle": "HTML or PDF for a date range · notes off by default",
+  "@reportRowSubtitle": {
+    "description": "Settings row subtitle."
+  },
+  "reportTitle": "Mood report",
+  "@reportTitle": {
+    "description": "Report heading (in the document)."
+  },
+  "reportRange": "Range",
+  "@reportRange": {
+    "description": "Section."
+  },
+  "reportRange3Months": "3 months",
+  "@reportRange3Months": {
+    "description": "Range option."
+  },
+  "reportRangeCustom": "Custom…",
+  "@reportRangeCustom": {
+    "description": "Range option."
+  },
+  "reportSections": "Sections",
+  "@reportSections": {
+    "description": "Section."
+  },
+  "reportIncludeNotes": "Include notes",
+  "@reportIncludeNotes": {
+    "description": "Switch."
+  },
+  "reportIncludeNotesHint": "Notes are the most private part — they stay out unless you switch this on.",
+  "@reportIncludeNotesHint": {
+    "description": "Switch subtitle."
+  },
+  "reportSaveHtml": "Save as HTML",
+  "@reportSaveHtml": {
+    "description": "Button."
+  },
+  "reportSavePdf": "Save as PDF",
+  "@reportSavePdf": {
+    "description": "Button."
+  },
+  "reportHtmlHint": "HTML opens on any phone or laptop, works offline and adapts to dark mode. PDF is for printing or attaching.",
+  "@reportHtmlHint": {
+    "description": "Explains the two formats."
+  },
+  "reportGenerated": "Created {date} with Launenfuchs — on the phone, nothing uploaded.",
+  "@reportGenerated": {
+    "description": "Report footer.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "reportSaved": "Report saved ({size}).",
+  "@reportSaved": {
+    "description": "Snackbar.",
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "reportFailed": "Couldn't save the report: {error}",
+  "@reportFailed": {
+    "description": "Snackbar.",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
   }
 }
