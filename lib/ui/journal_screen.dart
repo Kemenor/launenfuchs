@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+import '../domain/day.dart';
 import '../domain/journal.dart';
 import '../l10n/app_localizations.dart';
 import '../providers.dart';
@@ -10,6 +11,8 @@ import 'entry_row.dart';
 import 'entry_sheet.dart';
 import 'import_screen.dart';
 import 'month_calendar.dart';
+import 'period_sheet.dart';
+import 'stats/charts.dart' show amber;
 
 /// The Journal tab (DESIGN_SYSTEM §2.1): a month calendar of mood faces over
 /// that month's entries, newest first; `Log today` / `Edit today` FAB. An
@@ -79,12 +82,24 @@ class _JournalScreenState extends ConsumerState<JournalScreen> {
             margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
             child: Padding(
               padding: const EdgeInsets.fromLTRB(8, 12, 8, 8),
-              child: MonthCalendar(
-                year: year,
-                month: month,
-                journal: journal,
-                today: today,
-                onTapDay: (d) => showEntrySheet(context, day: d),
+              child: Column(
+                children: [
+                  MonthCalendar(
+                    year: year,
+                    month: month,
+                    journal: journal,
+                    today: today,
+                    onTapDay: (d) => showEntrySheet(context, day: d),
+                    onSelectRange: (from, to) =>
+                        showPeriodSheet(context, start: from, end: to),
+                  ),
+                  _PeriodLegend(
+                    journal: journal,
+                    year: year,
+                    month: month,
+                    today: today,
+                  ),
+                ],
               ),
             ),
           ),
@@ -190,6 +205,105 @@ class FirstRunCard extends ConsumerWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// Periods touching the shown month (tap → edit), and — while no period is
+/// ongoing — the hint that teaches the long-press gesture (§2.5).
+class _PeriodLegend extends StatelessWidget {
+  const _PeriodLegend({
+    required this.journal,
+    required this.year,
+    required this.month,
+    required this.today,
+  });
+
+  final Journal journal;
+  final int year;
+  final int month;
+  final Day today;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final muted = theme.colorScheme.onSurfaceVariant;
+    final first = Day(year, month, 1);
+    final last = Day.of(DateTime(year, month + 1, 0));
+    final visible = [
+      for (final p in journal.periods)
+        if (!p.start.isAfter(last) && !(p.end ?? today).isBefore(first)) p,
+    ];
+    final ongoing = journal.periods.any((p) => p.ongoing);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(4, 8, 4, 0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (visible.isNotEmpty)
+            Wrap(
+              spacing: 4,
+              runSpacing: 0,
+              children: [
+                for (final p in visible)
+                  InkWell(
+                    borderRadius: BorderRadius.circular(8),
+                    onTap: () => showPeriodSheet(context, period: p),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 6,
+                        vertical: 6,
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            width: 14,
+                            height: 4,
+                            decoration: BoxDecoration(
+                              color: p.away
+                                  ? amber.withValues(alpha: 0.6)
+                                  : muted.withValues(alpha: 0.4),
+                              borderRadius: BorderRadius.circular(2),
+                            ),
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            [
+                              p.name,
+                              if (p.away) l10n.periodLegendAway,
+                              if (p.ongoing) l10n.periodLegendOngoing,
+                            ].join(' · '),
+                            style: theme.textTheme.labelSmall?.copyWith(
+                              color: muted,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          if (!ongoing)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(6, 4, 6, 4),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(Symbols.date_range_rounded, size: 18, color: muted),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      l10n.periodHint,
+                      style: theme.textTheme.bodySmall?.copyWith(color: muted),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+        ],
       ),
     );
   }

@@ -127,4 +127,30 @@ void main() {
     expect(seen.first, 0);
     expect(seen.last, 1);
   });
+
+  test('periods: save, edit to ongoing, delete', () async {
+    await repo.savePeriod(
+      name: 'Holiday',
+      start: const Day(2026, 9, 22),
+      end: const Day(2026, 9, 28),
+      away: true,
+    );
+    var p = (await repo.loadJournal()).periods.single;
+    expect(p.away, isTrue);
+    expect(p.contains(const Day(2026, 9, 28), today: today), isTrue);
+    expect(p.contains(const Day(2026, 9, 29), today: today), isFalse);
+
+    await repo.savePeriod(
+      id: p.id,
+      name: 'New job',
+      start: const Day(2026, 10, 6),
+    );
+    p = (await repo.loadJournal()).periods.single;
+    expect(p.name, 'New job');
+    expect(p.ongoing, isTrue);
+    expect(p.contains(today, today: today), isTrue);
+
+    await repo.deletePeriod(p.id);
+    expect((await repo.loadJournal()).periods, isEmpty);
+  });
 }
