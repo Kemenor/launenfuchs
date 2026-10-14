@@ -141,6 +141,7 @@ class Journal {
     required List<Category> categories,
     required List<Entry> entries,
     this.periods = const [],
+    this.moodLabels = const {},
   }) : categories = List.unmodifiable(
          [...categories]..sort((a, b) => a.sort.compareTo(b.sort)),
        ),
@@ -164,6 +165,9 @@ class Journal {
   final List<Category> categories;
   final List<Entry> entries;
   final List<Period> periods;
+
+  /// Renamed mood labels (§2.1): value → label; missing = localised default.
+  final Map<int, String> moodLabels;
 
   final Map<Day, Entry> _byDay = {};
   final Map<int, OptionItem> _options = {};

@@ -44,13 +44,21 @@ class MoodStyle {
     Mood.awful => Symbols.sentiment_very_dissatisfied_rounded,
   };
 
-  static String label(Mood mood, AppLocalizations l10n) => switch (mood) {
-    Mood.rad => l10n.moodRad,
-    Mood.good => l10n.moodGood,
-    Mood.meh => l10n.moodMeh,
-    Mood.bad => l10n.moodBad,
-    Mood.awful => l10n.moodAwful,
-  };
+  /// User renames (design-concept §2.1), set by the app root from the
+  /// `mood_labels` table; empty = the localised defaults.
+  static Map<Mood, String> overrides = const {};
+
+  static String label(Mood mood, AppLocalizations l10n) =>
+      overrides[mood] ?? defaultLabel(mood, l10n);
+
+  static String defaultLabel(Mood mood, AppLocalizations l10n) =>
+      switch (mood) {
+        Mood.rad => l10n.moodRad,
+        Mood.good => l10n.moodGood,
+        Mood.meh => l10n.moodMeh,
+        Mood.bad => l10n.moodBad,
+        Mood.awful => l10n.moodAwful,
+      };
 }
 
 /// A mood as a coloured disc with its face — the only way a mood is drawn.

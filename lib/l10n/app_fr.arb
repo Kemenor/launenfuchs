@@ -295,5 +295,11 @@
   "reportHtmlHint": "Le HTML s'ouvre sur tout téléphone ou ordinateur, hors ligne, et suit le mode sombre. Le PDF sert à imprimer ou joindre.",
   "reportGenerated": "Créé le {date} avec Launenfuchs — sur le téléphone, rien envoyé.",
   "reportSaved": "Rapport enregistré ({size}).",
-  "reportFailed": "Échec de l'enregistrement : {error}"
+  "reportFailed": "Échec de l'enregistrement : {error}",
+  "moodNames": "Noms des humeurs",
+  "moodNamesSubtitle": "Renommer les cinq niveaux — l'échelle ne change pas",
+  "moodNamesReset": "Réinitialiser",
+  "sectionAbout": "À propos",
+  "aboutBody": "Un journal d'humeur sans pub et sans serveur. Tes données restent sur ton téléphone — pas de compte, pas d'analyse, pas d'abonnement. De la famille fuchs.",
+  "aboutLicenses": "Licences open source"
 }

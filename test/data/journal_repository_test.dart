@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart' show Value;
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:launenfuchs/data/db/database.dart';
@@ -152,5 +153,26 @@ void main() {
 
     await repo.deletePeriod(p.id);
     expect((await repo.loadJournal()).periods, isEmpty);
+  });
+
+  test('renamed mood labels ride along in the journal snapshot', () async {
+    await db
+        .into(db.moodLabels)
+        .insert(
+          MoodLabelsCompanion.insert(
+            value: const Value(5),
+            label: const Value('super'),
+          ),
+        );
+    await db
+        .into(db.moodLabels)
+        .insert(
+          MoodLabelsCompanion.insert(
+            value: const Value(1),
+            label: const Value('  '),
+          ),
+        );
+    final j = await repo.loadJournal();
+    expect(j.moodLabels, {5: 'super'}, reason: 'blank = the default');
   });
 }

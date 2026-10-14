@@ -102,6 +102,8 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Neuer Tag beginnt um'));
     await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('02:00'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('02:00'));
     await tester.pumpAndSettle();
 

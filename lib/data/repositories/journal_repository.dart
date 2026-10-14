@@ -25,6 +25,7 @@ class JournalRepository {
     db.entries,
     db.entryOptions,
     db.periods,
+    db.moodLabels,
   ];
 
   /// The journal now, then again after every change to its tables.
@@ -80,6 +81,7 @@ class JournalRepository {
     final periods = await (db.select(
       db.periods,
     )..orderBy([(p) => OrderingTerm(expression: p.startDay)])).get();
+    final labels = await db.select(db.moodLabels).get();
 
     final optionIdsByEntry = <int, Set<int>>{};
     for (final l in links) {
@@ -130,6 +132,11 @@ class JournalRepository {
             optionIds: optionIdsByEntry[e.id] ?? const {},
           ),
       ],
+      moodLabels: {
+        for (final l in labels)
+          if (l.label != null && l.label!.trim().isNotEmpty)
+            l.value: l.label!.trim(),
+      },
       periods: [
         for (final p in periods)
           dom.Period(

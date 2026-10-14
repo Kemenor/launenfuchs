@@ -295,5 +295,11 @@
   "reportHtmlHint": "L'HTML si apre su qualsiasi telefono o portatile, offline, e segue la modalità scura. Il PDF serve per stampare o allegare.",
   "reportGenerated": "Creato il {date} con Launenfuchs: sul telefono, nulla caricato.",
   "reportSaved": "Resoconto salvato ({size}).",
-  "reportFailed": "Salvataggio non riuscito: {error}"
+  "reportFailed": "Salvataggio non riuscito: {error}",
+  "moodNames": "Nomi degli umori",
+  "moodNamesSubtitle": "Rinomina i cinque livelli: la scala resta la stessa",
+  "moodNamesReset": "Ripristina",
+  "sectionAbout": "Informazioni",
+  "aboutBody": "Un diario dell'umore senza pubblicità e senza server. I tuoi dati restano sul telefono: nessun account, nessuna analisi, nessun abbonamento. Della famiglia fuchs.",
+  "aboutLicenses": "Licenze open source"
 }

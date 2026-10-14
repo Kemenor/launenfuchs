@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fuchsbau/fuchsbau.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 import '../data/backup/backup_service.dart';
@@ -10,6 +11,7 @@ import '../domain/journal.dart';
 import 'app_lock.dart';
 import 'categories/categories_screen.dart';
 import 'import_screen.dart';
+import 'mood_names_dialog.dart';
 import 'report_screen.dart';
 
 /// Settings (DESIGN_SYSTEM §2.4), in the shared Fuchsbau anatomy: uppercase
@@ -69,6 +71,13 @@ class SettingsScreen extends ConsumerWidget {
                     ),
                   );
                 },
+              ),
+              ListTile(
+                contentPadding: fuchsbauCardRowPadding,
+                leading: const Icon(Symbols.sentiment_satisfied_rounded),
+                title: Text(l10n.moodNames),
+                subtitle: Text(l10n.moodNamesSubtitle),
+                onTap: () => showMoodNamesDialog(context, ref),
               ),
               SwitchListTile(
                 contentPadding: fuchsbauCardRowPadding,
@@ -230,6 +239,35 @@ class SettingsScreen extends ConsumerWidget {
                   FuchsbauFont.openDyslexic: l10n.typefaceDyslexia,
                 },
                 onChanged: controller.setFont,
+              ),
+            ],
+          ),
+          FuchsbauSectionHeader(l10n.sectionAbout),
+          FuchsbauSettingsCard(
+            children: [
+              ListTile(
+                contentPadding: fuchsbauCardRowPadding,
+                leading: const Icon(Symbols.info_rounded),
+                title: Text(l10n.appTitle),
+                subtitle: FutureBuilder<PackageInfo>(
+                  future: PackageInfo.fromPlatform(),
+                  builder: (_, snap) => Text(
+                    snap.hasData
+                        ? '${snap.data!.version} (${snap.data!.buildNumber})'
+                        : '',
+                  ),
+                ),
+                onTap: () => showAboutDialog(
+                  context: context,
+                  applicationName: l10n.appTitle,
+                  applicationLegalese: '© 2026 Kemenor · Apache-2.0',
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 12),
+                      child: Text(l10n.aboutBody),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

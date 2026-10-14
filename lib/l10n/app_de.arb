@@ -295,5 +295,11 @@
   "reportHtmlHint": "HTML öffnet sich auf jedem Handy oder Laptop, funktioniert offline und passt sich dem Dunkelmodus an. PDF ist zum Drucken oder Anhängen.",
   "reportGenerated": "Erstellt am {date} mit Launenfuchs – auf dem Handy, nichts hochgeladen.",
   "reportSaved": "Bericht gespeichert ({size}).",
-  "reportFailed": "Bericht konnte nicht gespeichert werden: {error}"
+  "reportFailed": "Bericht konnte nicht gespeichert werden: {error}",
+  "moodNames": "Stimmungsnamen",
+  "moodNamesSubtitle": "Die fünf Stufen umbenennen – die Skala selbst bleibt gleich",
+  "moodNamesReset": "Zurücksetzen",
+  "sectionAbout": "Über",
+  "aboutBody": "Ein werbefreies Stimmungstagebuch ohne Server. Deine Daten bleiben auf dem Handy – kein Konto, keine Analyse, kein Abo. Teil der Fuchs-Familie.",
+  "aboutLicenses": "Open-Source-Lizenzen"
 }

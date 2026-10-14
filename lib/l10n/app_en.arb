@@ -1441,5 +1441,29 @@
         "type": "String"
       }
     }
+  },
+  "moodNames": "Mood names",
+  "@moodNames": {
+    "description": "Settings row / dialog title."
+  },
+  "moodNamesSubtitle": "Rename the five levels — the scale itself never changes",
+  "@moodNamesSubtitle": {
+    "description": "Settings row subtitle."
+  },
+  "moodNamesReset": "Reset",
+  "@moodNamesReset": {
+    "description": "Button."
+  },
+  "sectionAbout": "About",
+  "@sectionAbout": {
+    "description": "Settings section."
+  },
+  "aboutBody": "An ad-free, serverless mood journal. Your data stays on your phone — no account, no analytics, no subscription. Part of the fuchs family.",
+  "@aboutBody": {
+    "description": "About dialog text."
+  },
+  "aboutLicenses": "Open-source licenses",
+  "@aboutLicenses": {
+    "description": "Button."
   }
 }

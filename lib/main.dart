@@ -3,9 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/theme.dart';
 import 'l10n/app_localizations.dart';
+import 'domain/mood.dart';
 import 'providers.dart';
 import 'ui/app_lock.dart';
 import 'ui/home_shell.dart';
+import 'ui/mood_style.dart';
 
 void main() {
   runApp(const ProviderScope(child: LaunenfuchsApp()));
@@ -17,6 +19,14 @@ class LaunenfuchsApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(settingsProvider);
+    // Renamed moods apply everywhere — entry sheet, charts, reports.
+    MoodStyle.overrides = {
+      for (final MapEntry(key: v, value: label)
+          in (ref.watch(journalProvider).value?.moodLabels ??
+                  const <int, String>{})
+              .entries)
+        Mood.fromValue(v): label,
+    };
     return MaterialApp(
       onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
       debugShowCheckedModeBanner: false,
