@@ -3058,6 +3058,21 @@ class $AppSettingsTable extends AppSettings
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _onboardingDoneMeta = const VerificationMeta(
+    'onboardingDone',
+  );
+  @override
+  late final GeneratedColumn<bool> onboardingDone = GeneratedColumn<bool>(
+    'onboarding_done',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("onboarding_done" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
   static const VerificationMeta _appLockMeta = const VerificationMeta(
     'appLock',
   );
@@ -3092,6 +3107,7 @@ class $AppSettingsTable extends AppSettings
     localeCode,
     dayCutoffHour,
     statsTiles,
+    onboardingDone,
     appLock,
     appLockDelaySeconds,
   ];
@@ -3146,6 +3162,15 @@ class $AppSettingsTable extends AppSettings
         statsTiles.isAcceptableOrUnknown(data['stats_tiles']!, _statsTilesMeta),
       );
     }
+    if (data.containsKey('onboarding_done')) {
+      context.handle(
+        _onboardingDoneMeta,
+        onboardingDone.isAcceptableOrUnknown(
+          data['onboarding_done']!,
+          _onboardingDoneMeta,
+        ),
+      );
+    }
     if (data.containsKey('app_lock')) {
       context.handle(
         _appLockMeta,
@@ -3194,6 +3219,10 @@ class $AppSettingsTable extends AppSettings
         DriftSqlType.string,
         data['${effectivePrefix}stats_tiles'],
       ),
+      onboardingDone: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}onboarding_done'],
+      )!,
       appLock: attachedDatabase.typeMapping.read(
         DriftSqlType.bool,
         data['${effectivePrefix}app_lock'],
@@ -3225,6 +3254,10 @@ class AppSettingsRow extends DataClass implements Insertable<AppSettingsRow> {
   /// Enabled Stats tiles in display order, JSON list. Null = the default set.
   final String? statsTiles;
 
+  /// First run handled (starter set seeded or an import done) — never re-seed,
+  /// even if every category is later deleted.
+  final bool onboardingDone;
+
   /// App lock (§2.6): off by default; delay before re-locking, in seconds.
   final bool appLock;
   final int appLockDelaySeconds;
@@ -3235,6 +3268,7 @@ class AppSettingsRow extends DataClass implements Insertable<AppSettingsRow> {
     required this.localeCode,
     required this.dayCutoffHour,
     this.statsTiles,
+    required this.onboardingDone,
     required this.appLock,
     required this.appLockDelaySeconds,
   });
@@ -3249,6 +3283,7 @@ class AppSettingsRow extends DataClass implements Insertable<AppSettingsRow> {
     if (!nullToAbsent || statsTiles != null) {
       map['stats_tiles'] = Variable<String>(statsTiles);
     }
+    map['onboarding_done'] = Variable<bool>(onboardingDone);
     map['app_lock'] = Variable<bool>(appLock);
     map['app_lock_delay_seconds'] = Variable<int>(appLockDelaySeconds);
     return map;
@@ -3264,6 +3299,7 @@ class AppSettingsRow extends DataClass implements Insertable<AppSettingsRow> {
       statsTiles: statsTiles == null && nullToAbsent
           ? const Value.absent()
           : Value(statsTiles),
+      onboardingDone: Value(onboardingDone),
       appLock: Value(appLock),
       appLockDelaySeconds: Value(appLockDelaySeconds),
     );
@@ -3281,6 +3317,7 @@ class AppSettingsRow extends DataClass implements Insertable<AppSettingsRow> {
       localeCode: serializer.fromJson<String>(json['localeCode']),
       dayCutoffHour: serializer.fromJson<int>(json['dayCutoffHour']),
       statsTiles: serializer.fromJson<String?>(json['statsTiles']),
+      onboardingDone: serializer.fromJson<bool>(json['onboardingDone']),
       appLock: serializer.fromJson<bool>(json['appLock']),
       appLockDelaySeconds: serializer.fromJson<int>(
         json['appLockDelaySeconds'],
@@ -3297,6 +3334,7 @@ class AppSettingsRow extends DataClass implements Insertable<AppSettingsRow> {
       'localeCode': serializer.toJson<String>(localeCode),
       'dayCutoffHour': serializer.toJson<int>(dayCutoffHour),
       'statsTiles': serializer.toJson<String?>(statsTiles),
+      'onboardingDone': serializer.toJson<bool>(onboardingDone),
       'appLock': serializer.toJson<bool>(appLock),
       'appLockDelaySeconds': serializer.toJson<int>(appLockDelaySeconds),
     };
@@ -3309,6 +3347,7 @@ class AppSettingsRow extends DataClass implements Insertable<AppSettingsRow> {
     String? localeCode,
     int? dayCutoffHour,
     Value<String?> statsTiles = const Value.absent(),
+    bool? onboardingDone,
     bool? appLock,
     int? appLockDelaySeconds,
   }) => AppSettingsRow(
@@ -3318,6 +3357,7 @@ class AppSettingsRow extends DataClass implements Insertable<AppSettingsRow> {
     localeCode: localeCode ?? this.localeCode,
     dayCutoffHour: dayCutoffHour ?? this.dayCutoffHour,
     statsTiles: statsTiles.present ? statsTiles.value : this.statsTiles,
+    onboardingDone: onboardingDone ?? this.onboardingDone,
     appLock: appLock ?? this.appLock,
     appLockDelaySeconds: appLockDelaySeconds ?? this.appLockDelaySeconds,
   );
@@ -3337,6 +3377,9 @@ class AppSettingsRow extends DataClass implements Insertable<AppSettingsRow> {
       statsTiles: data.statsTiles.present
           ? data.statsTiles.value
           : this.statsTiles,
+      onboardingDone: data.onboardingDone.present
+          ? data.onboardingDone.value
+          : this.onboardingDone,
       appLock: data.appLock.present ? data.appLock.value : this.appLock,
       appLockDelaySeconds: data.appLockDelaySeconds.present
           ? data.appLockDelaySeconds.value
@@ -3353,6 +3396,7 @@ class AppSettingsRow extends DataClass implements Insertable<AppSettingsRow> {
           ..write('localeCode: $localeCode, ')
           ..write('dayCutoffHour: $dayCutoffHour, ')
           ..write('statsTiles: $statsTiles, ')
+          ..write('onboardingDone: $onboardingDone, ')
           ..write('appLock: $appLock, ')
           ..write('appLockDelaySeconds: $appLockDelaySeconds')
           ..write(')'))
@@ -3367,6 +3411,7 @@ class AppSettingsRow extends DataClass implements Insertable<AppSettingsRow> {
     localeCode,
     dayCutoffHour,
     statsTiles,
+    onboardingDone,
     appLock,
     appLockDelaySeconds,
   );
@@ -3380,6 +3425,7 @@ class AppSettingsRow extends DataClass implements Insertable<AppSettingsRow> {
           other.localeCode == this.localeCode &&
           other.dayCutoffHour == this.dayCutoffHour &&
           other.statsTiles == this.statsTiles &&
+          other.onboardingDone == this.onboardingDone &&
           other.appLock == this.appLock &&
           other.appLockDelaySeconds == this.appLockDelaySeconds);
 }
@@ -3391,6 +3437,7 @@ class AppSettingsCompanion extends UpdateCompanion<AppSettingsRow> {
   final Value<String> localeCode;
   final Value<int> dayCutoffHour;
   final Value<String?> statsTiles;
+  final Value<bool> onboardingDone;
   final Value<bool> appLock;
   final Value<int> appLockDelaySeconds;
   const AppSettingsCompanion({
@@ -3400,6 +3447,7 @@ class AppSettingsCompanion extends UpdateCompanion<AppSettingsRow> {
     this.localeCode = const Value.absent(),
     this.dayCutoffHour = const Value.absent(),
     this.statsTiles = const Value.absent(),
+    this.onboardingDone = const Value.absent(),
     this.appLock = const Value.absent(),
     this.appLockDelaySeconds = const Value.absent(),
   });
@@ -3410,6 +3458,7 @@ class AppSettingsCompanion extends UpdateCompanion<AppSettingsRow> {
     this.localeCode = const Value.absent(),
     this.dayCutoffHour = const Value.absent(),
     this.statsTiles = const Value.absent(),
+    this.onboardingDone = const Value.absent(),
     this.appLock = const Value.absent(),
     this.appLockDelaySeconds = const Value.absent(),
   });
@@ -3420,6 +3469,7 @@ class AppSettingsCompanion extends UpdateCompanion<AppSettingsRow> {
     Expression<String>? localeCode,
     Expression<int>? dayCutoffHour,
     Expression<String>? statsTiles,
+    Expression<bool>? onboardingDone,
     Expression<bool>? appLock,
     Expression<int>? appLockDelaySeconds,
   }) {
@@ -3430,6 +3480,7 @@ class AppSettingsCompanion extends UpdateCompanion<AppSettingsRow> {
       if (localeCode != null) 'locale_code': localeCode,
       if (dayCutoffHour != null) 'day_cutoff_hour': dayCutoffHour,
       if (statsTiles != null) 'stats_tiles': statsTiles,
+      if (onboardingDone != null) 'onboarding_done': onboardingDone,
       if (appLock != null) 'app_lock': appLock,
       if (appLockDelaySeconds != null)
         'app_lock_delay_seconds': appLockDelaySeconds,
@@ -3443,6 +3494,7 @@ class AppSettingsCompanion extends UpdateCompanion<AppSettingsRow> {
     Value<String>? localeCode,
     Value<int>? dayCutoffHour,
     Value<String?>? statsTiles,
+    Value<bool>? onboardingDone,
     Value<bool>? appLock,
     Value<int>? appLockDelaySeconds,
   }) {
@@ -3453,6 +3505,7 @@ class AppSettingsCompanion extends UpdateCompanion<AppSettingsRow> {
       localeCode: localeCode ?? this.localeCode,
       dayCutoffHour: dayCutoffHour ?? this.dayCutoffHour,
       statsTiles: statsTiles ?? this.statsTiles,
+      onboardingDone: onboardingDone ?? this.onboardingDone,
       appLock: appLock ?? this.appLock,
       appLockDelaySeconds: appLockDelaySeconds ?? this.appLockDelaySeconds,
     );
@@ -3479,6 +3532,9 @@ class AppSettingsCompanion extends UpdateCompanion<AppSettingsRow> {
     if (statsTiles.present) {
       map['stats_tiles'] = Variable<String>(statsTiles.value);
     }
+    if (onboardingDone.present) {
+      map['onboarding_done'] = Variable<bool>(onboardingDone.value);
+    }
     if (appLock.present) {
       map['app_lock'] = Variable<bool>(appLock.value);
     }
@@ -3497,6 +3553,7 @@ class AppSettingsCompanion extends UpdateCompanion<AppSettingsRow> {
           ..write('localeCode: $localeCode, ')
           ..write('dayCutoffHour: $dayCutoffHour, ')
           ..write('statsTiles: $statsTiles, ')
+          ..write('onboardingDone: $onboardingDone, ')
           ..write('appLock: $appLock, ')
           ..write('appLockDelaySeconds: $appLockDelaySeconds')
           ..write(')'))
@@ -6283,6 +6340,7 @@ typedef $$AppSettingsTableCreateCompanionBuilder =
       Value<String> localeCode,
       Value<int> dayCutoffHour,
       Value<String?> statsTiles,
+      Value<bool> onboardingDone,
       Value<bool> appLock,
       Value<int> appLockDelaySeconds,
     });
@@ -6294,6 +6352,7 @@ typedef $$AppSettingsTableUpdateCompanionBuilder =
       Value<String> localeCode,
       Value<int> dayCutoffHour,
       Value<String?> statsTiles,
+      Value<bool> onboardingDone,
       Value<bool> appLock,
       Value<int> appLockDelaySeconds,
     });
@@ -6334,6 +6393,11 @@ class $$AppSettingsTableFilterComposer
 
   ColumnFilters<String> get statsTiles => $composableBuilder(
     column: $table.statsTiles,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get onboardingDone => $composableBuilder(
+    column: $table.onboardingDone,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -6387,6 +6451,11 @@ class $$AppSettingsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<bool> get onboardingDone => $composableBuilder(
+    column: $table.onboardingDone,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<bool> get appLock => $composableBuilder(
     column: $table.appLock,
     builder: (column) => ColumnOrderings(column),
@@ -6430,6 +6499,11 @@ class $$AppSettingsTableAnnotationComposer
 
   GeneratedColumn<String> get statsTiles => $composableBuilder(
     column: $table.statsTiles,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get onboardingDone => $composableBuilder(
+    column: $table.onboardingDone,
     builder: (column) => column,
   );
 
@@ -6479,6 +6553,7 @@ class $$AppSettingsTableTableManager
                 Value<String> localeCode = const Value.absent(),
                 Value<int> dayCutoffHour = const Value.absent(),
                 Value<String?> statsTiles = const Value.absent(),
+                Value<bool> onboardingDone = const Value.absent(),
                 Value<bool> appLock = const Value.absent(),
                 Value<int> appLockDelaySeconds = const Value.absent(),
               }) => AppSettingsCompanion(
@@ -6488,6 +6563,7 @@ class $$AppSettingsTableTableManager
                 localeCode: localeCode,
                 dayCutoffHour: dayCutoffHour,
                 statsTiles: statsTiles,
+                onboardingDone: onboardingDone,
                 appLock: appLock,
                 appLockDelaySeconds: appLockDelaySeconds,
               ),
@@ -6499,6 +6575,7 @@ class $$AppSettingsTableTableManager
                 Value<String> localeCode = const Value.absent(),
                 Value<int> dayCutoffHour = const Value.absent(),
                 Value<String?> statsTiles = const Value.absent(),
+                Value<bool> onboardingDone = const Value.absent(),
                 Value<bool> appLock = const Value.absent(),
                 Value<int> appLockDelaySeconds = const Value.absent(),
               }) => AppSettingsCompanion.insert(
@@ -6508,6 +6585,7 @@ class $$AppSettingsTableTableManager
                 localeCode: localeCode,
                 dayCutoffHour: dayCutoffHour,
                 statsTiles: statsTiles,
+                onboardingDone: onboardingDone,
                 appLock: appLock,
                 appLockDelaySeconds: appLockDelaySeconds,
               ),

@@ -99,5 +99,252 @@
   "typefaceDyslexia": "Dyslexia",
   "@typefaceDyslexia": {
     "description": "Typeface option note."
+  },
+  "moodRad": "rad",
+  "@moodRad": {
+    "description": "Mood level 5 (best)."
+  },
+  "moodGood": "good",
+  "@moodGood": {
+    "description": "Mood level 4."
+  },
+  "moodMeh": "meh",
+  "@moodMeh": {
+    "description": "Mood level 3."
+  },
+  "moodBad": "bad",
+  "@moodBad": {
+    "description": "Mood level 2."
+  },
+  "moodAwful": "awful",
+  "@moodAwful": {
+    "description": "Mood level 1 (worst)."
+  },
+  "starterWork": "Work",
+  "@starterWork": {
+    "description": "Starter category."
+  },
+  "starterWorkedNormally": "Worked normally",
+  "@starterWorkedNormally": {
+    "description": "Starter option (Work)."
+  },
+  "starterWorkedLess": "Worked less",
+  "@starterWorkedLess": {
+    "description": "Starter option (Work)."
+  },
+  "starterDayOff": "Day off",
+  "@starterDayOff": {
+    "description": "Starter option (Work), the default."
+  },
+  "starterSick": "Sick",
+  "@starterSick": {
+    "description": "Starter option (Work)."
+  },
+  "starterHealth": "Health",
+  "@starterHealth": {
+    "description": "Starter category."
+  },
+  "starterWalk": "Walk",
+  "@starterWalk": {
+    "description": "Starter option (Health)."
+  },
+  "starterExercise": "Exercise",
+  "@starterExercise": {
+    "description": "Starter option (Health)."
+  },
+  "starterSport": "Sport",
+  "@starterSport": {
+    "description": "Starter option (Health)."
+  },
+  "starterSocial": "Social",
+  "@starterSocial": {
+    "description": "Starter category."
+  },
+  "starterFriends": "Friends",
+  "@starterFriends": {
+    "description": "Starter option (Social)."
+  },
+  "starterFamily": "Family",
+  "@starterFamily": {
+    "description": "Starter option (Social)."
+  },
+  "starterPartner": "Partner",
+  "@starterPartner": {
+    "description": "Starter option (Social)."
+  },
+  "starterTimeAlone": "Time alone",
+  "@starterTimeAlone": {
+    "description": "Starter option (Social)."
+  },
+  "starterHobbies": "Hobbies",
+  "@starterHobbies": {
+    "description": "Starter category."
+  },
+  "starterReading": "Reading",
+  "@starterReading": {
+    "description": "Starter option (Hobbies)."
+  },
+  "starterGaming": "Gaming",
+  "@starterGaming": {
+    "description": "Starter option (Hobbies)."
+  },
+  "starterMusic": "Music",
+  "@starterMusic": {
+    "description": "Starter option (Hobbies)."
+  },
+  "starterCreative": "Creative",
+  "@starterCreative": {
+    "description": "Starter option (Hobbies)."
+  },
+  "starterSleep": "Sleep",
+  "@starterSleep": {
+    "description": "Starter category."
+  },
+  "starterSleepPoor": "Poor",
+  "@starterSleepPoor": {
+    "description": "Starter option (Sleep), slider step 1."
+  },
+  "starterSleepOk": "OK",
+  "@starterSleepOk": {
+    "description": "Starter option (Sleep), slider step 2."
+  },
+  "starterSleepGood": "Good",
+  "@starterSleepGood": {
+    "description": "Starter option (Sleep), slider step 3."
+  },
+  "dayToday": "Today",
+  "@dayToday": {
+    "description": "Entry sheet header for today."
+  },
+  "dayYesterday": "Yesterday",
+  "@dayYesterday": {
+    "description": "Entry sheet header for yesterday."
+  },
+  "dayHeader": "{relative} · {date}",
+  "@dayHeader": {
+    "description": "Entry sheet header: relative word + date.",
+    "placeholders": {
+      "relative": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "lateNightHint": "It's {time} — logging for yesterday. Use › for today.",
+  "@lateNightHint": {
+    "description": "Entry sheet hint after midnight: logging for the evening before.",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "modeOne": "one",
+  "@modeOne": {
+    "description": "Category hint: one option per day."
+  },
+  "modeAny": "any",
+  "@modeAny": {
+    "description": "Category hint: any number of options."
+  },
+  "defaultTag": "default",
+  "@defaultTag": {
+    "description": "Small tag on a pending default option."
+  },
+  "sliderClear": "Clear",
+  "@sliderClear": {
+    "description": "Tooltip: clear the slider (nothing logged for this category)."
+  },
+  "notePlaceholder": "Add a note…",
+  "@notePlaceholder": {
+    "description": "Entry sheet note field hint."
+  },
+  "save": "Save",
+  "@save": {
+    "description": "Save button."
+  },
+  "saveNeedsMood": "Save — pick a mood first",
+  "@saveNeedsMood": {
+    "description": "Disabled save button until a mood is picked."
+  },
+  "close": "Close",
+  "@close": {
+    "description": "Close button tooltip."
+  },
+  "previousDay": "Previous day",
+  "@previousDay": {
+    "description": "Tooltip: previous day."
+  },
+  "nextDay": "Next day",
+  "@nextDay": {
+    "description": "Tooltip: next day."
+  },
+  "deleteEntry": "Delete entry",
+  "@deleteEntry": {
+    "description": "Button on an existing entry."
+  },
+  "deleteEntryTitle": "Delete this entry?",
+  "@deleteEntryTitle": {
+    "description": "Confirm dialog title."
+  },
+  "deleteEntryBody": "The mood, what you logged and the note for {date} are removed. This can't be undone.",
+  "@deleteEntryBody": {
+    "description": "Confirm dialog body.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button."
+  },
+  "delete": "Delete",
+  "@delete": {
+    "description": "Destructive confirm button."
+  },
+  "logToday": "Log today",
+  "@logToday": {
+    "description": "FAB when today is not logged yet."
+  },
+  "editToday": "Edit today",
+  "@editToday": {
+    "description": "FAB when today is logged."
+  },
+  "previousMonth": "Previous month",
+  "@previousMonth": {
+    "description": "Tooltip."
+  },
+  "nextMonth": "Next month",
+  "@nextMonth": {
+    "description": "Tooltip."
+  },
+  "monthEmpty": "Nothing logged in {month}.",
+  "@monthEmpty": {
+    "description": "Journal list when the shown month has no entries.",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarDayLabel": "{date}: {mood}",
+  "@calendarDayLabel": {
+    "description": "Screen-reader label for a calendar day.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "mood": {
+        "type": "String"
+      }
+    }
+  },
+  "entrySaved": "Saved.",
+  "@entrySaved": {
+    "description": "Snackbar after saving."
   }
 }

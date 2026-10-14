@@ -4,8 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fuchsbau/fuchsbau.dart' show FuchsbauFont;
 
 import 'data/db/database.dart';
+import 'data/repositories/journal_repository.dart';
 import 'domain/clock.dart';
 import 'domain/day.dart';
+import 'domain/journal.dart';
 
 /// The injected clock — overridden with a [FixedClock] in tests.
 final clockProvider = Provider<Clock>((ref) => const SystemClock());
@@ -16,6 +18,23 @@ final databaseProvider = Provider<AppDatabase>((ref) {
   ref.onDispose(db.close);
   return db;
 });
+
+final journalRepositoryProvider = Provider<JournalRepository>(
+  (ref) => JournalRepository(ref.watch(databaseProvider)),
+);
+
+/// The whole journal, re-emitted after every write.
+final journalProvider = StreamProvider<Journal>(
+  (ref) => ref.watch(journalRepositoryProvider).watchJournal(),
+);
+
+/// The day a new entry made now belongs to (the late-night cut-off, §2.2).
+/// Computed on every call, never cached — an app left open past the cut-off
+/// must roll over to the new day.
+Day logicalToday(WidgetRef ref) => logicalDay(
+  ref.read(clockProvider).now(),
+  cutoffHour: ref.watch(settingsProvider).dayCutoffHour,
+);
 
 // --- settings ----------------------------------------------------------------
 

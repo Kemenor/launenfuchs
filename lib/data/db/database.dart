@@ -146,6 +146,11 @@ class AppSettings extends Table {
   /// Enabled Stats tiles in display order, JSON list. Null = the default set.
   TextColumn get statsTiles => text().nullable()();
 
+  /// First run handled (starter set seeded or an import done) — never re-seed,
+  /// even if every category is later deleted.
+  BoolColumn get onboardingDone =>
+      boolean().withDefault(const Constant(false))();
+
   /// App lock (§2.6): off by default; delay before re-locking, in seconds.
   BoolColumn get appLock => boolean().withDefault(const Constant(false))();
   IntColumn get appLockDelaySeconds =>
