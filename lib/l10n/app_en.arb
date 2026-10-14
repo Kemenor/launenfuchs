@@ -1281,5 +1281,90 @@
   "nameRequired": "Name",
   "@nameRequired": {
     "description": "Name field hint."
+  },
+  "reminderTitle": "Daily reminder",
+  "@reminderTitle": {
+    "description": "Settings row."
+  },
+  "reminderOnSubtitle": "{time} · skipped once today is logged",
+  "@reminderOnSubtitle": {
+    "description": "Subtitle when on.",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderOff": "Off",
+  "@reminderOff": {
+    "description": "Subtitle when off."
+  },
+  "reminderTime": "Reminder time",
+  "@reminderTime": {
+    "description": "Row: change the time."
+  },
+  "notifTitle": "How was today?",
+  "@notifTitle": {
+    "description": "Notification title."
+  },
+  "notifBody": "One tap for the mood is enough.",
+  "@notifBody": {
+    "description": "Notification body."
+  },
+  "notifChannel": "Daily reminder",
+  "@notifChannel": {
+    "description": "Android channel name."
+  },
+  "notifChannelDescription": "One reminder a day to log your mood",
+  "@notifChannelDescription": {
+    "description": "Android channel description."
+  },
+  "notifDenied": "Notifications are off for launenfuchs in your phone's settings.",
+  "@notifDenied": {
+    "description": "Snackbar when the permission is denied."
+  },
+  "sectionPrivacy": "Privacy",
+  "@sectionPrivacy": {
+    "description": "Settings section."
+  },
+  "appLockTitle": "App lock",
+  "@appLockTitle": {
+    "description": "Settings row."
+  },
+  "appLockSubtitle": "Fingerprint, face or phone PIN",
+  "@appLockSubtitle": {
+    "description": "Settings row subtitle."
+  },
+  "appLockDelay": "Lock after",
+  "@appLockDelay": {
+    "description": "Picker title."
+  },
+  "lockImmediately": "Immediately",
+  "@lockImmediately": {
+    "description": "Option."
+  },
+  "lockAfter1": "1 minute away",
+  "@lockAfter1": {
+    "description": "Option."
+  },
+  "lockAfter5": "5 minutes away",
+  "@lockAfter5": {
+    "description": "Option."
+  },
+  "appLockUnavailable": "Set a screen lock on your phone first.",
+  "@appLockUnavailable": {
+    "description": "Snackbar."
+  },
+  "lockedTitle": "Launenfuchs is locked",
+  "@lockedTitle": {
+    "description": "Lock screen."
+  },
+  "unlock": "Unlock",
+  "@unlock": {
+    "description": "Lock screen button."
+  },
+  "unlockReason": "Unlock your journal",
+  "@unlockReason": {
+    "description": "System prompt reason."
   }
 }

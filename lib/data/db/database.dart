@@ -153,6 +153,11 @@ class AppSettings extends Table {
   BoolColumn get onboardingDone =>
       boolean().withDefault(const Constant(false))();
 
+  /// The daily reminder (§2.8): off by default; minutes after midnight.
+  BoolColumn get reminderOn => boolean().withDefault(const Constant(false))();
+  IntColumn get reminderMinutes =>
+      integer().withDefault(const Constant(20 * 60))();
+
   /// App lock (§2.6): off by default; delay before re-locking, in seconds.
   BoolColumn get appLock => boolean().withDefault(const Constant(false))();
   IntColumn get appLockDelaySeconds =>

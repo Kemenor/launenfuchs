@@ -7,6 +7,7 @@ import '../data/backup/backup_service.dart';
 import '../l10n/app_localizations.dart';
 import '../providers.dart';
 import '../domain/journal.dart';
+import 'app_lock.dart';
 import 'categories/categories_screen.dart';
 import 'import_screen.dart';
 
@@ -25,6 +26,10 @@ class SettingsScreen extends ConsumerWidget {
     final controller = ref.read(settingsProvider.notifier);
     final material = MaterialLocalizations.of(context);
     final use24h = MediaQuery.alwaysUse24HourFormatOf(context);
+    String minutesLabel(int m) => material.formatTimeOfDay(
+      TimeOfDay(hour: m ~/ 60, minute: m % 60),
+      alwaysUse24HourFormat: use24h,
+    );
     String hourLabel(int h) => material.formatTimeOfDay(
       TimeOfDay(hour: h, minute: 0),
       alwaysUse24HourFormat: use24h,
@@ -64,6 +69,56 @@ class SettingsScreen extends ConsumerWidget {
                   );
                 },
               ),
+              SwitchListTile(
+                contentPadding: fuchsbauCardRowPadding,
+                secondary: const Icon(Symbols.notifications_rounded),
+                title: Text(l10n.reminderTitle),
+                subtitle: Text(
+                  settings.reminderOn
+                      ? l10n.reminderOnSubtitle(
+                          minutesLabel(settings.reminderMinutes),
+                        )
+                      : l10n.reminderOff,
+                ),
+                value: settings.reminderOn,
+                onChanged: (on) async {
+                  if (on) {
+                    final granted = await ref
+                        .read(reminderSchedulerProvider)
+                        .requestPermission();
+                    if (!granted && context.mounted) {
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text(l10n.notifDenied)));
+                    }
+                  }
+                  await controller.setReminder(on: on);
+                },
+              ),
+              if (settings.reminderOn)
+                ListTile(
+                  contentPadding: fuchsbauCardRowPadding,
+                  leading: const Icon(Symbols.schedule_rounded),
+                  title: Text(l10n.reminderTime),
+                  trailing: Text(
+                    minutesLabel(settings.reminderMinutes),
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                  onTap: () async {
+                    final t = await showTimePicker(
+                      context: context,
+                      initialTime: TimeOfDay(
+                        hour: settings.reminderMinutes ~/ 60,
+                        minute: settings.reminderMinutes % 60,
+                      ),
+                    );
+                    if (t != null) {
+                      await controller.setReminder(
+                        minutes: t.hour * 60 + t.minute,
+                      );
+                    }
+                  },
+                ),
               FuchsbauChoicePicker<int>(
                 icon: Symbols.bedtime_rounded,
                 title: l10n.dayCutoffTitle,
@@ -72,6 +127,34 @@ class SettingsScreen extends ConsumerWidget {
                 footnote: l10n.dayCutoffFootnote,
                 onChanged: controller.setDayCutoffHour,
               ),
+            ],
+          ),
+          FuchsbauSectionHeader(l10n.sectionPrivacy),
+          FuchsbauSettingsCard(
+            children: [
+              SwitchListTile(
+                contentPadding: fuchsbauCardRowPadding,
+                secondary: const Icon(Symbols.lock_rounded),
+                title: Text(l10n.appLockTitle),
+                subtitle: Text(l10n.appLockSubtitle),
+                value: settings.appLock,
+                onChanged: (on) async {
+                  if (on && !await confirmAppLock(context)) return;
+                  await controller.setAppLock(on: on);
+                },
+              ),
+              if (settings.appLock)
+                FuchsbauChoicePicker<int>(
+                  icon: Symbols.timer_rounded,
+                  title: l10n.appLockDelay,
+                  value: settings.appLockDelaySeconds,
+                  options: {
+                    0: l10n.lockImmediately,
+                    60: l10n.lockAfter1,
+                    300: l10n.lockAfter5,
+                  },
+                  onChanged: (v) => controller.setAppLock(delaySeconds: v),
+                ),
             ],
           ),
           FuchsbauSectionHeader(l10n.sectionData),

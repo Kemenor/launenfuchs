@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/theme.dart';
 import 'l10n/app_localizations.dart';
 import 'providers.dart';
+import 'ui/app_lock.dart';
 import 'ui/home_shell.dart';
 
 void main() {
@@ -25,6 +26,7 @@ class LaunenfuchsApp extends ConsumerWidget {
       locale: settings.locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+      builder: (context, child) => AppLockGate(child: child!),
       home: const HomeShell(),
     );
   }

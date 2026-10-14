@@ -1,5 +1,6 @@
 package ch.fuchsnest.launenfuchs
 
-import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.android.FlutterFragmentActivity
 
-class MainActivity : FlutterActivity()
+// local_auth (app lock) needs a FragmentActivity.
+class MainActivity : FlutterFragmentActivity()

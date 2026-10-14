@@ -3077,6 +3077,33 @@ class $AppSettingsTable extends AppSettings
     ),
     defaultValue: const Constant(false),
   );
+  static const VerificationMeta _reminderOnMeta = const VerificationMeta(
+    'reminderOn',
+  );
+  @override
+  late final GeneratedColumn<bool> reminderOn = GeneratedColumn<bool>(
+    'reminder_on',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("reminder_on" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _reminderMinutesMeta = const VerificationMeta(
+    'reminderMinutes',
+  );
+  @override
+  late final GeneratedColumn<int> reminderMinutes = GeneratedColumn<int>(
+    'reminder_minutes',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(20 * 60),
+  );
   static const VerificationMeta _appLockMeta = const VerificationMeta(
     'appLock',
   );
@@ -3112,6 +3139,8 @@ class $AppSettingsTable extends AppSettings
     dayCutoffHour,
     statsTiles,
     onboardingDone,
+    reminderOn,
+    reminderMinutes,
     appLock,
     appLockDelaySeconds,
   ];
@@ -3175,6 +3204,21 @@ class $AppSettingsTable extends AppSettings
         ),
       );
     }
+    if (data.containsKey('reminder_on')) {
+      context.handle(
+        _reminderOnMeta,
+        reminderOn.isAcceptableOrUnknown(data['reminder_on']!, _reminderOnMeta),
+      );
+    }
+    if (data.containsKey('reminder_minutes')) {
+      context.handle(
+        _reminderMinutesMeta,
+        reminderMinutes.isAcceptableOrUnknown(
+          data['reminder_minutes']!,
+          _reminderMinutesMeta,
+        ),
+      );
+    }
     if (data.containsKey('app_lock')) {
       context.handle(
         _appLockMeta,
@@ -3227,6 +3271,14 @@ class $AppSettingsTable extends AppSettings
         DriftSqlType.bool,
         data['${effectivePrefix}onboarding_done'],
       )!,
+      reminderOn: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}reminder_on'],
+      )!,
+      reminderMinutes: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}reminder_minutes'],
+      )!,
       appLock: attachedDatabase.typeMapping.read(
         DriftSqlType.bool,
         data['${effectivePrefix}app_lock'],
@@ -3262,6 +3314,10 @@ class AppSettingsRow extends DataClass implements Insertable<AppSettingsRow> {
   /// even if every category is later deleted.
   final bool onboardingDone;
 
+  /// The daily reminder (§2.8): off by default; minutes after midnight.
+  final bool reminderOn;
+  final int reminderMinutes;
+
   /// App lock (§2.6): off by default; delay before re-locking, in seconds.
   final bool appLock;
   final int appLockDelaySeconds;
@@ -3273,6 +3329,8 @@ class AppSettingsRow extends DataClass implements Insertable<AppSettingsRow> {
     required this.dayCutoffHour,
     this.statsTiles,
     required this.onboardingDone,
+    required this.reminderOn,
+    required this.reminderMinutes,
     required this.appLock,
     required this.appLockDelaySeconds,
   });
@@ -3288,6 +3346,8 @@ class AppSettingsRow extends DataClass implements Insertable<AppSettingsRow> {
       map['stats_tiles'] = Variable<String>(statsTiles);
     }
     map['onboarding_done'] = Variable<bool>(onboardingDone);
+    map['reminder_on'] = Variable<bool>(reminderOn);
+    map['reminder_minutes'] = Variable<int>(reminderMinutes);
     map['app_lock'] = Variable<bool>(appLock);
     map['app_lock_delay_seconds'] = Variable<int>(appLockDelaySeconds);
     return map;
@@ -3304,6 +3364,8 @@ class AppSettingsRow extends DataClass implements Insertable<AppSettingsRow> {
           ? const Value.absent()
           : Value(statsTiles),
       onboardingDone: Value(onboardingDone),
+      reminderOn: Value(reminderOn),
+      reminderMinutes: Value(reminderMinutes),
       appLock: Value(appLock),
       appLockDelaySeconds: Value(appLockDelaySeconds),
     );
@@ -3322,6 +3384,8 @@ class AppSettingsRow extends DataClass implements Insertable<AppSettingsRow> {
       dayCutoffHour: serializer.fromJson<int>(json['dayCutoffHour']),
       statsTiles: serializer.fromJson<String?>(json['statsTiles']),
       onboardingDone: serializer.fromJson<bool>(json['onboardingDone']),
+      reminderOn: serializer.fromJson<bool>(json['reminderOn']),
+      reminderMinutes: serializer.fromJson<int>(json['reminderMinutes']),
       appLock: serializer.fromJson<bool>(json['appLock']),
       appLockDelaySeconds: serializer.fromJson<int>(
         json['appLockDelaySeconds'],
@@ -3339,6 +3403,8 @@ class AppSettingsRow extends DataClass implements Insertable<AppSettingsRow> {
       'dayCutoffHour': serializer.toJson<int>(dayCutoffHour),
       'statsTiles': serializer.toJson<String?>(statsTiles),
       'onboardingDone': serializer.toJson<bool>(onboardingDone),
+      'reminderOn': serializer.toJson<bool>(reminderOn),
+      'reminderMinutes': serializer.toJson<int>(reminderMinutes),
       'appLock': serializer.toJson<bool>(appLock),
       'appLockDelaySeconds': serializer.toJson<int>(appLockDelaySeconds),
     };
@@ -3352,6 +3418,8 @@ class AppSettingsRow extends DataClass implements Insertable<AppSettingsRow> {
     int? dayCutoffHour,
     Value<String?> statsTiles = const Value.absent(),
     bool? onboardingDone,
+    bool? reminderOn,
+    int? reminderMinutes,
     bool? appLock,
     int? appLockDelaySeconds,
   }) => AppSettingsRow(
@@ -3362,6 +3430,8 @@ class AppSettingsRow extends DataClass implements Insertable<AppSettingsRow> {
     dayCutoffHour: dayCutoffHour ?? this.dayCutoffHour,
     statsTiles: statsTiles.present ? statsTiles.value : this.statsTiles,
     onboardingDone: onboardingDone ?? this.onboardingDone,
+    reminderOn: reminderOn ?? this.reminderOn,
+    reminderMinutes: reminderMinutes ?? this.reminderMinutes,
     appLock: appLock ?? this.appLock,
     appLockDelaySeconds: appLockDelaySeconds ?? this.appLockDelaySeconds,
   );
@@ -3384,6 +3454,12 @@ class AppSettingsRow extends DataClass implements Insertable<AppSettingsRow> {
       onboardingDone: data.onboardingDone.present
           ? data.onboardingDone.value
           : this.onboardingDone,
+      reminderOn: data.reminderOn.present
+          ? data.reminderOn.value
+          : this.reminderOn,
+      reminderMinutes: data.reminderMinutes.present
+          ? data.reminderMinutes.value
+          : this.reminderMinutes,
       appLock: data.appLock.present ? data.appLock.value : this.appLock,
       appLockDelaySeconds: data.appLockDelaySeconds.present
           ? data.appLockDelaySeconds.value
@@ -3401,6 +3477,8 @@ class AppSettingsRow extends DataClass implements Insertable<AppSettingsRow> {
           ..write('dayCutoffHour: $dayCutoffHour, ')
           ..write('statsTiles: $statsTiles, ')
           ..write('onboardingDone: $onboardingDone, ')
+          ..write('reminderOn: $reminderOn, ')
+          ..write('reminderMinutes: $reminderMinutes, ')
           ..write('appLock: $appLock, ')
           ..write('appLockDelaySeconds: $appLockDelaySeconds')
           ..write(')'))
@@ -3416,6 +3494,8 @@ class AppSettingsRow extends DataClass implements Insertable<AppSettingsRow> {
     dayCutoffHour,
     statsTiles,
     onboardingDone,
+    reminderOn,
+    reminderMinutes,
     appLock,
     appLockDelaySeconds,
   );
@@ -3430,6 +3510,8 @@ class AppSettingsRow extends DataClass implements Insertable<AppSettingsRow> {
           other.dayCutoffHour == this.dayCutoffHour &&
           other.statsTiles == this.statsTiles &&
           other.onboardingDone == this.onboardingDone &&
+          other.reminderOn == this.reminderOn &&
+          other.reminderMinutes == this.reminderMinutes &&
           other.appLock == this.appLock &&
           other.appLockDelaySeconds == this.appLockDelaySeconds);
 }
@@ -3442,6 +3524,8 @@ class AppSettingsCompanion extends UpdateCompanion<AppSettingsRow> {
   final Value<int> dayCutoffHour;
   final Value<String?> statsTiles;
   final Value<bool> onboardingDone;
+  final Value<bool> reminderOn;
+  final Value<int> reminderMinutes;
   final Value<bool> appLock;
   final Value<int> appLockDelaySeconds;
   const AppSettingsCompanion({
@@ -3452,6 +3536,8 @@ class AppSettingsCompanion extends UpdateCompanion<AppSettingsRow> {
     this.dayCutoffHour = const Value.absent(),
     this.statsTiles = const Value.absent(),
     this.onboardingDone = const Value.absent(),
+    this.reminderOn = const Value.absent(),
+    this.reminderMinutes = const Value.absent(),
     this.appLock = const Value.absent(),
     this.appLockDelaySeconds = const Value.absent(),
   });
@@ -3463,6 +3549,8 @@ class AppSettingsCompanion extends UpdateCompanion<AppSettingsRow> {
     this.dayCutoffHour = const Value.absent(),
     this.statsTiles = const Value.absent(),
     this.onboardingDone = const Value.absent(),
+    this.reminderOn = const Value.absent(),
+    this.reminderMinutes = const Value.absent(),
     this.appLock = const Value.absent(),
     this.appLockDelaySeconds = const Value.absent(),
   });
@@ -3474,6 +3562,8 @@ class AppSettingsCompanion extends UpdateCompanion<AppSettingsRow> {
     Expression<int>? dayCutoffHour,
     Expression<String>? statsTiles,
     Expression<bool>? onboardingDone,
+    Expression<bool>? reminderOn,
+    Expression<int>? reminderMinutes,
     Expression<bool>? appLock,
     Expression<int>? appLockDelaySeconds,
   }) {
@@ -3485,6 +3575,8 @@ class AppSettingsCompanion extends UpdateCompanion<AppSettingsRow> {
       if (dayCutoffHour != null) 'day_cutoff_hour': dayCutoffHour,
       if (statsTiles != null) 'stats_tiles': statsTiles,
       if (onboardingDone != null) 'onboarding_done': onboardingDone,
+      if (reminderOn != null) 'reminder_on': reminderOn,
+      if (reminderMinutes != null) 'reminder_minutes': reminderMinutes,
       if (appLock != null) 'app_lock': appLock,
       if (appLockDelaySeconds != null)
         'app_lock_delay_seconds': appLockDelaySeconds,
@@ -3499,6 +3591,8 @@ class AppSettingsCompanion extends UpdateCompanion<AppSettingsRow> {
     Value<int>? dayCutoffHour,
     Value<String?>? statsTiles,
     Value<bool>? onboardingDone,
+    Value<bool>? reminderOn,
+    Value<int>? reminderMinutes,
     Value<bool>? appLock,
     Value<int>? appLockDelaySeconds,
   }) {
@@ -3510,6 +3604,8 @@ class AppSettingsCompanion extends UpdateCompanion<AppSettingsRow> {
       dayCutoffHour: dayCutoffHour ?? this.dayCutoffHour,
       statsTiles: statsTiles ?? this.statsTiles,
       onboardingDone: onboardingDone ?? this.onboardingDone,
+      reminderOn: reminderOn ?? this.reminderOn,
+      reminderMinutes: reminderMinutes ?? this.reminderMinutes,
       appLock: appLock ?? this.appLock,
       appLockDelaySeconds: appLockDelaySeconds ?? this.appLockDelaySeconds,
     );
@@ -3539,6 +3635,12 @@ class AppSettingsCompanion extends UpdateCompanion<AppSettingsRow> {
     if (onboardingDone.present) {
       map['onboarding_done'] = Variable<bool>(onboardingDone.value);
     }
+    if (reminderOn.present) {
+      map['reminder_on'] = Variable<bool>(reminderOn.value);
+    }
+    if (reminderMinutes.present) {
+      map['reminder_minutes'] = Variable<int>(reminderMinutes.value);
+    }
     if (appLock.present) {
       map['app_lock'] = Variable<bool>(appLock.value);
     }
@@ -3558,6 +3660,8 @@ class AppSettingsCompanion extends UpdateCompanion<AppSettingsRow> {
           ..write('dayCutoffHour: $dayCutoffHour, ')
           ..write('statsTiles: $statsTiles, ')
           ..write('onboardingDone: $onboardingDone, ')
+          ..write('reminderOn: $reminderOn, ')
+          ..write('reminderMinutes: $reminderMinutes, ')
           ..write('appLock: $appLock, ')
           ..write('appLockDelaySeconds: $appLockDelaySeconds')
           ..write(')'))
@@ -6345,6 +6449,8 @@ typedef $$AppSettingsTableCreateCompanionBuilder =
       Value<int> dayCutoffHour,
       Value<String?> statsTiles,
       Value<bool> onboardingDone,
+      Value<bool> reminderOn,
+      Value<int> reminderMinutes,
       Value<bool> appLock,
       Value<int> appLockDelaySeconds,
     });
@@ -6357,6 +6463,8 @@ typedef $$AppSettingsTableUpdateCompanionBuilder =
       Value<int> dayCutoffHour,
       Value<String?> statsTiles,
       Value<bool> onboardingDone,
+      Value<bool> reminderOn,
+      Value<int> reminderMinutes,
       Value<bool> appLock,
       Value<int> appLockDelaySeconds,
     });
@@ -6402,6 +6510,16 @@ class $$AppSettingsTableFilterComposer
 
   ColumnFilters<bool> get onboardingDone => $composableBuilder(
     column: $table.onboardingDone,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get reminderOn => $composableBuilder(
+    column: $table.reminderOn,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get reminderMinutes => $composableBuilder(
+    column: $table.reminderMinutes,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -6460,6 +6578,16 @@ class $$AppSettingsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<bool> get reminderOn => $composableBuilder(
+    column: $table.reminderOn,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get reminderMinutes => $composableBuilder(
+    column: $table.reminderMinutes,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<bool> get appLock => $composableBuilder(
     column: $table.appLock,
     builder: (column) => ColumnOrderings(column),
@@ -6511,6 +6639,16 @@ class $$AppSettingsTableAnnotationComposer
     builder: (column) => column,
   );
 
+  GeneratedColumn<bool> get reminderOn => $composableBuilder(
+    column: $table.reminderOn,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get reminderMinutes => $composableBuilder(
+    column: $table.reminderMinutes,
+    builder: (column) => column,
+  );
+
   GeneratedColumn<bool> get appLock =>
       $composableBuilder(column: $table.appLock, builder: (column) => column);
 
@@ -6558,6 +6696,8 @@ class $$AppSettingsTableTableManager
                 Value<int> dayCutoffHour = const Value.absent(),
                 Value<String?> statsTiles = const Value.absent(),
                 Value<bool> onboardingDone = const Value.absent(),
+                Value<bool> reminderOn = const Value.absent(),
+                Value<int> reminderMinutes = const Value.absent(),
                 Value<bool> appLock = const Value.absent(),
                 Value<int> appLockDelaySeconds = const Value.absent(),
               }) => AppSettingsCompanion(
@@ -6568,6 +6708,8 @@ class $$AppSettingsTableTableManager
                 dayCutoffHour: dayCutoffHour,
                 statsTiles: statsTiles,
                 onboardingDone: onboardingDone,
+                reminderOn: reminderOn,
+                reminderMinutes: reminderMinutes,
                 appLock: appLock,
                 appLockDelaySeconds: appLockDelaySeconds,
               ),
@@ -6580,6 +6722,8 @@ class $$AppSettingsTableTableManager
                 Value<int> dayCutoffHour = const Value.absent(),
                 Value<String?> statsTiles = const Value.absent(),
                 Value<bool> onboardingDone = const Value.absent(),
+                Value<bool> reminderOn = const Value.absent(),
+                Value<int> reminderMinutes = const Value.absent(),
                 Value<bool> appLock = const Value.absent(),
                 Value<int> appLockDelaySeconds = const Value.absent(),
               }) => AppSettingsCompanion.insert(
@@ -6590,6 +6734,8 @@ class $$AppSettingsTableTableManager
                 dayCutoffHour: dayCutoffHour,
                 statsTiles: statsTiles,
                 onboardingDone: onboardingDone,
+                reminderOn: reminderOn,
+                reminderMinutes: reminderMinutes,
                 appLock: appLock,
                 appLockDelaySeconds: appLockDelaySeconds,
               ),

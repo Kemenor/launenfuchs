@@ -12,6 +12,7 @@ import 'data/repositories/journal_repository.dart';
 import 'domain/clock.dart';
 import 'domain/day.dart';
 import 'domain/journal.dart';
+import 'notifications/reminder_scheduler.dart';
 
 /// The injected clock — overridden with a [FixedClock] in tests.
 final clockProvider = Provider<Clock>((ref) => const SystemClock());
@@ -25,6 +26,10 @@ final databaseProvider = Provider<AppDatabase>((ref) {
 
 final backupServiceProvider = Provider<BackupService>(
   (ref) => BackupService(ref.watch(databaseProvider)),
+);
+
+final reminderSchedulerProvider = Provider<ReminderScheduler>(
+  (ref) => ReminderScheduler(),
 );
 
 final categoryRepositoryProvider = Provider<CategoryRepository>(
@@ -59,6 +64,11 @@ class Settings {
     this.localeCode = 'system',
     this.dayCutoffHour = defaultDayCutoffHour,
     this.statsTiles,
+    this.reminderOn = false,
+    this.reminderMinutes = 20 * 60,
+    this.appLock = false,
+    this.appLockDelaySeconds = 0,
+    this.loaded = false,
   });
 
   final ThemeMode themeMode;
@@ -74,6 +84,18 @@ class Settings {
   /// layout. Unknown ids are dropped, new tiles appended (see tile_catalog).
   final List<(String, bool)>? statsTiles;
 
+  /// The daily reminder (§2.8) and its time, in minutes after midnight.
+  final bool reminderOn;
+  final int reminderMinutes;
+
+  /// App lock (§2.6) and how long the app may be away before it re-locks.
+  final bool appLock;
+  final int appLockDelaySeconds;
+
+  /// The stored row has been read — the app lock waits for this so the
+  /// journal never flashes before the lock on a cold start.
+  final bool loaded;
+
   /// What MaterialApp.locale wants: null = system.
   Locale? get locale => localeCode == 'system' ? null : Locale(localeCode);
 
@@ -83,12 +105,21 @@ class Settings {
     String? localeCode,
     int? dayCutoffHour,
     List<(String, bool)>? statsTiles,
+    bool? reminderOn,
+    int? reminderMinutes,
+    bool? appLock,
+    int? appLockDelaySeconds,
   }) => Settings(
     themeMode: themeMode ?? this.themeMode,
     font: font ?? this.font,
     localeCode: localeCode ?? this.localeCode,
     dayCutoffHour: dayCutoffHour ?? this.dayCutoffHour,
     statsTiles: statsTiles ?? this.statsTiles,
+    reminderOn: reminderOn ?? this.reminderOn,
+    reminderMinutes: reminderMinutes ?? this.reminderMinutes,
+    appLock: appLock ?? this.appLock,
+    appLockDelaySeconds: appLockDelaySeconds ?? this.appLockDelaySeconds,
+    loaded: loaded,
   );
 }
 
@@ -109,14 +140,24 @@ class SettingsController extends Notifier<Settings> {
   Future<void> _load() async {
     final db = ref.read(databaseProvider);
     final row = await db.select(db.appSettings).getSingleOrNull();
-    if (row != null && !_touched) {
+    if (_touched) return;
+    if (row == null) {
+      state = const Settings(loaded: true);
+      return;
+    }
+    {
       state = Settings(
+        loaded: true,
         themeMode: ThemeMode.values[row.themeModeIndex.clamp(0, 2)],
         font: FuchsbauFont
             .values[row.fontIndex.clamp(0, FuchsbauFont.values.length - 1)],
         localeCode: row.localeCode,
         dayCutoffHour: row.dayCutoffHour.clamp(0, 23),
         statsTiles: _decodeTiles(row.statsTiles),
+        reminderOn: row.reminderOn,
+        reminderMinutes: row.reminderMinutes.clamp(0, 24 * 60 - 1),
+        appLock: row.appLock,
+        appLockDelaySeconds: row.appLockDelaySeconds,
       );
     }
   }
@@ -135,6 +176,12 @@ class SettingsController extends Notifier<Settings> {
 
   Future<void> setStatsTiles(List<(String, bool)> tiles) =>
       _update(state.copyWith(statsTiles: List.unmodifiable(tiles)));
+
+  Future<void> setReminder({bool? on, int? minutes}) =>
+      _update(state.copyWith(reminderOn: on, reminderMinutes: minutes));
+
+  Future<void> setAppLock({bool? on, int? delaySeconds}) =>
+      _update(state.copyWith(appLock: on, appLockDelaySeconds: delaySeconds));
 
   Future<void> setThemeMode(ThemeMode mode) =>
       _update(state.copyWith(themeMode: mode));
@@ -161,6 +208,10 @@ class SettingsController extends Notifier<Settings> {
             fontIndex: Value(state.font.index),
             localeCode: Value(state.localeCode),
             dayCutoffHour: Value(state.dayCutoffHour),
+            reminderOn: Value(state.reminderOn),
+            reminderMinutes: Value(state.reminderMinutes),
+            appLock: Value(state.appLock),
+            appLockDelaySeconds: Value(state.appLockDelaySeconds),
             statsTiles: Value(
               state.statsTiles == null
                   ? null

@@ -1,10 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+import '../domain/journal.dart';
+import '../domain/reminder.dart';
 import '../domain/starter.dart';
 import '../l10n/app_localizations.dart';
 import '../providers.dart';
+import 'entry_sheet.dart';
 import 'journal_screen.dart';
 import 'settings_screen.dart';
 import 'stats/stats_screen.dart';
@@ -21,6 +26,57 @@ class HomeShell extends ConsumerStatefulWidget {
 class _HomeShellState extends ConsumerState<HomeShell> {
   int _index = 0;
   bool _seeded = false;
+  StreamSubscription<void>? _taps;
+  Timer? _syncDebounce;
+
+  @override
+  void initState() {
+    super.initState();
+    final scheduler = ref.read(reminderSchedulerProvider);
+    // A tapped reminder opens today's entry on the Journal tab.
+    _taps = scheduler.taps.listen((_) {
+      if (!mounted) return;
+      setState(() => _index = 0);
+      showEntrySheet(context, day: logicalToday(ref));
+    });
+    scheduler.init();
+  }
+
+  @override
+  void dispose() {
+    _taps?.cancel();
+    _syncDebounce?.cancel();
+    super.dispose();
+  }
+
+  /// Re-fills the reminder schedule (§2.8) after any journal or settings
+  /// change — logging today drops today's reminder.
+  void _scheduleSync() {
+    _syncDebounce?.cancel();
+    _syncDebounce = Timer(const Duration(milliseconds: 400), () {
+      if (!mounted) return;
+      final s = ref.read(settingsProvider);
+      if (!s.loaded) return;
+      final l10n = AppLocalizations.of(context);
+      final journal = ref.read(journalProvider).value ?? Journal.empty;
+      final times = s.reminderOn
+          ? reminderTimes(
+              now: ref.read(clockProvider).now(),
+              minutes: s.reminderMinutes,
+              logged: {for (final e in journal.entries) e.day},
+            )
+          : const <DateTime>[];
+      ref
+          .read(reminderSchedulerProvider)
+          .sync(
+            times,
+            title: l10n.notifTitle,
+            body: l10n.notifBody,
+            channelName: l10n.notifChannel,
+            channelDescription: l10n.notifChannelDescription,
+          );
+    });
+  }
 
   @override
   void didChangeDependencies() {
@@ -40,6 +96,8 @@ class _HomeShellState extends ConsumerState<HomeShell> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(journalProvider, (_, _) => _scheduleSync());
+    ref.listen(settingsProvider, (_, _) => _scheduleSync());
     final l10n = AppLocalizations.of(context);
     return Scaffold(
       body: IndexedStack(
