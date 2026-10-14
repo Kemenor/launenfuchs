@@ -50,3 +50,24 @@ claude.session
 # Real mood data never leaves this machine (golden test against the real Daylio backup)
 test/private/
 *.daylio
+
+# From flutter create
+*.class
+*.log
+*.swp
+.swiftpm/
+migrate_working_dir/
+*.ipr
+*.iws
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.flutter-plugins-dependencies
+/coverage/
+app.*.symbols
+app.*.map.json
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+# Emulator / device scratch screenshots
+.emu_*.png

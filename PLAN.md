@@ -7,8 +7,8 @@ note — then see what moves your mood, on your phone, without a subscription. A
 The model lives in [`design-concept.md`](./design-concept.md) — that doc owns the *what*.
 **This doc owns the *how*:** stack, schema, engine, and the phased build order.
 
-> Status: **planning, nothing scaffolded yet** (2026-10-14, rev. 2). Review the concept, the
-> mockups in [`examples/ui/`](./examples/ui/), and § Open questions before Phase 0.
+> Status: **Phase 0 done** (2026-10-14) — skeleton boots to an empty Journal (phone + emulator), 21 tests green. Next: Phase 1. Launcher icon pending the
+> art (Phase 0's one open item).
 
 ## Decisions
 
@@ -58,20 +58,20 @@ lib/
 ```
 mood_label   (value INT PK 1..5, label TEXT NULL, icon TEXT NULL)   -- NULL = localised default
 category     (id, name, icon TEXT, mode TEXT 'one'|'any', display TEXT 'chips'|'slider',
-              default_option_id → option NULL, sort INT, hidden BOOL)
+              default_option_id → category_options NULL, sort INT, hidden BOOL)
 category_span (id, category_id → category ON DELETE CASCADE, from_day TEXT,
                to_day TEXT NULL)          -- hide closes the open span, bring back opens one
-option       (id, category_id → category ON DELETE CASCADE, name, icon TEXT, sort INT,
+category_options (id, category_id → category ON DELETE CASCADE, name, icon TEXT, sort INT,
               hidden BOOL)
 entry        (id, day TEXT UNIQUE, logged_at INT, mood INT 1..5, note TEXT NULL,
               created_at INT, updated_at INT)
-entry_option (entry_id → entry ON DELETE CASCADE, option_id → option ON DELETE CASCADE,
+entry_options (entry_id → entry ON DELETE CASCADE, option_id → category_options ON DELETE CASCADE,
               PK(entry_id, option_id))     -- "delete for good" = the cascade
 period       (id, name, start_day TEXT, end_day TEXT NULL, away BOOL, icon TEXT NULL)
 import_map   (source TEXT 'daylio', kind TEXT 'group'|'tag', source_id INT,
               action TEXT 'keep'|'merge'|'drop', target_id INT NULL, name TEXT NULL,
               PK(source, kind, source_id))
-setting      (key TEXT PK, value TEXT)   -- incl. stats_tiles: ordered [{id, on}] (checkfuchs pattern)
+app_settings (id = 1, theme, font, locale, day_cutoff_hour, stats_tiles JSON, app_lock, …)   -- singleton row (checkfuchs pattern)
 ```
 
 `entry.day UNIQUE` encodes *one entry per day* — dropping it later (if several entries

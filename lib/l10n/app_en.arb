@@ -1,0 +1,103 @@
+{
+  "@@locale": "en",
+  "appTitle": "Launenfuchs",
+  "@appTitle": {
+    "description": "App name."
+  },
+  "navJournal": "Journal",
+  "@navJournal": {
+    "description": "Bottom navigation: the journal (calendar + entries)."
+  },
+  "navStats": "Stats",
+  "@navStats": {
+    "description": "Bottom navigation: statistics."
+  },
+  "navSettings": "Settings",
+  "@navSettings": {
+    "description": "Bottom navigation and screen title: settings."
+  },
+  "journalEmptyTitle": "How was today?",
+  "@journalEmptyTitle": {
+    "description": "Empty journal: headline."
+  },
+  "journalEmptyBody": "One tap for the mood, a few for what you did — that is a whole entry. Your days will show up here.",
+  "@journalEmptyBody": {
+    "description": "Empty journal: what logging takes."
+  },
+  "statsEmptyBody": "Stats appear once you have logged a few days.",
+  "@statsEmptyBody": {
+    "description": "Stats screen before anything is logged."
+  },
+  "sectionJournal": "Journal",
+  "@sectionJournal": {
+    "description": "Settings section header: journal behaviour."
+  },
+  "sectionAppearance": "Appearance",
+  "@sectionAppearance": {
+    "description": "Settings section header: theme, language, typeface."
+  },
+  "dayCutoffTitle": "New day starts at",
+  "@dayCutoffTitle": {
+    "description": "Setting: the hour a new day starts (late-night entries count for the evening before)."
+  },
+  "dayCutoffFootnote": "Entries made before this time count for the day before.",
+  "@dayCutoffFootnote": {
+    "description": "Explains the day cut-off setting."
+  },
+  "themePickerTitle": "Theme",
+  "@themePickerTitle": {
+    "description": "Setting: light/dark theme."
+  },
+  "themeSystem": "System",
+  "@themeSystem": {
+    "description": "Theme option."
+  },
+  "themeLight": "Light",
+  "@themeLight": {
+    "description": "Theme option."
+  },
+  "themeDark": "Dark",
+  "@themeDark": {
+    "description": "Theme option."
+  },
+  "languageTitle": "App language",
+  "@languageTitle": {
+    "description": "Setting: app language override."
+  },
+  "languageSystem": "System default",
+  "@languageSystem": {
+    "description": "Language option: follow the OS."
+  },
+  "languageEnglish": "English",
+  "@languageEnglish": {
+    "description": "Language option (endonym)."
+  },
+  "languageGerman": "Deutsch",
+  "@languageGerman": {
+    "description": "Language option (endonym)."
+  },
+  "languageFrench": "Français",
+  "@languageFrench": {
+    "description": "Language option (endonym)."
+  },
+  "languageItalian": "Italiano",
+  "@languageItalian": {
+    "description": "Language option (endonym)."
+  },
+  "typefaceTitle": "Typeface",
+  "@typefaceTitle": {
+    "description": "Setting: typeface picker."
+  },
+  "typefaceDefault": "Default",
+  "@typefaceDefault": {
+    "description": "Typeface option note."
+  },
+  "typefaceLowVision": "Low-vision legibility",
+  "@typefaceLowVision": {
+    "description": "Typeface option note."
+  },
+  "typefaceDyslexia": "Dyslexia",
+  "@typefaceDyslexia": {
+    "description": "Typeface option note."
+  }
+}
