@@ -2631,10 +2631,10 @@ class $ImportMapsTable extends ImportMaps
     type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  static const VerificationMeta _choiceMeta = const VerificationMeta('choice');
   @override
-  late final GeneratedColumn<String> name = GeneratedColumn<String>(
-    'name',
+  late final GeneratedColumn<String> choice = GeneratedColumn<String>(
+    'choice',
     aliasedName,
     true,
     type: DriftSqlType.string,
@@ -2647,7 +2647,7 @@ class $ImportMapsTable extends ImportMaps
     sourceId,
     action,
     targetId,
-    name,
+    choice,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -2699,10 +2699,10 @@ class $ImportMapsTable extends ImportMaps
         targetId.isAcceptableOrUnknown(data['target_id']!, _targetIdMeta),
       );
     }
-    if (data.containsKey('name')) {
+    if (data.containsKey('choice')) {
       context.handle(
-        _nameMeta,
-        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+        _choiceMeta,
+        choice.isAcceptableOrUnknown(data['choice']!, _choiceMeta),
       );
     }
     return context;
@@ -2734,9 +2734,9 @@ class $ImportMapsTable extends ImportMaps
         DriftSqlType.int,
         data['${effectivePrefix}target_id'],
       ),
-      name: attachedDatabase.typeMapping.read(
+      choice: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}name'],
+        data['${effectivePrefix}choice'],
       ),
     );
   }
@@ -2753,14 +2753,16 @@ class ImportMapRow extends DataClass implements Insertable<ImportMapRow> {
   final int sourceId;
   final String action;
   final int? targetId;
-  final String? name;
+
+  /// The rest of the choice as JSON (name, icon, mode, display).
+  final String? choice;
   const ImportMapRow({
     required this.source,
     required this.kind,
     required this.sourceId,
     required this.action,
     this.targetId,
-    this.name,
+    this.choice,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -2772,8 +2774,8 @@ class ImportMapRow extends DataClass implements Insertable<ImportMapRow> {
     if (!nullToAbsent || targetId != null) {
       map['target_id'] = Variable<int>(targetId);
     }
-    if (!nullToAbsent || name != null) {
-      map['name'] = Variable<String>(name);
+    if (!nullToAbsent || choice != null) {
+      map['choice'] = Variable<String>(choice);
     }
     return map;
   }
@@ -2787,7 +2789,9 @@ class ImportMapRow extends DataClass implements Insertable<ImportMapRow> {
       targetId: targetId == null && nullToAbsent
           ? const Value.absent()
           : Value(targetId),
-      name: name == null && nullToAbsent ? const Value.absent() : Value(name),
+      choice: choice == null && nullToAbsent
+          ? const Value.absent()
+          : Value(choice),
     );
   }
 
@@ -2802,7 +2806,7 @@ class ImportMapRow extends DataClass implements Insertable<ImportMapRow> {
       sourceId: serializer.fromJson<int>(json['sourceId']),
       action: serializer.fromJson<String>(json['action']),
       targetId: serializer.fromJson<int?>(json['targetId']),
-      name: serializer.fromJson<String?>(json['name']),
+      choice: serializer.fromJson<String?>(json['choice']),
     );
   }
   @override
@@ -2814,7 +2818,7 @@ class ImportMapRow extends DataClass implements Insertable<ImportMapRow> {
       'sourceId': serializer.toJson<int>(sourceId),
       'action': serializer.toJson<String>(action),
       'targetId': serializer.toJson<int?>(targetId),
-      'name': serializer.toJson<String?>(name),
+      'choice': serializer.toJson<String?>(choice),
     };
   }
 
@@ -2824,14 +2828,14 @@ class ImportMapRow extends DataClass implements Insertable<ImportMapRow> {
     int? sourceId,
     String? action,
     Value<int?> targetId = const Value.absent(),
-    Value<String?> name = const Value.absent(),
+    Value<String?> choice = const Value.absent(),
   }) => ImportMapRow(
     source: source ?? this.source,
     kind: kind ?? this.kind,
     sourceId: sourceId ?? this.sourceId,
     action: action ?? this.action,
     targetId: targetId.present ? targetId.value : this.targetId,
-    name: name.present ? name.value : this.name,
+    choice: choice.present ? choice.value : this.choice,
   );
   ImportMapRow copyWithCompanion(ImportMapsCompanion data) {
     return ImportMapRow(
@@ -2840,7 +2844,7 @@ class ImportMapRow extends DataClass implements Insertable<ImportMapRow> {
       sourceId: data.sourceId.present ? data.sourceId.value : this.sourceId,
       action: data.action.present ? data.action.value : this.action,
       targetId: data.targetId.present ? data.targetId.value : this.targetId,
-      name: data.name.present ? data.name.value : this.name,
+      choice: data.choice.present ? data.choice.value : this.choice,
     );
   }
 
@@ -2852,14 +2856,14 @@ class ImportMapRow extends DataClass implements Insertable<ImportMapRow> {
           ..write('sourceId: $sourceId, ')
           ..write('action: $action, ')
           ..write('targetId: $targetId, ')
-          ..write('name: $name')
+          ..write('choice: $choice')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode =>
-      Object.hash(source, kind, sourceId, action, targetId, name);
+      Object.hash(source, kind, sourceId, action, targetId, choice);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -2869,7 +2873,7 @@ class ImportMapRow extends DataClass implements Insertable<ImportMapRow> {
           other.sourceId == this.sourceId &&
           other.action == this.action &&
           other.targetId == this.targetId &&
-          other.name == this.name);
+          other.choice == this.choice);
 }
 
 class ImportMapsCompanion extends UpdateCompanion<ImportMapRow> {
@@ -2878,7 +2882,7 @@ class ImportMapsCompanion extends UpdateCompanion<ImportMapRow> {
   final Value<int> sourceId;
   final Value<String> action;
   final Value<int?> targetId;
-  final Value<String?> name;
+  final Value<String?> choice;
   final Value<int> rowid;
   const ImportMapsCompanion({
     this.source = const Value.absent(),
@@ -2886,7 +2890,7 @@ class ImportMapsCompanion extends UpdateCompanion<ImportMapRow> {
     this.sourceId = const Value.absent(),
     this.action = const Value.absent(),
     this.targetId = const Value.absent(),
-    this.name = const Value.absent(),
+    this.choice = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   ImportMapsCompanion.insert({
@@ -2895,7 +2899,7 @@ class ImportMapsCompanion extends UpdateCompanion<ImportMapRow> {
     required int sourceId,
     required String action,
     this.targetId = const Value.absent(),
-    this.name = const Value.absent(),
+    this.choice = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : source = Value(source),
        kind = Value(kind),
@@ -2907,7 +2911,7 @@ class ImportMapsCompanion extends UpdateCompanion<ImportMapRow> {
     Expression<int>? sourceId,
     Expression<String>? action,
     Expression<int>? targetId,
-    Expression<String>? name,
+    Expression<String>? choice,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -2916,7 +2920,7 @@ class ImportMapsCompanion extends UpdateCompanion<ImportMapRow> {
       if (sourceId != null) 'source_id': sourceId,
       if (action != null) 'action': action,
       if (targetId != null) 'target_id': targetId,
-      if (name != null) 'name': name,
+      if (choice != null) 'choice': choice,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -2927,7 +2931,7 @@ class ImportMapsCompanion extends UpdateCompanion<ImportMapRow> {
     Value<int>? sourceId,
     Value<String>? action,
     Value<int?>? targetId,
-    Value<String?>? name,
+    Value<String?>? choice,
     Value<int>? rowid,
   }) {
     return ImportMapsCompanion(
@@ -2936,7 +2940,7 @@ class ImportMapsCompanion extends UpdateCompanion<ImportMapRow> {
       sourceId: sourceId ?? this.sourceId,
       action: action ?? this.action,
       targetId: targetId ?? this.targetId,
-      name: name ?? this.name,
+      choice: choice ?? this.choice,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -2959,8 +2963,8 @@ class ImportMapsCompanion extends UpdateCompanion<ImportMapRow> {
     if (targetId.present) {
       map['target_id'] = Variable<int>(targetId.value);
     }
-    if (name.present) {
-      map['name'] = Variable<String>(name.value);
+    if (choice.present) {
+      map['choice'] = Variable<String>(choice.value);
     }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
@@ -2976,7 +2980,7 @@ class ImportMapsCompanion extends UpdateCompanion<ImportMapRow> {
           ..write('sourceId: $sourceId, ')
           ..write('action: $action, ')
           ..write('targetId: $targetId, ')
-          ..write('name: $name, ')
+          ..write('choice: $choice, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -6111,7 +6115,7 @@ typedef $$ImportMapsTableCreateCompanionBuilder =
       required int sourceId,
       required String action,
       Value<int?> targetId,
-      Value<String?> name,
+      Value<String?> choice,
       Value<int> rowid,
     });
 typedef $$ImportMapsTableUpdateCompanionBuilder =
@@ -6121,7 +6125,7 @@ typedef $$ImportMapsTableUpdateCompanionBuilder =
       Value<int> sourceId,
       Value<String> action,
       Value<int?> targetId,
-      Value<String?> name,
+      Value<String?> choice,
       Value<int> rowid,
     });
 
@@ -6159,8 +6163,8 @@ class $$ImportMapsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get name => $composableBuilder(
-    column: $table.name,
+  ColumnFilters<String> get choice => $composableBuilder(
+    column: $table.choice,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -6199,8 +6203,8 @@ class $$ImportMapsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get name => $composableBuilder(
-    column: $table.name,
+  ColumnOrderings<String> get choice => $composableBuilder(
+    column: $table.choice,
     builder: (column) => ColumnOrderings(column),
   );
 }
@@ -6229,8 +6233,8 @@ class $$ImportMapsTableAnnotationComposer
   GeneratedColumn<int> get targetId =>
       $composableBuilder(column: $table.targetId, builder: (column) => column);
 
-  GeneratedColumn<String> get name =>
-      $composableBuilder(column: $table.name, builder: (column) => column);
+  GeneratedColumn<String> get choice =>
+      $composableBuilder(column: $table.choice, builder: (column) => column);
 }
 
 class $$ImportMapsTableTableManager
@@ -6269,7 +6273,7 @@ class $$ImportMapsTableTableManager
                 Value<int> sourceId = const Value.absent(),
                 Value<String> action = const Value.absent(),
                 Value<int?> targetId = const Value.absent(),
-                Value<String?> name = const Value.absent(),
+                Value<String?> choice = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => ImportMapsCompanion(
                 source: source,
@@ -6277,7 +6281,7 @@ class $$ImportMapsTableTableManager
                 sourceId: sourceId,
                 action: action,
                 targetId: targetId,
-                name: name,
+                choice: choice,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -6287,7 +6291,7 @@ class $$ImportMapsTableTableManager
                 required int sourceId,
                 required String action,
                 Value<int?> targetId = const Value.absent(),
-                Value<String?> name = const Value.absent(),
+                Value<String?> choice = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => ImportMapsCompanion.insert(
                 source: source,
@@ -6295,7 +6299,7 @@ class $$ImportMapsTableTableManager
                 sourceId: sourceId,
                 action: action,
                 targetId: targetId,
-                name: name,
+                choice: choice,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0

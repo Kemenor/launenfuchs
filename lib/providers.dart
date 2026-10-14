@@ -3,6 +3,7 @@ import 'package:flutter/material.dart' show Locale, ThemeMode;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fuchsbau/fuchsbau.dart' show FuchsbauFont;
 
+import 'data/backup/backup_service.dart';
 import 'data/db/database.dart';
 import 'data/repositories/journal_repository.dart';
 import 'domain/clock.dart';
@@ -18,6 +19,10 @@ final databaseProvider = Provider<AppDatabase>((ref) {
   ref.onDispose(db.close);
   return db;
 });
+
+final backupServiceProvider = Provider<BackupService>(
+  (ref) => BackupService(ref.watch(databaseProvider)),
+);
 
 final journalRepositoryProvider = Provider<JournalRepository>(
   (ref) => JournalRepository(ref.watch(databaseProvider)),

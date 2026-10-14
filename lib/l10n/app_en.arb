@@ -346,5 +346,328 @@
   "entrySaved": "Saved.",
   "@entrySaved": {
     "description": "Snackbar after saving."
+  },
+  "importTitle": "Import from Daylio",
+  "@importTitle": {
+    "description": "Import screen title."
+  },
+  "importStepFile": "File",
+  "@importStepFile": {
+    "description": "Stepper step."
+  },
+  "importStepCategories": "Categories",
+  "@importStepCategories": {
+    "description": "Stepper step."
+  },
+  "importStepOptions": "Options",
+  "@importStepOptions": {
+    "description": "Stepper step."
+  },
+  "importStepDefaults": "Defaults",
+  "@importStepDefaults": {
+    "description": "Stepper step."
+  },
+  "importStepReview": "Review",
+  "@importStepReview": {
+    "description": "Stepper step."
+  },
+  "importPickBody": "In Daylio: More › Backup & restore › create a backup file. Then choose that .daylio file here. It's read on your phone — nothing is uploaded.",
+  "@importPickBody": {
+    "description": "How to get the Daylio backup file."
+  },
+  "importPickButton": "Choose file",
+  "@importPickButton": {
+    "description": "Button: pick the backup file."
+  },
+  "importNotDaylio": "That file isn't a Daylio backup.",
+  "@importNotDaylio": {
+    "description": "Error: the picked file is not a Daylio backup."
+  },
+  "importReadFailed": "Couldn't read the file: {error}",
+  "@importReadFailed": {
+    "description": "Error reading the file.",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "importDays": "Days",
+  "@importDays": {
+    "description": "Summary row label."
+  },
+  "importNotes": "Notes",
+  "@importNotes": {
+    "description": "Summary row label."
+  },
+  "importPhotos": "Photos (not imported)",
+  "@importPhotos": {
+    "description": "Summary row label."
+  },
+  "importMergedDays": "Days with several entries (combined)",
+  "@importMergedDays": {
+    "description": "Summary row: days that had several Daylio entries."
+  },
+  "importRepeatHint": "Starting from your choices of the last import.",
+  "@importRepeatHint": {
+    "description": "Shown when a saved mapping exists."
+  },
+  "importKeep": "Keep",
+  "@importKeep": {
+    "description": "Mapping action."
+  },
+  "importMerge": "Merge",
+  "@importMerge": {
+    "description": "Mapping action."
+  },
+  "importDrop": "Drop",
+  "@importDrop": {
+    "description": "Mapping action."
+  },
+  "importUsedOn": "{count, plural, =1{used on 1 day} other{used on {count} days}}",
+  "@importUsedOn": {
+    "description": "How often a group/tag was used.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importNeverUsed": "never used",
+  "@importNeverUsed": {
+    "description": "A tag never used."
+  },
+  "importNeverTwo": "never two on one day",
+  "@importNeverTwo": {
+    "description": "Group: never two tags on one day."
+  },
+  "importTwoOn": "{count, plural, =1{two on 1 day} other{two on {count} days}}",
+  "@importTwoOn": {
+    "description": "Group: days with two or more tags.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importMergeInto": "Merge into",
+  "@importMergeInto": {
+    "description": "Dropdown label."
+  },
+  "importModeOne": "one per day",
+  "@importModeOne": {
+    "description": "Category mode."
+  },
+  "importModeAny": "any number",
+  "@importModeAny": {
+    "description": "Category mode."
+  },
+  "importShowChips": "chips",
+  "@importShowChips": {
+    "description": "Display choice."
+  },
+  "importShowSlider": "slider",
+  "@importShowSlider": {
+    "description": "Display choice."
+  },
+  "importDropLoses": "{count, plural, =1{Removed from 1 day.} other{Removed from {count} days.}}",
+  "@importDropLoses": {
+    "description": "Info when dropping a used option.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importName": "Name",
+  "@importName": {
+    "description": "Rename field label."
+  },
+  "importDefault": "Default for new entries",
+  "@importDefault": {
+    "description": "Label."
+  },
+  "importNoDefault": "No default",
+  "@importNoDefault": {
+    "description": "Dropdown option."
+  },
+  "importTrackedSince": "Tracked since",
+  "@importTrackedSince": {
+    "description": "Label."
+  },
+  "importTrackedSinceHint": "Earlier days count as not tracked.",
+  "@importTrackedSinceHint": {
+    "description": "Explains tracked since."
+  },
+  "importEmptyDays": "{count, plural, =0{No days with nothing logged here.} =1{1 day with nothing logged here} other{{count} days with nothing logged here}}",
+  "@importEmptyDays": {
+    "description": "Count of days with nothing logged in a category.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importLeaveEmpty": "Leave empty",
+  "@importLeaveEmpty": {
+    "description": "Choice."
+  },
+  "importFillWith": "Fill with",
+  "@importFillWith": {
+    "description": "Choice."
+  },
+  "importFilledNote": "Filled days are saved with that option.",
+  "@importFilledNote": {
+    "description": "Explains filling."
+  },
+  "importCollisions": "{count, plural, =1{1 day would get two options here — both are kept.} other{{count} days would get two options here — both are kept.}}",
+  "@importCollisions": {
+    "description": "Warning after a merge.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importNoOnePerDay": "No one-per-day categories — nothing to set here.",
+  "@importNoOnePerDay": {
+    "description": "Defaults step when no category is one per day."
+  },
+  "importReviewCategories": "Categories",
+  "@importReviewCategories": {
+    "description": "Review row."
+  },
+  "importReviewOptions": "Options",
+  "@importReviewOptions": {
+    "description": "Review row."
+  },
+  "importReviewFilled": "Days filled",
+  "@importReviewFilled": {
+    "description": "Review row."
+  },
+  "importEmptyJournal": "Your journal is empty — nothing will be replaced.",
+  "@importEmptyJournal": {
+    "description": "Review: nothing will be replaced."
+  },
+  "importWillReplace": "This replaces every entry, category and option. Your periods and settings stay.",
+  "@importWillReplace": {
+    "description": "Review: the import replaces data."
+  },
+  "importButton": "{count, plural, =1{Import 1 day} other{Import {count} days}}",
+  "@importButton": {
+    "description": "Final import button.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importReplaceTitle": "Replace everything?",
+  "@importReplaceTitle": {
+    "description": "Confirm dialog."
+  },
+  "importReplaceAction": "Replace",
+  "@importReplaceAction": {
+    "description": "Destructive confirm."
+  },
+  "importDone": "{count, plural, =1{Imported 1 day.} other{Imported {count} days.}}",
+  "@importDone": {
+    "description": "Snackbar after import.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importOther": "Other",
+  "@importOther": {
+    "description": "Name for tags outside any Daylio group."
+  },
+  "next": "Next",
+  "@next": {
+    "description": "Stepper button."
+  },
+  "back": "Back",
+  "@back": {
+    "description": "Stepper button."
+  },
+  "sectionData": "Data",
+  "@sectionData": {
+    "description": "Settings section."
+  },
+  "importDaylioSubtitle": "Reads the free .daylio backup",
+  "@importDaylioSubtitle": {
+    "description": "Settings row subtitle."
+  },
+  "backupSave": "Save a backup",
+  "@backupSave": {
+    "description": "Settings row."
+  },
+  "backupSaveSubtitle": "A file you own — no cloud",
+  "@backupSaveSubtitle": {
+    "description": "Settings row subtitle."
+  },
+  "backupRestore": "Restore a backup",
+  "@backupRestore": {
+    "description": "Settings row."
+  },
+  "backupSaved": "Backup saved ({size}).",
+  "@backupSaved": {
+    "description": "Snackbar with the file size.",
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "backupExportFailed": "Couldn't save the backup: {error}",
+  "@backupExportFailed": {
+    "description": "Error.",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "backupReplaceTitle": "Restore this backup?",
+  "@backupReplaceTitle": {
+    "description": "Confirm dialog."
+  },
+  "backupReplaceBody": "Everything in launenfuchs is replaced by the backup — entries, categories, periods and settings.",
+  "@backupReplaceBody": {
+    "description": "Confirm dialog body."
+  },
+  "backupRestoreAction": "Restore",
+  "@backupRestoreAction": {
+    "description": "Confirm."
+  },
+  "backupRestored": "Backup restored.",
+  "@backupRestored": {
+    "description": "Snackbar."
+  },
+  "backupNewer": "This backup is from a newer launenfuchs. Update the app, then restore.",
+  "@backupNewer": {
+    "description": "Error: backup from a newer app version."
+  },
+  "backupNotOurs": "That file isn't a launenfuchs backup.",
+  "@backupNotOurs": {
+    "description": "Error: not a launenfuchs backup."
+  },
+  "backupRestoreFailed": "Couldn't restore: {error}",
+  "@backupRestoreFailed": {
+    "description": "Error.",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "firstRunImportTitle": "Coming from Daylio?",
+  "@firstRunImportTitle": {
+    "description": "First-run card."
+  },
+  "firstRunImportBody": "Import its free backup file — your days, options and notes come along.",
+  "@firstRunImportBody": {
+    "description": "First-run card."
   }
 }

@@ -29,6 +29,12 @@ dependencies:
 
   material_symbols_icons: ^4.2951.0
 
+  # Backup / import: ZIP in and out through the system dialogs (Fuchsbau
+  # backup pattern — save dialog out, flutter_file_dialog in).
+  archive: ^4.0.9
+  flutter_file_dialog: ^3.3.1
+  package_info_plus: ^10.2.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -69,7 +69,7 @@ entry_options (entry_id → entry ON DELETE CASCADE, option_id → category_opti
               PK(entry_id, option_id))     -- "delete for good" = the cascade
 period       (id, name, start_day TEXT, end_day TEXT NULL, away BOOL, icon TEXT NULL)
 import_map   (source TEXT 'daylio', kind TEXT 'group'|'tag', source_id INT,
-              action TEXT 'keep'|'merge'|'drop', target_id INT NULL, name TEXT NULL,
+              action TEXT 'keep'|'merge'|'drop', target_id INT NULL, choice TEXT JSON NULL,
               PK(source, kind, source_id))
 app_settings (id = 1, theme, font, locale, day_cutoff_hour, stats_tiles JSON, app_lock, …)   -- singleton row (checkfuchs pattern)
 ```

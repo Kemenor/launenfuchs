@@ -123,7 +123,9 @@ class ImportMaps extends Table {
   IntColumn get sourceId => integer()();
   TextColumn get action => text()(); // 'keep' | 'merge' | 'drop'
   IntColumn get targetId => integer().nullable()();
-  TextColumn get name => text().nullable()();
+
+  /// The rest of the choice as JSON (name, icon, mode, display).
+  TextColumn get choice => text().nullable()();
 
   @override
   Set<Column<Object>> get primaryKey => {source, kind, sourceId};

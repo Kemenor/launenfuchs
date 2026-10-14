@@ -8,6 +8,7 @@ import '../l10n/app_localizations.dart';
 import '../providers.dart';
 import 'entry_row.dart';
 import 'entry_sheet.dart';
+import 'import_screen.dart';
 import 'month_calendar.dart';
 
 /// The Journal tab (DESIGN_SYSTEM §2.1): a month calendar of mood faces over
@@ -152,6 +153,40 @@ class FirstRunCard extends ConsumerWidget {
               value: null,
               onChanged: (m) =>
                   showEntrySheet(context, day: today, initialMood: m),
+            ),
+            const Divider(height: 24),
+            Row(
+              children: [
+                Icon(
+                  Symbols.upload_file_rounded,
+                  color: theme.colorScheme.primary,
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        l10n.firstRunImportTitle,
+                        style: theme.textTheme.titleSmall,
+                      ),
+                      Text(
+                        l10n.firstRunImportBody,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton(
+                onPressed: () => ImportScreen.open(context),
+                child: Text(l10n.importTitle),
+              ),
             ),
           ],
         ),
