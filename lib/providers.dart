@@ -7,6 +7,7 @@ import 'package:fuchsbau/fuchsbau.dart' show FuchsbauFont;
 
 import 'data/backup/backup_service.dart';
 import 'data/db/database.dart';
+import 'data/repositories/category_repository.dart';
 import 'data/repositories/journal_repository.dart';
 import 'domain/clock.dart';
 import 'domain/day.dart';
@@ -24,6 +25,10 @@ final databaseProvider = Provider<AppDatabase>((ref) {
 
 final backupServiceProvider = Provider<BackupService>(
   (ref) => BackupService(ref.watch(databaseProvider)),
+);
+
+final categoryRepositoryProvider = Provider<CategoryRepository>(
+  (ref) => CategoryRepository(ref.watch(databaseProvider)),
 );
 
 final journalRepositoryProvider = Provider<JournalRepository>(

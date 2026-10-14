@@ -6,6 +6,8 @@ import 'package:material_symbols_icons/symbols.dart';
 import '../data/backup/backup_service.dart';
 import '../l10n/app_localizations.dart';
 import '../providers.dart';
+import '../domain/journal.dart';
+import 'categories/categories_screen.dart';
 import 'import_screen.dart';
 
 /// Settings (DESIGN_SYSTEM §2.4), in the shared Fuchsbau anatomy: uppercase
@@ -36,6 +38,32 @@ class SettingsScreen extends ConsumerWidget {
           FuchsbauSectionHeader(l10n.sectionJournal),
           FuchsbauSettingsCard(
             children: [
+              Builder(
+                builder: (context) {
+                  final j = ref.watch(journalProvider).value ?? Journal.empty;
+                  final cats = [
+                    for (final c in j.categories)
+                      if (!c.hidden) c,
+                  ];
+                  return ListTile(
+                    contentPadding: fuchsbauCardRowPadding,
+                    leading: const Icon(Symbols.category_rounded),
+                    title: Text(l10n.categoriesTitle),
+                    subtitle: Text(
+                      l10n.categoriesSubtitle(
+                        cats.length,
+                        cats.fold(0, (n, c) => n + c.visibleOptions.length),
+                      ),
+                    ),
+                    trailing: const Icon(Symbols.chevron_right_rounded),
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (_) => const CategoriesScreen(),
+                      ),
+                    ),
+                  );
+                },
+              ),
               FuchsbauChoicePicker<int>(
                 icon: Symbols.bedtime_rounded,
                 title: l10n.dayCutoffTitle,

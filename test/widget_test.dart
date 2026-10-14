@@ -52,7 +52,7 @@ void main() {
     await tester.tap(find.text('Settings').last);
     await tester.pumpAndSettle();
     expect(find.text('New day starts at'), findsOneWidget);
-    expect(find.text('Typeface'), findsOneWidget);
+    expect(find.text('Categories & options'), findsOneWidget);
   });
 
   for (final (code, title) in [

@@ -1052,5 +1052,234 @@
   "periodLegendAway": "away",
   "@periodLegendAway": {
     "description": "Calendar legend suffix."
+  },
+  "categoriesTitle": "Categories & options",
+  "@categoriesTitle": {
+    "description": "Screen / settings row."
+  },
+  "categoriesSubtitle": "{cats, plural, =1{1 category} other{{cats} categories}} · {opts, plural, =1{1 option} other{{opts} options}}",
+  "@categoriesSubtitle": {
+    "description": "Settings row subtitle.",
+    "placeholders": {
+      "cats": {
+        "type": "int"
+      },
+      "opts": {
+        "type": "int"
+      }
+    }
+  },
+  "categoryRowSubtitle": "{mode} · {count, plural, =1{1 option} other{{count} options}}",
+  "@categoryRowSubtitle": {
+    "description": "List row: mode · count.",
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "hiddenSection": "Hidden",
+  "@hiddenSection": {
+    "description": "Section header."
+  },
+  "hiddenSpanSubtitle": "Data kept · tracked until {date}",
+  "@hiddenSpanSubtitle": {
+    "description": "Hidden category subtitle.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "bringBack": "Bring back",
+  "@bringBack": {
+    "description": "Button."
+  },
+  "newCategory": "New category",
+  "@newCategory": {
+    "description": "Button / dialog title."
+  },
+  "newOption": "Add option",
+  "@newOption": {
+    "description": "Button / dialog title."
+  },
+  "pickOnePerDay": "Pick one per day",
+  "@pickOnePerDay": {
+    "description": "Switch."
+  },
+  "pickOnePerDayHint": "Choosing another option replaces the first",
+  "@pickOnePerDayHint": {
+    "description": "Switch subtitle."
+  },
+  "showAs": "Show as",
+  "@showAs": {
+    "description": "Label."
+  },
+  "showAsHint": "Slider: the options below, left to right, become the steps. Best for a short scale (up to 5).",
+  "@showAsHint": {
+    "description": "Hint under show as."
+  },
+  "trackedSince": "Tracked since",
+  "@trackedSince": {
+    "description": "Row."
+  },
+  "optionsSection": "Options",
+  "@optionsSection": {
+    "description": "Section header."
+  },
+  "fillEmptyDays": "Fill empty days…",
+  "@fillEmptyDays": {
+    "description": "Button."
+  },
+  "fillEmptyDaysHint": "Sets one option on every tracked day with nothing logged here. Shows the count first.",
+  "@fillEmptyDaysHint": {
+    "description": "Hint."
+  },
+  "fillEmptyTitle": "Fill empty days?",
+  "@fillEmptyTitle": {
+    "description": "Dialog title."
+  },
+  "fillEmptyBody": "{count, plural, =1{1 day has nothing logged for {category}.} other{{count} days have nothing logged for {category}.}} Set them to:",
+  "@fillEmptyBody": {
+    "description": "Dialog body.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "fillEmptyNote": "Changing the default later won't undo this.",
+  "@fillEmptyNote": {
+    "description": "Dialog note."
+  },
+  "fillEmptyAction": "{count, plural, =1{Fill 1 day} other{Fill {count} days}}",
+  "@fillEmptyAction": {
+    "description": "Confirm.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "fillEmptyNone": "No empty days to fill.",
+  "@fillEmptyNone": {
+    "description": "Snackbar."
+  },
+  "removeCategory": "Remove category…",
+  "@removeCategory": {
+    "description": "Button."
+  },
+  "removeTitle": "Remove “{name}”?",
+  "@removeTitle": {
+    "description": "Dialog title.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "removeLoggedOn": "{count, plural, =0{Not logged on any day.} =1{Logged on 1 day.} other{Logged on {count} days.}}",
+  "@removeLoggedOn": {
+    "description": "Dialog line.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "hideChoice": "Hide",
+  "@hideChoice": {
+    "description": "Choice title."
+  },
+  "hideCategoryBody": "Gone from the entry sheet. Your days stay in stats. Bring it back any time — the time in between counts as not tracked.",
+  "@hideCategoryBody": {
+    "description": "Choice body."
+  },
+  "hideOptionBody": "Gone from the entry sheet. Past days keep it. Bring it back any time.",
+  "@hideOptionBody": {
+    "description": "Choice body."
+  },
+  "deleteForGood": "Delete for good",
+  "@deleteForGood": {
+    "description": "Choice title."
+  },
+  "deleteForGoodBody": "Removes it from every day. Can't be undone — a backup can.",
+  "@deleteForGoodBody": {
+    "description": "Choice body."
+  },
+  "deleteForGoodConfirm": "Really delete “{name}” for good?",
+  "@deleteForGoodConfirm": {
+    "description": "Second confirm.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "makeDefault": "Make default",
+  "@makeDefault": {
+    "description": "Option menu."
+  },
+  "clearDefault": "No default",
+  "@clearDefault": {
+    "description": "Option menu."
+  },
+  "renameAndIcon": "Rename & icon",
+  "@renameAndIcon": {
+    "description": "Option menu."
+  },
+  "mergeInto": "Merge into…",
+  "@mergeInto": {
+    "description": "Option menu."
+  },
+  "remove": "Remove…",
+  "@remove": {
+    "description": "Option menu."
+  },
+  "mergeTitle": "Merge “{name}” into…",
+  "@mergeTitle": {
+    "description": "Dialog title.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "mergeBody": "{count, plural, =0{Deletes {from} — it was never logged.} =1{Moves 1 day from {from} to {to} and deletes {from}.} other{Moves {count} days from {from} to {to} and deletes {from}.}}",
+  "@mergeBody": {
+    "description": "Consequence.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "mergeAction": "Merge",
+  "@mergeAction": {
+    "description": "Destructive confirm."
+  },
+  "cantUndo": "Can't be undone — a backup can.",
+  "@cantUndo": {
+    "description": "Note."
+  },
+  "iconTitle": "Icon",
+  "@iconTitle": {
+    "description": "Icon picker title."
+  },
+  "nameRequired": "Name",
+  "@nameRequired": {
+    "description": "Name field hint."
   }
 }
