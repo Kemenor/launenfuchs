@@ -35,6 +35,24 @@ dev_dependencies:
   flutter_lints: ^6.0.0
   drift_dev: ^2.34.0
   build_runner: ^2.15.0
+  flutter_launcher_icons: ^0.14.4
+
+# App icon. Regenerate the layers with `python3 tool/make_icon.py
+# assets/icon/launenfuchs_art.png assets/icon`, then `dart run
+# flutter_launcher_icons`. Family recipe: full art for legacy/iOS, the
+# transparent fox as the adaptive foreground on the app's triad colour
+# (launenfuchs = indigo; checkfuchs = emerald). No monochrome layer on purpose.
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/launenfuchs.png"
+  adaptive_icon_background: "#8559D0"
+  adaptive_icon_foreground: "assets/icon/launenfuchs_fg.png"
+  # The foreground is already laid out for the 66 % safe zone (tool/make_icon.py),
+  # so no extra inset on top.
+  adaptive_icon_foreground_inset: 0
+  min_sdk_android: 26
+  remove_alpha_ios: true
 
 flutter:
   uses-material-design: true

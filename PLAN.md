@@ -7,8 +7,8 @@ note — then see what moves your mood, on your phone, without a subscription. A
 The model lives in [`design-concept.md`](./design-concept.md) — that doc owns the *what*.
 **This doc owns the *how*:** stack, schema, engine, and the phased build order.
 
-> Status: **Phase 0 done** (2026-10-14) — skeleton boots to an empty Journal (phone + emulator), 21 tests green. Next: Phase 1. Launcher icon pending the
-> art (Phase 0's one open item).
+> Status: **Phase 0 done** (2026-10-14) — skeleton boots to an empty Journal (phone + emulator), 21 tests green, launcher icon in (fox art on fuchsbau indigo). Next:
+> Phase 1.
 
 ## Decisions
 
