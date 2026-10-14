@@ -669,5 +669,388 @@
   "firstRunImportBody": "Import its free backup file — your days, options and notes come along.",
   "@firstRunImportBody": {
     "description": "First-run card."
+  },
+  "rangeDays30": "30 days",
+  "@rangeDays30": {
+    "description": "Stats range chip."
+  },
+  "rangeMonth": "Month",
+  "@rangeMonth": {
+    "description": "Stats range chip."
+  },
+  "rangeYear": "Year",
+  "@rangeYear": {
+    "description": "Stats range chip."
+  },
+  "rangeAll": "All",
+  "@rangeAll": {
+    "description": "Stats range chip."
+  },
+  "rangePeriod": "Period",
+  "@rangePeriod": {
+    "description": "Stats range chip (opens the period menu)."
+  },
+  "editTiles": "Edit tiles",
+  "@editTiles": {
+    "description": "Edit tiles screen title / tooltip."
+  },
+  "editTilesHint": "Tiles you switch on appear on Stats in this order. Drag the handle to reorder.",
+  "@editTilesHint": {
+    "description": "Edit tiles hint."
+  },
+  "tileSummary": "Summary",
+  "@tileSummary": {
+    "description": "Tile title."
+  },
+  "tileDayByDay": "Mood, day by day",
+  "@tileDayByDay": {
+    "description": "Tile title."
+  },
+  "tileByPeriod": "By period",
+  "@tileByPeriod": {
+    "description": "Tile title."
+  },
+  "tileAlongside": "Mood alongside what you logged",
+  "@tileAlongside": {
+    "description": "Tile title."
+  },
+  "tileGrid": "What you logged, day by day",
+  "@tileGrid": {
+    "description": "Tile title."
+  },
+  "tileWeekday": "Weekday",
+  "@tileWeekday": {
+    "description": "Tile title."
+  },
+  "tileNotes": "Notes",
+  "@tileNotes": {
+    "description": "Tile title."
+  },
+  "tileMoodCount": "Mood count",
+  "@tileMoodCount": {
+    "description": "Tile title."
+  },
+  "tileOptionCounts": "Option counts",
+  "@tileOptionCounts": {
+    "description": "Tile title."
+  },
+  "tileOftenTogether": "Often together",
+  "@tileOftenTogether": {
+    "description": "Tile title."
+  },
+  "tileUpsAndDowns": "Ups and downs",
+  "@tileUpsAndDowns": {
+    "description": "Tile title."
+  },
+  "tileStretches": "Good and hard stretches",
+  "@tileStretches": {
+    "description": "Tile title."
+  },
+  "tileYearInPixels": "Year in pixels",
+  "@tileYearInPixels": {
+    "description": "Tile title."
+  },
+  "statsAverage": "average",
+  "@statsAverage": {
+    "description": "Summary figure label."
+  },
+  "statsDaysLogged": "days logged",
+  "@statsDaysLogged": {
+    "description": "Summary figure label."
+  },
+  "statsBestDay": "best day",
+  "@statsBestDay": {
+    "description": "Summary figure label."
+  },
+  "statsWorstDay": "hardest day",
+  "@statsWorstDay": {
+    "description": "Summary figure label."
+  },
+  "statsNothingInRange": "Nothing logged in this range.",
+  "@statsNothingInRange": {
+    "description": "Tile body when the range has no entries."
+  },
+  "statsDayByDayHint": "Line: 7-day average · ringed: has a note · tap a day to open it",
+  "@statsDayByDayHint": {
+    "description": "Chart caption."
+  },
+  "statsAlongsideHint": "Average mood on days with each option · dashed = your average ({avg}) · hollow = nothing logged / not tracked",
+  "@statsAlongsideHint": {
+    "description": "Caption.",
+    "placeholders": {
+      "avg": {
+        "type": "String"
+      }
+    }
+  },
+  "statsCaveat": "With few days this shows what happened together, not cause and effect. Options that only appear in one period overlap with it.",
+  "@statsCaveat": {
+    "description": "The fixed caveat under the comparison (design-concept §5)."
+  },
+  "rowNothingLogged": "nothing logged",
+  "@rowNothingLogged": {
+    "description": "Comparison row for days with nothing from the category."
+  },
+  "rowNotTracked": "not tracked",
+  "@rowNotTracked": {
+    "description": "Comparison row for days outside the tracking spans."
+  },
+  "perDayCount": "{value} · {count}×",
+  "@perDayCount": {
+    "description": "Value · count, e.g. \"3.4 · 12×\".",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "statsWeekdayNoPattern": "No weekday pattern — every weekday averages {from}–{to}.",
+  "@statsWeekdayNoPattern": {
+    "description": "Weekday tile when the spread is small.",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "statsWeekdayPattern": "{best} highest ({bestAvg}), {worst} lowest ({worstAvg}).",
+  "@statsWeekdayPattern": {
+    "description": "Weekday tile with a spread.",
+    "placeholders": {
+      "best": {
+        "type": "String"
+      },
+      "bestAvg": {
+        "type": "String"
+      },
+      "worst": {
+        "type": "String"
+      },
+      "worstAvg": {
+        "type": "String"
+      }
+    }
+  },
+  "statsPeriodOutside": "Outside any period",
+  "@statsPeriodOutside": {
+    "description": "By period: days outside any period."
+  },
+  "statsPeriodsEmpty": "Mark a stretch of days as a period — a holiday, a new job, a hard month — and see your mood phase by phase.",
+  "@statsPeriodsEmpty": {
+    "description": "By period empty state."
+  },
+  "addPeriod": "Period",
+  "@addPeriod": {
+    "description": "Button."
+  },
+  "statsUpsText": "From one day to the next your mood moved {steps} steps on average.",
+  "@statsUpsText": {
+    "description": "Ups and downs main line.",
+    "placeholders": {
+      "steps": {
+        "type": "String"
+      }
+    }
+  },
+  "statsUpsDrop": "Biggest drop: {date} ({from} → {to}).",
+  "@statsUpsDrop": {
+    "description": "Biggest drop line.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "statsUpsTooFew": "Needs a few days in a row to say anything.",
+  "@statsUpsTooFew": {
+    "description": "Ups and downs with too little data."
+  },
+  "statsGoodStretch": "{count, plural, =1{1 day good or better} other{{count} days good or better}}",
+  "@statsGoodStretch": {
+    "description": "Stretch row.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "statsHardStretch": "{count, plural, =1{1 day bad or worse} other{{count} days bad or worse}}",
+  "@statsHardStretch": {
+    "description": "Stretch row.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "statsNoStretch": "None in this range.",
+  "@statsNoStretch": {
+    "description": "No such stretch."
+  },
+  "statsOftenOn": "On days that were",
+  "@statsOftenOn": {
+    "description": "Often together: picker label."
+  },
+  "statsOptionCountsCategories": "Per category",
+  "@statsOptionCountsCategories": {
+    "description": "Option counts: category totals heading."
+  },
+  "optionHowOften": "How often",
+  "@optionHowOften": {
+    "description": "Option detail section."
+  },
+  "optionLogged": "Logged",
+  "@optionLogged": {
+    "description": "Option detail row."
+  },
+  "optionLoggedValue": "{count} of {total} days",
+  "@optionLoggedValue": {
+    "description": "X of Y days.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "optionVsPrevious": "Previous {days} days",
+  "@optionVsPrevious": {
+    "description": "Option detail row.",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "optionMood": "Mood",
+  "@optionMood": {
+    "description": "Option detail section."
+  },
+  "optionOnDays": "On days with it",
+  "@optionOnDays": {
+    "description": "Option detail row."
+  },
+  "optionNextDay": "The day after",
+  "@optionNextDay": {
+    "description": "Option detail row."
+  },
+  "optionYourAverage": "Your average",
+  "@optionYourAverage": {
+    "description": "Option detail row."
+  },
+  "optionDaysCount": "{count, plural, =1{1 day} other{{count} days}}",
+  "@optionDaysCount": {
+    "description": "n days suffix.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "optionWhenInWeek": "When in the week",
+  "@optionWhenInWeek": {
+    "description": "Option detail section."
+  },
+  "optionTogether": "Often together with",
+  "@optionTogether": {
+    "description": "Option detail section."
+  },
+  "optionByPeriod": "By period · runs",
+  "@optionByPeriod": {
+    "description": "Option detail section."
+  },
+  "optionLongestRuns": "Longest run with / without",
+  "@optionLongestRuns": {
+    "description": "Option detail row."
+  },
+  "optionRunsValue": "{withIt} / {withoutIt} days",
+  "@optionRunsValue": {
+    "description": "Runs value.",
+    "placeholders": {
+      "withIt": {
+        "type": "int"
+      },
+      "withoutIt": {
+        "type": "int"
+      }
+    }
+  },
+  "optionNotLogged": "Not logged in this range.",
+  "@optionNotLogged": {
+    "description": "Option detail when not logged in range."
+  },
+  "periodNew": "New period",
+  "@periodNew": {
+    "description": "Period sheet title."
+  },
+  "periodEdit": "Edit period",
+  "@periodEdit": {
+    "description": "Period sheet title."
+  },
+  "periodNameHint": "e.g. Holiday, New job",
+  "@periodNameHint": {
+    "description": "Name field hint."
+  },
+  "periodStart": "Starts",
+  "@periodStart": {
+    "description": "Date row."
+  },
+  "periodEnd": "Ends",
+  "@periodEnd": {
+    "description": "Date row."
+  },
+  "periodOngoing": "Ongoing",
+  "@periodOngoing": {
+    "description": "Switch."
+  },
+  "periodOngoingHint": "No end date yet — grows with each day",
+  "@periodOngoingHint": {
+    "description": "Switch subtitle."
+  },
+  "periodAway": "Away / off",
+  "@periodAway": {
+    "description": "Switch."
+  },
+  "periodAwayHint": "Shaded on charts, like a holiday",
+  "@periodAwayHint": {
+    "description": "Switch subtitle."
+  },
+  "periodSave": "Save period",
+  "@periodSave": {
+    "description": "Button."
+  },
+  "periodDelete": "Delete period",
+  "@periodDelete": {
+    "description": "Button."
+  },
+  "periodDeleteBody": "The period is removed. Your entries stay as they are.",
+  "@periodDeleteBody": {
+    "description": "Confirm body."
+  },
+  "periodHint": "Mark a stretch of days as a period — a holiday, a new job, a hard month. Long-press a day, then drag.",
+  "@periodHint": {
+    "description": "Journal hint while no period is ongoing."
+  },
+  "periodLegendOngoing": "ongoing",
+  "@periodLegendOngoing": {
+    "description": "Calendar legend suffix."
+  },
+  "periodLegendAway": "away",
+  "@periodLegendAway": {
+    "description": "Calendar legend suffix."
   }
 }

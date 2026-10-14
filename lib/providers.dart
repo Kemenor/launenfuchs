@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:drift/drift.dart' show Value;
 import 'package:flutter/material.dart' show Locale, ThemeMode;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -51,6 +53,7 @@ class Settings {
     this.font = FuchsbauFont.figtree,
     this.localeCode = 'system',
     this.dayCutoffHour = defaultDayCutoffHour,
+    this.statsTiles,
   });
 
   final ThemeMode themeMode;
@@ -62,6 +65,10 @@ class Settings {
   /// Entries made before this hour count for the day before (§2.2).
   final int dayCutoffHour;
 
+  /// Stats tiles in display order with their switch; null = the default
+  /// layout. Unknown ids are dropped, new tiles appended (see tile_catalog).
+  final List<(String, bool)>? statsTiles;
+
   /// What MaterialApp.locale wants: null = system.
   Locale? get locale => localeCode == 'system' ? null : Locale(localeCode);
 
@@ -70,11 +77,13 @@ class Settings {
     FuchsbauFont? font,
     String? localeCode,
     int? dayCutoffHour,
+    List<(String, bool)>? statsTiles,
   }) => Settings(
     themeMode: themeMode ?? this.themeMode,
     font: font ?? this.font,
     localeCode: localeCode ?? this.localeCode,
     dayCutoffHour: dayCutoffHour ?? this.dayCutoffHour,
+    statsTiles: statsTiles ?? this.statsTiles,
   );
 }
 
@@ -102,9 +111,25 @@ class SettingsController extends Notifier<Settings> {
             .values[row.fontIndex.clamp(0, FuchsbauFont.values.length - 1)],
         localeCode: row.localeCode,
         dayCutoffHour: row.dayCutoffHour.clamp(0, 23),
+        statsTiles: _decodeTiles(row.statsTiles),
       );
     }
   }
+
+  static List<(String, bool)>? _decodeTiles(String? json) {
+    if (json == null) return null;
+    try {
+      return [
+        for (final e in jsonDecode(json) as List)
+          ((e as Map)['id'] as String, e['on'] as bool),
+      ];
+    } catch (_) {
+      return null;
+    }
+  }
+
+  Future<void> setStatsTiles(List<(String, bool)> tiles) =>
+      _update(state.copyWith(statsTiles: List.unmodifiable(tiles)));
 
   Future<void> setThemeMode(ThemeMode mode) =>
       _update(state.copyWith(themeMode: mode));
@@ -131,6 +156,14 @@ class SettingsController extends Notifier<Settings> {
             fontIndex: Value(state.font.index),
             localeCode: Value(state.localeCode),
             dayCutoffHour: Value(state.dayCutoffHour),
+            statsTiles: Value(
+              state.statsTiles == null
+                  ? null
+                  : jsonEncode([
+                      for (final (id, on) in state.statsTiles!)
+                        {'id': id, 'on': on},
+                    ]),
+            ),
           ),
         );
   }

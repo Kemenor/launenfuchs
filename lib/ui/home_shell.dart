@@ -7,7 +7,7 @@ import '../l10n/app_localizations.dart';
 import '../providers.dart';
 import 'journal_screen.dart';
 import 'settings_screen.dart';
-import 'stats_screen.dart';
+import 'stats/stats_screen.dart';
 
 /// The top level: a bottom [NavigationBar] — Journal · Stats · Settings
 /// (router-less, Fuchsbau TECH_STACK). [IndexedStack] keeps each tab's state.

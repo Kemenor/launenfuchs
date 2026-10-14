@@ -196,6 +196,32 @@ class JournalRepository {
   Future<void> deleteEntry(Day day) =>
       (db.delete(db.entries)..where((e) => e.day.equals(day.key))).go();
 
+  // --- periods ---------------------------------------------------------------
+
+  /// Inserts ([id] null) or updates a period (§2.5).
+  Future<void> savePeriod({
+    int? id,
+    required String name,
+    required Day start,
+    Day? end,
+    bool away = false,
+  }) async {
+    final row = PeriodsCompanion(
+      name: Value(name),
+      startDay: Value(start.key),
+      endDay: Value(end?.key),
+      away: Value(away),
+    );
+    if (id == null) {
+      await db.into(db.periods).insert(row);
+    } else {
+      await (db.update(db.periods)..where((p) => p.id.equals(id))).write(row);
+    }
+  }
+
+  Future<void> deletePeriod(int id) =>
+      (db.delete(db.periods)..where((p) => p.id.equals(id))).go();
+
   // --- first run -------------------------------------------------------------
 
   Future<bool> onboardingDone() async {
