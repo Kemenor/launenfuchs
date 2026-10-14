@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Datenschutzerklärung — Launenfuchs</title>
+  <link rel="icon" href="img/icon.png">
+  <style>
+:root{--bg:#faf7f4;--card:#fff;--ink:#221d1a;--muted:#7a6f68;--line:#ece4dd;--orange:#ea7a24;--indigo:#8559d0}
+@media (prefers-color-scheme: dark){:root{--bg:#161311;--card:#211c19;--ink:#f3ede9;--muted:#a99e96;--line:#322a25;--orange:#f39c4e;--indigo:#a98cee}}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6}
+a{color:var(--orange)}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+header{padding:48px 0 16px;text-align:center}
+header img{width:84px;height:84px;border-radius:20px}
+h1{font-size:2rem;margin:.4rem 0 .2rem;letter-spacing:-.02em}
+.meta,.langs{color:var(--muted);font-size:.95rem;margin:4px 0 0}
+.langs a{color:var(--indigo);text-decoration:none;font-weight:600}
+.tldr{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--orange);border-radius:12px;padding:18px 22px;margin:18px 0}
+h2{font-size:1.2rem;margin:28px 0 6px;letter-spacing:-.01em}
+footer{padding:36px 0 60px;text-align:center;color:var(--muted);font-size:.92rem;border-top:1px solid var(--line);margin-top:30px}
+footer a{color:inherit}
+  </style>
+</head>
+<body>
+<header class="wrap">
+  <img src="img/icon.png" alt="">
+  <h1>Datenschutzerklärung</h1>
+  <p class="meta">Launenfuchs &middot; zuletzt aktualisiert am 15. Oktober 2026</p>
+  <p class="langs"><a href="privacy.html">EN</a> &middot; <strong>DE</strong> &middot; <a href="privacy-fr.html">FR</a> &middot; <a href="privacy-it.html">IT</a></p>
+</header>
+<main class="wrap">
+  <div class="tldr"><strong>Kurz gesagt:</strong> Launenfuchs hat kein Konto, keine Analyse, keine Werbung und kein Tracking. Dein Stimmungstagebuch liegt in einer Datenbank <em>auf deinem Handy</em>. Die App spricht mit keinem Server – wir betreiben keinen und sehen deine Daten nie.</div>
+  <h2>Was die App speichert</h2>
+  <p>Deine Einträge (Stimmung, Erfasstes, Notizen), Kategorien und Optionen, Perioden und Einstellungen – in einer lokalen SQLite-Datenbank im privaten Speicher der App auf deinem Gerät. Erinnerungen werden auf dem Gerät berechnet und an das Mitteilungssystem des Handys übergeben.</p>
+  <h2>Was dein Handy verlässt</h2>
+  <p>Nichts, mit Absicht. Launenfuchs stellt keine Netzwerkanfragen. Daten verlassen das Gerät nur, wenn <em>du</em> sie exportierst: eine Sicherungs-ZIP oder einen Bericht (HTML oder PDF), gespeichert, wo du willst. Notizen sind in Berichten nur enthalten, wenn du das einschaltest.</p>
+  <h2>Import aus Daylio</h2>
+  <p>Beim Import einer Daylio-Sicherung wird die Datei auf deinem Handy gelesen. Nichts wird hochgeladen, die Daylio-Datei bleibt unverändert.</p>
+  <h2>Berechtigungen</h2>
+  <p><strong>Mitteilungen</strong> für die optionale tägliche Erinnerung. <strong>Biometrie / Bildschirmsperre</strong> für die optionale App-Sperre – dein Handy prüft Fingerabdruck, Gesicht oder PIN; die App erfährt nur «entsperrt» oder «nicht entsperrt» und sieht nie biometrische Daten.</p>
+  <h2>Daten löschen</h2>
+  <p>Einzelne Tage im Tagebuch löschen oder eine Kategorie in den Einstellungen «endgültig löschen». Beim Deinstallieren wird alles entfernt. Es gibt kein Konto zu schliessen und nichts bei uns anzufragen, weil wir nichts speichern.</p>
+  <h2>Kinder</h2>
+  <p>Launenfuchs erhebt von niemandem Daten, in keinem Alter.</p>
+  <h2>Änderungen</h2>
+  <p>Falls sich diese Erklärung ändert, wird das Datum oben angepasst und die Änderung hier beschrieben. Die App beginnt nicht ohne neue Version und neue Erklärung, Daten zu erheben.</p>
+  <h2>Kontakt</h2>
+  <p>Fragen: Issue eröffnen auf <a href="https://github.com/Kemenor/launenfuchs">github.com/Kemenor/launenfuchs</a>.</p>
+</main>
+<footer class="wrap"><a href="./">Zurück zu Launenfuchs</a> &middot; Kemenor</footer>
+</body>
+</html>

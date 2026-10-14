@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Informativa sulla privacy — Launenfuchs</title>
+  <link rel="icon" href="img/icon.png">
+  <style>
+:root{--bg:#faf7f4;--card:#fff;--ink:#221d1a;--muted:#7a6f68;--line:#ece4dd;--orange:#ea7a24;--indigo:#8559d0}
+@media (prefers-color-scheme: dark){:root{--bg:#161311;--card:#211c19;--ink:#f3ede9;--muted:#a99e96;--line:#322a25;--orange:#f39c4e;--indigo:#a98cee}}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6}
+a{color:var(--orange)}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+header{padding:48px 0 16px;text-align:center}
+header img{width:84px;height:84px;border-radius:20px}
+h1{font-size:2rem;margin:.4rem 0 .2rem;letter-spacing:-.02em}
+.meta,.langs{color:var(--muted);font-size:.95rem;margin:4px 0 0}
+.langs a{color:var(--indigo);text-decoration:none;font-weight:600}
+.tldr{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--orange);border-radius:12px;padding:18px 22px;margin:18px 0}
+h2{font-size:1.2rem;margin:28px 0 6px;letter-spacing:-.01em}
+footer{padding:36px 0 60px;text-align:center;color:var(--muted);font-size:.92rem;border-top:1px solid var(--line);margin-top:30px}
+footer a{color:inherit}
+  </style>
+</head>
+<body>
+<header class="wrap">
+  <img src="img/icon.png" alt="">
+  <h1>Informativa sulla privacy</h1>
+  <p class="meta">Launenfuchs &middot; aggiornata il 15 ottobre 2026</p>
+  <p class="langs"><a href="privacy.html">EN</a> &middot; <a href="privacy-de.html">DE</a> &middot; <a href="privacy-fr.html">FR</a> &middot; <strong>IT</strong></p>
+</header>
+<main class="wrap">
+  <div class="tldr"><strong>In breve:</strong> Launenfuchs non ha account, analisi, pubblicità né tracciamento. Il tuo diario dell'umore vive in un database <em>sul tuo telefono</em>. L'app non comunica con nessun server: non ne gestiamo e non vediamo mai i tuoi dati.</div>
+  <h2>Cosa salva l'app</h2>
+  <p>Le tue voci (umore, ciò che hai registrato, note), categorie e opzioni, periodi e impostazioni — in un database SQLite locale nella memoria privata dell'app sul tuo dispositivo. I promemoria vengono calcolati sul dispositivo e affidati al sistema di notifiche del telefono.</p>
+  <h2>Cosa lascia il telefono</h2>
+  <p>Niente, per scelta. Launenfuchs non effettua richieste di rete. I dati lasciano il dispositivo solo se <em>tu</em> li esporti: un backup ZIP o un resoconto (HTML o PDF), salvato dove vuoi. Le note sono incluse nei resoconti solo se lo attivi.</p>
+  <h2>Import da Daylio</h2>
+  <p>Quando importi un backup di Daylio, il file viene letto sul telefono. Nulla viene caricato e il file di Daylio non viene modificato.</p>
+  <h2>Autorizzazioni</h2>
+  <p><strong>Notifiche</strong>, per il promemoria giornaliero facoltativo. <strong>Biometria / blocco schermo</strong>, per il blocco facoltativo dell'app — il telefono verifica impronta, volto o PIN; l'app sa solo «sbloccato» o no e non vede mai dati biometrici.</p>
+  <h2>Eliminare i dati</h2>
+  <p>Elimina singoli giorni nel diario o una categoria «per sempre» nelle impostazioni. Disinstallare l'app rimuove tutto. Nessun account da chiudere e nulla da chiederci: non conserviamo niente.</p>
+  <h2>Minori</h2>
+  <p>Launenfuchs non raccoglie dati da nessuno, di nessuna età.</p>
+  <h2>Modifiche</h2>
+  <p>Se questa informativa cambia, la data in alto viene aggiornata e la modifica descritta qui. L'app non inizierà a raccogliere dati senza una nuova versione e una nuova informativa.</p>
+  <h2>Contatti</h2>
+  <p>Domande: apri una issue su <a href="https://github.com/Kemenor/launenfuchs">github.com/Kemenor/launenfuchs</a>.</p>
+</main>
+<footer class="wrap"><a href="./">Torna a Launenfuchs</a> &middot; Kemenor</footer>
+</body>
+</html>

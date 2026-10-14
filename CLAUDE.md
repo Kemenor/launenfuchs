@@ -7,8 +7,8 @@ in `examples/ui/`. Part of the fox family — shared design system & base stack 
 `../fuchsbau`; `../checkfuchs` and `../knabberfuchs` are the siblings to copy
 toolchain, CI and release pipeline from.
 
-**Status: Phase 0 done** (skeleton: fuchsbau theme, 4 locales, drift schema v1, CI).
-Next: Phase 1 in `PLAN.md`.
+**Status: v1.0.0 feature-complete** (Phases 0–6 + release tooling, 74 tests). Not yet
+published — see PLAN.md § Release for what needs Thomas (keystore, store records).
 
 ## Working in this repo
 
@@ -38,8 +38,19 @@ distrobox enter flutter -- bash -lc 'export PATH=$HOME/development/flutter/bin:$
   off (`adb -s emulator-5554 shell am start -n ch.fuchsnest.launenfuchs/.MainActivity --ez enable-impeller false`,
   or `flutter run --no-enable-impeller`), otherwise the surface stays 0×0.
   Screenshots: `adb exec-out screencap -p > .emu_x.png` (gitignored).
-- **Release flow, signing, secrets:** copy from `../checkfuchs/CLAUDE.md` in Phase 7.
-  `android/key.properties` and keystores are gitignored.
+- **Release flow (copied from checkfuchs, same model):** write the four changelogs at
+  `fastlane/metadata/android/<locale>/changelogs/<nextBuildNumber>.txt` and the iOS
+  `release_notes.txt`, then `tool/cut_release.sh x.y.z`. **The tag is the human gate**:
+  `android.yml` / `ios.yml` run on `v*` tags only. Store text and lanes:
+  `fastlane/RELEASING.md`. Secrets (keystore, `android/key.properties`,
+  `fastlane/play-store-key.json`, `*.p8/*.p12`) are gitignored — never commit, print or
+  paste them; backups in ProtonDrive, CI copies as base64 secrets.
+- **Schema:** still v1 and pre-release-mutable until the first store build; after that
+  every change is a drift migration (`schemaVersion` + `onUpgrade`).
+- **Landing / privacy pages:** `docs/` (GitHub Pages; planned domain
+  launenfuchs.fuchsnest.ch, no CNAME yet).
+- **Store screenshots:** not automated yet (checkfuchs' `tool/screenshots.sh` needs an
+  `integration_test` harness + demo data — use invented data, never the real backup).
 
 ## Rules specific to this app
 

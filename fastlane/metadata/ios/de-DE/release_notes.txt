@@ -1,0 +1,1 @@
+Erste Version: einen Tag in zehn Sekunden erfassen, alle Statistiken gratis, Perioden, Bericht für die Therapie, Daylio-Import.

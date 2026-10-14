@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Launenfuchs</title>
+  <link rel="icon" href="img/icon.png">
+  <style>
+:root{--bg:#faf7f4;--card:#fff;--ink:#221d1a;--muted:#7a6f68;--line:#ece4dd;--orange:#ea7a24;--indigo:#8559d0}
+@media (prefers-color-scheme: dark){:root{--bg:#161311;--card:#211c19;--ink:#f3ede9;--muted:#a99e96;--line:#322a25;--orange:#f39c4e;--indigo:#a98cee}}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6}
+a{color:var(--orange)}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+header{padding:48px 0 16px;text-align:center}
+header img{width:84px;height:84px;border-radius:20px}
+h1{font-size:2rem;margin:.4rem 0 .2rem;letter-spacing:-.02em}
+.meta,.langs{color:var(--muted);font-size:.95rem;margin:4px 0 0}
+.langs a{color:var(--indigo);text-decoration:none;font-weight:600}
+.tldr{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--orange);border-radius:12px;padding:18px 22px;margin:18px 0}
+h2{font-size:1.2rem;margin:28px 0 6px;letter-spacing:-.01em}
+footer{padding:36px 0 60px;text-align:center;color:var(--muted);font-size:.92rem;border-top:1px solid var(--line);margin-top:30px}
+footer a{color:inherit}
+  </style>
+</head>
+<body>
+<header class="wrap">
+  <img src="img/icon.png" alt="">
+  <h1>Privacy Policy</h1>
+  <p class="meta">Launenfuchs &middot; last updated 15 October 2026</p>
+  <p class="langs"><strong>EN</strong> &middot; <a href="privacy-de.html">DE</a> &middot; <a href="privacy-fr.html">FR</a> &middot; <a href="privacy-it.html">IT</a></p>
+</header>
+<main class="wrap">
+  <div class="tldr"><strong>The short version:</strong> Launenfuchs has no accounts, no analytics, no ads and no tracking. Your mood journal lives in a database <em>on your phone</em>. The app never talks to a server — we don’t run one and we never see your data.</div>
+  <h2>What the app stores</h2>
+  <p>Your entries (mood, what you logged, notes), categories and options, periods and settings — in a local SQLite database inside the app’s private storage on your device. Reminders are computed on the device and handed to your phone’s notification system.</p>
+  <h2>What leaves your phone</h2>
+  <p>Nothing, by design. Launenfuchs makes no network requests. Data leaves the device only when <em>you</em> export it: a backup ZIP, or a report (HTML or PDF) — saved wherever you choose. Notes are left out of reports unless you switch them on.</p>
+  <h2>Importing from Daylio</h2>
+  <p>When you import a Daylio backup, the file is read on your phone. Nothing is uploaded, and the Daylio file is not changed.</p>
+  <h2>Permissions</h2>
+  <p><strong>Notifications</strong>, for the optional daily reminder. <strong>Biometrics / screen lock</strong>, for the optional app lock — your phone checks your fingerprint, face or PIN; the app only learns “unlocked” or “not unlocked” and never sees the biometric data.</p>
+  <h2>Deleting your data</h2>
+  <p>Delete single days in the journal, or a category “for good” in Settings. Uninstalling the app removes everything. There is no account to close and nothing to request from us, because we hold nothing.</p>
+  <h2>Children</h2>
+  <p>Launenfuchs collects no data from anyone, of any age.</p>
+  <h2>Changes</h2>
+  <p>If this policy ever changes, the date above moves and the change is described here. The app will not start collecting data without a new version and a new policy.</p>
+  <h2>Contact</h2>
+  <p>Questions: open an issue at <a href="https://github.com/Kemenor/launenfuchs">github.com/Kemenor/launenfuchs</a>.</p>
+</main>
+<footer class="wrap"><a href="./">Back to Launenfuchs</a> &middot; Kemenor</footer>
+</body>
+</html>

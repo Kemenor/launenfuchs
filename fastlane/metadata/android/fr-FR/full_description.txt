@@ -1,0 +1,21 @@
+Launenfuchs est un journal d'humeur dont les statistiques t'appartiennent. Note la journée, touche ce que tu as fait, ajoute une note si tu veux — et vois comment tes semaines se sont vraiment passées, sur ton téléphone, sans abonnement.
+
+Né parce que mon ancienne app cachait chaque graphique derrière un paiement — justement la semaine où j'en avais besoin.
+
+COMMENT ÇA MARCHE
+• Dix secondes par jour. Un geste pour l'humeur, quelques-uns pour ce que tu as fait. Le rappel quotidien ouvre directement aujourd'hui et se tait si c'est déjà noté.
+• Des catégories à ta façon. « Un par jour » (travail normal / moins / congé — en puces ou en curseur, avec une valeur par défaut) ou « plusieurs » (marche, sport, amis).
+• Périodes. Marque des vacances, un déménagement, un nouveau travail — et vois ton humeur phase par phase.
+• Toutes les stats, gratuites. Jour après jour, par période, humeur à côté de ce que tu as noté, jours de la semaine, hauts et bas, bonnes et dures périodes, année en pixels, notes.
+• Des chiffres honnêtes. Chaque moyenne indique sur combien de jours elle repose, « rien noté » ne compte jamais comme « aucun », et l'app ne prétend jamais qu'une tendance est une cause.
+• Un rapport à emporter. Choisis une période et exporte en HTML ou PDF pour ta thérapie ou ton médecin — les notes seulement si tu le veux.
+• Ton historique Daylio suit. Lit la sauvegarde gratuite de Daylio ; renomme, fusionne ou ignore catégories et options à l'import.
+• Tes données sont un fichier à toi. Sauvegarde et restauration en ZIP, pas de cloud.
+
+CALME PAR CONCEPTION
+Pas de rouge pour les mauvais jours, pas de culpabilité de série, pas de pub, pas d'abonnement. Thèmes clair et sombre, quatre langues, verrouillage optionnel, polices pour la dyslexie et la basse vision.
+
+VIE PRIVÉE
+Tout reste sur l'appareil. Pas de compte, pas d'analyse, pas de serveur. Rien ne quitte le téléphone sauf si tu l'exportes.
+
+Fait en Suisse.

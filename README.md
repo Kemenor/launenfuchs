@@ -30,8 +30,9 @@ export it.
 
 ## Status
 
-Planning — see [`PLAN.md`](./PLAN.md), [`design-concept.md`](./design-concept.md),
-[`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md) and the mockups in
+v1.0.0 is feature-complete and in testing; not in the stores yet. See
+[`PLAN.md`](./PLAN.md) (phases, decisions, what's left), [`design-concept.md`](./design-concept.md),
+[`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md) and the original mockups in
 [`examples/ui/`](./examples/ui/). Part of the fuchs family — shared design and stack in
 [`../fuchsbau`](../fuchsbau).
 

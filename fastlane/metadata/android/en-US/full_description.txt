@@ -1,0 +1,21 @@
+Launenfuchs is a mood journal whose statistics are yours. Rate the day, tap what you did, add a note if you like — and see how your weeks actually went, on your phone, with no subscription.
+
+Built because the mood app I used put every chart behind a paywall the week I needed them — and a mood journal is a small database with a nice entry screen.
+
+HOW IT WORKS
+• Ten seconds a day. One tap for the mood, a few for what you did. The daily reminder opens straight into today and skips days you've already logged.
+• Categories that fit how you log. "One per day" (worked normally / worked less / day off — as chips or a slider, with a default) or "any number" (walk, gym, friends).
+• Periods. Mark a holiday, a move, a new job — and see your mood phase by phase. Often the clearest view there is.
+• All stats, free. Day by day, by period, mood alongside what you logged, weekdays, ups and downs, good and hard stretches, year in pixels, notes. Arrange them like you want.
+• Honest numbers. Every average shows how many days it rests on, "nothing logged" is never counted as "none", and the app never pretends a pattern is a cause.
+• A report to take along. Pick a range and export HTML or PDF for your therapist or doctor — notes only if you say so.
+• Bring your Daylio history. Reads the free Daylio backup and lets you rename, merge or drop categories and options on the way in.
+• Your data is a file you own. Backup and restore as a ZIP, no cloud, no lock-in.
+
+CALM BY DESIGN
+No red for bad days, no streak guilt, no ads, no subscription. Dark and light themes, four languages, an optional app lock, and dyslexia- and low-vision-friendly fonts.
+
+PRIVACY BY DESIGN
+Fully on-device. No accounts, no analytics, no server. Nothing leaves the phone unless you export it.
+
+Made in Switzerland.

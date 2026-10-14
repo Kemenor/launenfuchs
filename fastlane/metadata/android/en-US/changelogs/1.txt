@@ -1,0 +1,1 @@
+First release: log a day in ten seconds, all stats free, periods, a report for your therapist, Daylio import.

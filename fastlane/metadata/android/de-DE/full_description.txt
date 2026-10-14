@@ -1,0 +1,21 @@
+Launenfuchs ist ein Stimmungstagebuch, dessen Statistiken dir gehören. Bewerte den Tag, tippe an, was du gemacht hast, füge eine Notiz hinzu, wenn du magst – und sieh, wie deine Wochen wirklich waren. Auf dem Handy, ohne Abo.
+
+Entstanden, weil meine bisherige App jede Grafik hinter eine Bezahlschranke stellte – genau in der Woche, in der ich sie brauchte.
+
+SO FUNKTIONIERT ES
+• Zehn Sekunden pro Tag. Ein Tipp für die Stimmung, ein paar für das, was du gemacht hast. Die tägliche Erinnerung öffnet direkt den heutigen Tag und entfällt, wenn du schon erfasst hast.
+• Kategorien, wie du erfasst. «Eins pro Tag» (normal gearbeitet / weniger / frei – als Chips oder Regler, mit Standard) oder «beliebig viele» (Spaziergang, Training, Freunde).
+• Perioden. Markiere Ferien, einen Umzug, einen neuen Job – und sieh deine Stimmung Phase für Phase.
+• Alle Statistiken gratis. Tag für Tag, nach Periode, Stimmung neben dem Erfassten, Wochentage, Auf und Ab, gute und schwere Strecken, Jahr in Pixeln, Notizen. Anordnung nach deinem Geschmack.
+• Ehrliche Zahlen. Jeder Durchschnitt zeigt, auf wie vielen Tagen er beruht; «nichts erfasst» zählt nie als «keins», und die App behauptet nie, ein Muster sei eine Ursache.
+• Ein Bericht zum Mitnehmen. Zeitraum wählen und als HTML oder PDF für Therapie oder Arztpraxis exportieren – Notizen nur, wenn du willst.
+• Deine Daylio-Geschichte kommt mit. Liest die kostenlose Daylio-Sicherung; Kategorien und Optionen beim Import umbenennen, zusammenführen oder weglassen.
+• Deine Daten sind eine Datei, die dir gehört. Sichern und Wiederherstellen als ZIP, keine Cloud.
+
+RUHIG GESTALTET
+Kein Rot für schlechte Tage, kein Serien-Druck, keine Werbung, kein Abo. Hell und dunkel, vier Sprachen, optionale App-Sperre, Schriften für Legasthenie und Sehschwäche.
+
+PRIVATSPHÄRE
+Alles auf dem Gerät. Kein Konto, keine Analyse, kein Server. Nichts verlässt das Handy, ausser du exportierst es.
+
+Gemacht in der Schweiz.

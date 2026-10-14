@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Launenfuchs — a mood journal whose stats are yours</title>
+  <meta name="description" content="Log your mood in ten seconds and see every statistic for free. Local-first, no accounts, no ads, no subscription.">
+  <link rel="icon" href="img/icon.png">
+  <style>
+:root{--bg:#faf7f4;--card:#fff;--ink:#221d1a;--muted:#7a6f68;--line:#ece4dd;--orange:#ea7a24;--indigo:#8559d0}
+@media (prefers-color-scheme: dark){:root{--bg:#161311;--card:#211c19;--ink:#f3ede9;--muted:#a99e96;--line:#322a25;--orange:#f39c4e;--indigo:#a98cee}}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6}
+a{color:var(--orange)}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+header{padding:48px 0 16px;text-align:center}
+header img{width:84px;height:84px;border-radius:20px}
+h1{font-size:2rem;margin:.4rem 0 .2rem;letter-spacing:-.02em}
+.meta,.langs{color:var(--muted);font-size:.95rem;margin:4px 0 0}
+.langs a{color:var(--indigo);text-decoration:none;font-weight:600}
+.tldr{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--orange);border-radius:12px;padding:18px 22px;margin:18px 0}
+h2{font-size:1.2rem;margin:28px 0 6px;letter-spacing:-.01em}
+footer{padding:36px 0 60px;text-align:center;color:var(--muted);font-size:.92rem;border-top:1px solid var(--line);margin-top:30px}
+footer a{color:inherit}
+.hero{text-align:center;padding:56px 0 24px}
+.hero img{width:120px;height:120px;border-radius:28px;box-shadow:0 20px 50px -28px rgba(0,0,0,.5)}
+.hero h1{font-size:2.4rem}
+.lead{font-size:1.12rem;color:var(--muted);max-width:36ch;margin:0 auto}
+ul{padding-left:1.1rem} li{margin:.4rem 0}
+  </style>
+</head>
+<body>
+<section class="hero wrap">
+  <img src="img/icon.png" alt="Launenfuchs icon">
+  <h1>Launenfuchs</h1>
+  <p class="lead">A mood journal whose statistics are yours. Rate the day, tap what you did — and see how your weeks actually went.</p>
+</section>
+<main class="wrap">
+  <h2>The idea</h2>
+  <ul>
+    <li><strong>Ten seconds a day.</strong> One tap for the mood, a few for what you did.</li>
+    <li><strong>Categories that fit how you log</strong> — one per day (as chips or a slider, with a default) or any number.</li>
+    <li><strong>Periods.</strong> Mark a holiday, a move, a new job — and see your mood phase by phase.</li>
+    <li><strong>All stats, free</strong> — honest about small numbers, never pretending a pattern is a cause.</li>
+    <li><strong>A report to take along</strong> — HTML or PDF for your therapist, notes only if you say so.</li>
+    <li><strong>Bring your Daylio history</strong> from its free backup file.</li>
+    <li><strong>Calm by design</strong> — no red for bad days, no streak guilt, no ads, no subscription.</li>
+  </ul>
+  <h2>Privacy</h2>
+  <p>Fully on-device. No accounts, no analytics, no server. <a href="privacy.html">Privacy policy</a>.</p>
+  <h2>Source</h2>
+  <p>Open source (Apache-2.0) at <a href="https://github.com/Kemenor/launenfuchs">github.com/Kemenor/launenfuchs</a>. Part of the fuchs family.</p>
+</main>
+<footer class="wrap">Made in Switzerland &middot; Kemenor</footer>
+</body>
+</html>

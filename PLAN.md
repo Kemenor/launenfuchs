@@ -7,8 +7,8 @@ note — then see what moves your mood, on your phone, without a subscription. A
 The model lives in [`design-concept.md`](./design-concept.md) — that doc owns the *what*.
 **This doc owns the *how*:** stack, schema, engine, and the phased build order.
 
-> Status: **Phase 0 done** (2026-10-14) — skeleton boots to an empty Journal (phone + emulator), 21 tests green, launcher icon in (fox art on fuchsbau indigo). Next:
-> Phase 1.
+> Status: **v1.0.0 feature-complete** (2026-10-15) — Phases 0–6 done, release tooling in
+> place, 74 tests; not published yet (§ Release — what's left).
 
 ## Decisions
 
@@ -111,21 +111,30 @@ categories, a hidden-then-restored category, empty days, a tracked-from gap).
 
 ## Phases
 
-| # | Phase | Done when |
+| # | Phase | State (2026-10-15) |
 |---|---|---|
-| 0 | **Skeleton** — repo, fuchsbau theme, l10n, drift v1, CI (analyze, test, format, codegen fresh), launcher icon | app boots to an empty Journal in 4 locales, dark + light |
-| 1 | **Log** — starter categories, entry sheet (mood, one/any, chips/slider, stored defaults, note), Journal month + list, edit/delete | a day can be logged in < 10 s; a default is saved as an option |
-| 2 | **Daylio import** (5-step mapping, saved mapping) + backup export/import | a real backup imports with a renamed default, unused options dropped and empty days filled; a repeat import asks nothing; backup round-trips identically |
-| 3 | **Stats I** — engine + golden fixture; tile framework + Edit tiles; Summary, Day by day, Mood alongside, Weekday, Notes; option detail | engine numbers match the 2026-10-14 report |
-| 4 | **Periods** — range select in the calendar, period sheet, bands on charts, *By period* card with + / edit, grid | a multi-period split of the reference report reproduces |
-| 5 | **Category editor** — mode, show as, default option, tracking spans, fill empty days, hide / bring back / delete for good (categories and options), merge options, icons; reminder | changing a default leaves past days untouched; a hidden-then-restored category shows the gap as *not tracked* |
-| 5a | **App lock** — `local_auth`, lock on open / on resume after the delay, hidden recents preview | locked on cold start and after the delay; device PIN works when biometrics fail |
-| 5b | **Stats II** — Mood count, Option counts, Often together, Ups and downs, Good and hard stretches, Year in pixels | each tile has a golden test |
-| 6 | **Report** — range, sections, notes toggle, periods; HTML, then PDF from the same HTML | a report for a therapist in < 30 s; HTML and PDF show the same numbers |
-| 7 | **Release** — store listing, fastlane, landing page, screenshots | internal track build |
+| 0 | Skeleton — fuchsbau theme, l10n, drift v1, CI, launcher icon | ✅ |
+| 1 | Log — starter set, entry sheet (chips/slider, stored defaults, note), Journal | ✅ |
+| 2 | Daylio import (5-step mapping, saved mapping) + ZIP backup/restore | ✅ real backup imported on the emulator |
+| 3 | Stats — engine + golden test, 13 tiles, Edit tiles, option detail | ✅ golden reproduces the 2026-10-14 report |
+| 4 | Periods — calendar range select, bands, legend + hint, By period | ✅ |
+| 5 | Categories (hide/delete, merge, fill, spans), reminder, app lock, mood names, About | ✅ unlock itself needs a real-device check |
+| 6 | Report — HTML + PDF, notes off by default | ✅ real-data PDF verified |
+| 7 | Release tooling — store text ×4 locales, workflows, landing + privacy pages, v1.0.0 | ✅ files; publishing open (below) |
 
-Phases 1–3 are the useful core: after 3 the app replaces Daylio for daily use *and* the
-paywalled stats.
+## Release — what's left (needs Thomas)
+
+1. **Upload keystore** for `ch.fuchsnest.launenfuchs` + `android/key.properties`, backed
+   up to ProtonDrive (same recipe as checkfuchs).
+2. **Play Console app record** + the first upload by hand (Play requires it), then the
+   CI secrets (`ANDROID_*`, `PLAY_STORE_KEY_JSON_BASE64`).
+3. **App Store Connect record** + signing secrets and `ios/ExportOptions.plist` (on the
+   Mac, as for checkfuchs).
+4. **GitHub Pages** for `docs/` and the launenfuchs.fuchsnest.ch DNS (store listings
+   already point at its `/privacy.html`).
+5. **Store screenshots** — an `integration_test` harness with invented demo data.
+6. A **real-device pass**: fingerprint/PIN app lock, a reminder firing and its tap,
+   import from the real Daylio file picker on the phone.
 
 ## Decided (2026-10-14)
 

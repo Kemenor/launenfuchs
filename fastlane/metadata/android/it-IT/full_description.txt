@@ -1,0 +1,21 @@
+Launenfuchs è un diario dell'umore le cui statistiche sono tue. Valuta la giornata, tocca ciò che hai fatto, aggiungi una nota se vuoi — e guarda com'erano davvero le tue settimane, sul telefono, senza abbonamento.
+
+Nato perché la mia vecchia app nascondeva ogni grafico dietro un pagamento, proprio nella settimana in cui mi servivano.
+
+COME FUNZIONA
+• Dieci secondi al giorno. Un tocco per l'umore, qualcuno per ciò che hai fatto. Il promemoria apre direttamente oggi e salta i giorni già registrati.
+• Categorie a modo tuo. «Uno al giorno» (lavoro normale / meno / libero — come chip o cursore, con un predefinito) o «più di uno» (passeggiata, palestra, amici).
+• Periodi. Segna una vacanza, un trasloco, un nuovo lavoro — e guarda l'umore fase per fase.
+• Tutte le statistiche, gratis. Giorno per giorno, per periodo, umore accanto a ciò che hai registrato, giorni della settimana, alti e bassi, periodi buoni e difficili, anno in pixel, note.
+• Numeri onesti. Ogni media dice su quanti giorni si basa, «niente registrato» non conta mai come «nessuno» e l'app non spaccia mai uno schema per una causa.
+• Un resoconto da portare. Scegli un periodo ed esporta in HTML o PDF per la terapia o il medico — le note solo se vuoi.
+• La tua storia di Daylio ti segue. Legge il backup gratuito di Daylio; rinomina, unisci o escludi categorie e opzioni durante l'import.
+• I tuoi dati sono un file tuo. Backup e ripristino in ZIP, nessun cloud.
+
+CALMO PER SCELTA
+Niente rosso per le giornate no, niente ansia da serie, niente pubblicità, niente abbonamento. Tema chiaro e scuro, quattro lingue, blocco opzionale, caratteri per dislessia e ipovisione.
+
+PRIVACY
+Tutto resta sul dispositivo. Nessun account, nessuna analisi, nessun server. Niente lascia il telefono a meno che tu non lo esporti.
+
+Fatto in Svizzera.
