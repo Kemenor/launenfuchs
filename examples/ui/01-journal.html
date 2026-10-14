@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Launenfuchs — Journal</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400..500,0..1,0&display=block" rel="stylesheet">
+<link rel="stylesheet" href="fuchsbau.css">
+</head>
+<body><div class="wrap">
+  <header class="pg"><h1>🦊 Launenfuchs — Journal</h1>
+  <button class="toggle" onclick="document.body.classList.toggle('dark')">◐ Light / dark</button></header>
+  <p class="cap" style="margin-top:10px">Month calendar of mood dots with <b>period bands</b> under the days (amber = away/off) · newest-first list · orange pill FAB · <b>long-press + drag a range → New period</b>.</p>
+  <style>
+    .stage{grid-template-columns:1fr 1fr 1fr}
+    @media(max-width:1200px){.stage{grid-template-columns:1fr 1fr}}
+    .cal .d{position:relative;padding-bottom:7px}
+    .cal .d b.pb{position:absolute;left:-2px;right:-2px;bottom:1px;height:4px}
+    .cal .d b.pb.away{background:color-mix(in srgb,var(--amber) 55%,transparent)}
+    .cal .d b.pb.on{background:color-mix(in srgb,var(--muted) 40%,transparent)}
+    .cal .d b.pb.first{border-top-left-radius:3px;border-bottom-left-radius:3px;left:3px}
+    .cal .d b.pb.last{border-top-right-radius:3px;border-bottom-right-radius:3px;right:3px}
+    .cal .d.sel{background:color-mix(in srgb,var(--orange) 14%,transparent);border-radius:0}
+    .cal .d.sel.s0{border-top-left-radius:10px;border-bottom-left-radius:10px}
+    .cal .d.sel.s1{border-top-right-radius:10px;border-bottom-right-radius:10px}
+    .phint{display:flex;gap:8px;align-items:flex-start;font-size:.74rem;color:var(--muted);margin:8px 4px 0;line-height:1.4}
+    .phint .ms{font-size:17px;color:var(--muted)}
+    .phint b{color:var(--ink);font-weight:700}
+    .plg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.72rem;color:var(--muted);font-weight:600;margin:8px 4px 0}
+    .plg i{display:inline-block;width:14px;height:4px;border-radius:2px;margin-right:5px;vertical-align:2px}
+  </style>
+
+  <div class="stage">
+
+    <!-- FIRST RUN -->
+    <div>
+      <p class="cap">First run <small>· empty journal, import offered once</small></p>
+      <div class="phone">
+        <div class="appbar"><b>Journal</b></div>
+        <div class="body">
+          <div class="card hero">
+            <div class="ctitle">How was today?</div>
+            <p class="cdesc" style="margin-bottom:12px">One tap for the mood, a few for what you did. That's a whole entry.</p>
+            <div class="moods" style="margin-bottom:4px">
+              <div class="mood"><span class="face f1"><span class="ms">sentiment_very_dissatisfied</span></span>awful</div>
+              <div class="mood"><span class="face f2"><span class="ms">sentiment_dissatisfied</span></span>bad</div>
+              <div class="mood"><span class="face f3"><span class="ms">sentiment_neutral</span></span>meh</div>
+              <div class="mood"><span class="face f4"><span class="ms">sentiment_satisfied</span></span>good</div>
+              <div class="mood"><span class="face f5"><span class="ms">sentiment_very_satisfied</span></span>rad</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="tile" style="min-height:0;padding:0"><span class="ms">upload_file</span>
+              <div class="tx"><div class="t">Coming from Daylio?</div><div class="s">Import its free backup file — entries, activities and notes come along.</div></div>
+            </div>
+            <button class="btn text" style="margin-left:30px">Import a Daylio backup</button>
+          </div>
+          <div class="empty" style="margin-top:28px">Your days will show up here.</div>
+        </div>
+        <div class="fabs"><button class="fab ext"><span class="ms">add</span> Log today</button></div>
+        <div class="nav">
+          <div class="dest on"><span class="pl"><span class="ms fill">calendar_month</span></span>Journal</div>
+          <div class="dest"><span class="pl"><span class="ms">insights</span></span>Stats</div>
+          <div class="dest"><span class="pl"><span class="ms">settings</span></span>Settings</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOGGED -->
+    <div>
+      <p class="cap">Five weeks in <small>· today logged · show: <span class="chip on" id="pw" style="cursor:pointer;padding:2px 9px;font-size:.72rem">with periods</span> <span class="chip" id="pn" style="cursor:pointer;padding:2px 9px;font-size:.72rem">none ongoing</span></small></p>
+      <div class="phone">
+        <div class="appbar"><span class="ms nav-i l">chevron_left</span><b>October 2026</b><span class="ms nav-i r" style="opacity:.3">chevron_right</span></div>
+        <div class="body">
+          <div class="card" style="padding:12px 10px 8px">
+            <div class="cal" id="cal"></div>
+            <div class="plg" id="plg"><span><i style="background:color-mix(in srgb,var(--muted) 40%,transparent)"></i>Moving flat · 29 Sep – 5 Oct</span><span><i style="background:color-mix(in srgb,var(--muted) 40%,transparent)"></i>New job · ongoing</span></div>
+            <div class="phint" id="phint" style="display:none"><span class="ms">date_range</span><span>Mark a stretch of days as a period — a holiday, a new job, a hard month. <b>Long-press a day, then drag.</b></span></div>
+          </div>
+          <div class="card pad0">
+            <div class="erow"><span class="face f4"><span class="ms">sentiment_satisfied</span></span>
+              <div class="tx"><div class="t">Today<small>21:11</small></div>
+                <div class="acts"><span class="ms">work</span><span class="ms">favorite</span><span class="ms">menu_book</span><span class="ms">coffee</span></div></div></div>
+            <div class="erow"><span class="face f3"><span class="ms">sentiment_neutral</span></span>
+              <div class="tx"><div class="t">Tue 13 Oct<small>20:23</small></div>
+                <div class="acts"><span class="ms">work</span><span class="ms">directions_walk</span><span class="ms">music_note</span><span class="ms">coffee</span></div></div></div>
+            <div class="erow"><span class="face f4"><span class="ms">sentiment_satisfied</span></span>
+              <div class="tx"><div class="t">Mon 12 Oct<small>20:02</small></div>
+                <div class="acts"><span class="ms">work</span><span class="ms">fitness_center</span><span class="ms">menu_book</span><span class="ms">coffee</span></div></div></div>
+            <div class="erow"><span class="face f2"><span class="ms">sentiment_dissatisfied</span></span>
+              <div class="tx"><div class="t">Sat 10 Oct<small>20:02</small></div>
+                <div class="acts"><span class="ms">groups</span><span class="ms">menu_book</span><span class="ms">coffee</span></div></div></div>
+          </div>
+        </div>
+        <div class="fabs"><button class="fab ext"><span class="ms">edit</span> Edit today</button></div>
+        <div class="nav">
+          <div class="dest on"><span class="pl"><span class="ms fill">calendar_month</span></span>Journal</div>
+          <div class="dest"><span class="pl"><span class="ms">insights</span></span>Stats</div>
+          <div class="dest"><span class="pl"><span class="ms">settings</span></span>Settings</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEW PERIOD -->
+    <div>
+      <p class="cap">New period <small>· long-press 6 Oct, drag to 14 Oct</small></p>
+      <div class="phone">
+        <div class="appbar"><span class="ms nav-i l">chevron_left</span><b>October 2026</b><span class="ms nav-i r" style="opacity:.3">chevron_right</span></div>
+        <div class="body">
+          <div class="card" style="padding:12px 10px 8px">
+            <div class="cal" id="cal2"></div>
+          </div>
+        </div>
+        <div class="scrim" style="top:300px"></div>
+        <div class="sheet">
+          <div class="grab"></div>
+          <h3>New period</h3>
+          <div class="flab">Name</div>
+          <div class="field focus"><span class="val">New job</span></div>
+          <div class="field"><span class="ms">date_range</span><span class="val">Tue 6 Oct</span><span class="lab" style="text-align:right">→ ongoing</span></div>
+          <div class="card pad0" style="margin-bottom:14px">
+            <div class="opt"><div class="tx"><div class="t">Ongoing</div><div class="s">No end date yet — grows with each day</div></div><span class="sw on"></span></div>
+            <div class="opt"><div class="tx"><div class="t">Away / off</div><div class="s">Shaded on charts, like a holiday</div></div><span class="sw"></span></div>
+          </div>
+          <button class="btn primary">Save period</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script>
+  // October 2026 starts on a Thursday; Mon-first grid. Scores 1..5.
+  const s = [3,2,3,3,2,3,4,3,3,2,4,4,3,4];
+  // periods in October (sample data): moving flat 29 Sep – 5 Oct, new job 6 Oct – ongoing
+  const band = d => d <= 5 ? ['on', false, d === 5] : d <= 14 ? ['on', d === 6, d === 14] : null;
+  function cal(id, opts = {}) {
+    document.getElementById(id).innerHTML = ['M','T','W','T','F','S','S'].map(d => `<div class="wd">${d}</div>`).join('') + '<div></div>'.repeat(3) +
+      Array.from({length: 31}, (_, i) => {
+        const d = i + 1, v = s[i], b = opts.bands ? band(d) : null;
+        const sel = opts.sel && d >= opts.sel[0] && d <= opts.sel[1];
+        const cls = ['d', d === 14 && !sel ? 'today' : '', d > 14 ? 'off' : '', sel ? 'sel' : '',
+          sel && (d === opts.sel[0] || (d + 3) % 7 === 1) ? 's0' : '', sel && (d === opts.sel[1] || (d + 3) % 7 === 0) ? 's1' : ''].join(' ');
+        const bar = b ? `<b class="pb ${b[0]} ${b[1] || (d + 3) % 7 === 1 ? 'first' : ''} ${b[2] || (d + 3) % 7 === 0 ? 'last' : ''}"></b>` : '';
+        return `<div class="${cls}"><i ${v ? `style="background:var(--m${v})"` : ''}></i>${d}${bar}</div>`;
+      }).join('');
+  }
+  cal('cal', {bands: true});
+  // demo: with periods (legend) vs. none ongoing (the hint teaches the gesture)
+  function periods(on) {
+    cal('cal', {bands: on});
+    document.getElementById('plg').style.display = on ? '' : 'none';
+    document.getElementById('phint').style.display = on ? 'none' : '';
+    document.getElementById('pw').classList.toggle('on', on);
+    document.getElementById('pn').classList.toggle('on', !on);
+  }
+  document.getElementById('pw').onclick = () => periods(true);
+  document.getElementById('pn').onclick = () => periods(false);
+  cal('cal2', {sel: [6, 14]});
+</script>
+</body></html>

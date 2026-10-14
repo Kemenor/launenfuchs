@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Launenfuchs — Settings</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400..500,0..1,0&display=block" rel="stylesheet">
+<link rel="stylesheet" href="fuchsbau.css">
+<style>
+  .stage{grid-template-columns:1fr 1fr}
+  
+  .phone{min-height:900px}
+  .choice{display:flex;gap:12px;align-items:flex-start;text-align:left;border-radius:14px;padding:12px 14px;margin-bottom:8px;border:1px solid var(--line)}
+  .choice .ms{margin-top:1px}
+  .choice b{display:block;font-size:.95rem}
+  .choice span.d{font-size:.8rem;opacity:.85;line-height:1.35;display:block}
+  .choice.keep{background:var(--orange);color:#fff;border-color:transparent}
+  .choice.keep .ms{color:#fff}
+  .choice.del{color:#d03b3b}.choice.del .ms{color:#d03b3b}
+  body.dark .choice.del,body.dark .choice.del .ms{color:#e66767}
+  body.dark .choice.keep,body.dark .choice.keep .ms{color:#1a0f06}
+  .tile .chev{color:var(--muted)}
+  .opt-row{display:flex;align-items:center;gap:12px;min-height:48px}
+  .opt-row+.opt-row{border-top:1px solid var(--line)}
+  .opt-row .ms{color:var(--orange)}
+  .opt-row .ms.h{color:var(--muted)}
+  .opt-row .tx{flex:1;font-weight:600;font-size:.92rem}
+  .deftag{font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--neutral);background:color-mix(in srgb,var(--neutral) 16%,transparent);padding:2px 7px;border-radius:999px}
+  .menu{position:absolute;right:22px;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--float);padding:6px 0;min-width:190px;z-index:6}
+  .menu div{display:flex;gap:12px;align-items:center;padding:10px 16px;font-size:.9rem;font-weight:600}
+  .menu .ms{color:var(--muted)}
+  .menu .red,.menu .red .ms{color:#d03b3b}
+  body.dark .menu .red,body.dark .menu .red .ms{color:#e66767}
+</style>
+</head>
+<body><div class="wrap">
+  <header class="pg"><h1>🦊 Launenfuchs — Settings</h1>
+  <button class="toggle" onclick="document.body.classList.toggle('dark')">◐ Light / dark</button></header>
+  <p class="cap" style="margin-top:10px">Settings has no periods (they live in Journal and Stats) · category editor: one per day, show as, the default marked on its option, tracked since, fill empty days · option menu: make default, merge, remove · removing asks <b>hide (data kept)</b> or <b>delete for good</b>.</p>
+
+  <div class="stage">
+
+    <div>
+      <p class="cap">Settings</p>
+      <div class="phone">
+        <div class="appbar"><b>Settings</b></div>
+        <div class="body">
+          <div class="sect">Journal</div>
+          <div class="card pad0">
+            <div class="tile"><span class="ms">category</span><div class="tx"><div class="t">Categories &amp; options</div><div class="s">5 categories · 18 options</div></div><span class="ms chev">chevron_right</span></div>
+            <div class="tile"><span class="ms">notifications</span><div class="tx"><div class="t">Daily reminder</div><div class="s">20:00 · skipped once today is logged</div></div><span class="sw on"></span></div>
+            <div class="tile"><span class="ms">bedtime</span><div class="tx"><div class="t">New day starts at</div><div class="s">04:00 — earlier entries count for the day before</div></div><span class="ms chev">chevron_right</span></div>
+          </div>
+          <div class="sect">Privacy</div>
+          <div class="card pad0">
+            <div class="tile"><span class="ms">lock</span><div class="tx"><div class="t">App lock</div><div class="s">Fingerprint or phone PIN · after 1 min away</div></div><span class="sw on"></span></div>
+          </div>
+          <div class="sect">Data</div>
+          <div class="card pad0">
+            <div class="tile"><span class="ms">description</span><div class="tx"><div class="t">Report for someone else</div><div class="s">PDF for a date range · notes off by default</div></div><span class="ms chev">chevron_right</span></div>
+            <div class="tile"><span class="ms">upload_file</span><div class="tx"><div class="t">Import from Daylio</div><div class="s">Mapping saved · last import 14 Oct</div></div><span class="ms chev">chevron_right</span></div>
+            <div class="tile"><span class="ms">save</span><div class="tx"><div class="t">Backup &amp; restore</div><div class="s">A file you own — no cloud</div></div><span class="ms chev">chevron_right</span></div>
+          </div>
+          <div class="sect">Look</div>
+          <div class="card pad0">
+            <div class="tile"><span class="ms">contrast</span><div class="tx"><div class="t">Theme</div><div class="s">Follow system</div></div><span class="ms chev">chevron_right</span></div>
+            <div class="tile"><span class="ms">text_fields</span><div class="tx"><div class="t">Font</div><div class="s">Figtree</div></div><span class="ms chev">chevron_right</span></div>
+          </div>
+          <p class="cdesc" style="margin:14px 4px">Periods are marked in the Journal calendar or from Stats.</p>
+        </div>
+        <div class="nav">
+          <div class="dest"><span class="pl"><span class="ms">calendar_month</span></span>Journal</div>
+          <div class="dest"><span class="pl"><span class="ms">insights</span></span>Stats</div>
+          <div class="dest on"><span class="pl"><span class="ms fill">settings</span></span>Settings</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="cap">Category editor <small>· Work</small></p>
+      <div class="phone">
+        <div class="appbar"><span class="ms nav-i l">arrow_back</span><b>Work</b></div>
+        <div class="body">
+          <div class="flab">Name</div>
+          <div class="field"><span class="ms" style="color:var(--orange)">work</span><span class="val">Work</span></div>
+          <div class="card pad0">
+            <div class="opt"><div class="tx"><div class="t">Pick one per day</div><div class="s">Choosing another option replaces the first</div></div><span class="sw on"></span></div>
+          </div>
+          <div class="flab">Show as</div>
+          <div class="seg"><span class="on">Chips</span><span>Slider</span></div>
+          <p class="cdesc" style="margin:-8px 2px 12px">Slider: the options below, left to right, become the steps. Best for a short scale (up to 5).</p>
+          <div class="flab">Tracked since</div>
+          <div class="field"><span class="ms">event</span><span class="val">8 Sep 2026</span><span class="lab" style="text-align:right">earlier days = not tracked</span></div>
+          <div class="sect" style="margin-top:6px">Options</div>
+          <div class="card pad0">
+            <div class="opt-row"><span class="ms h">drag_indicator</span><span class="ms">work</span><span class="tx">Worked normally</span><span class="ms h">more_vert</span></div>
+            <div class="opt-row"><span class="ms h">drag_indicator</span><span class="ms">work_history</span><span class="tx">Worked less</span><span class="ms h">more_vert</span></div>
+            <div class="opt-row"><span class="ms h">drag_indicator</span><span class="ms">work_alert</span><span class="tx">Long day</span><span class="ms h">more_vert</span></div>
+            
+            <div class="opt-row"><span class="ms h">drag_indicator</span><span class="ms">sick</span><span class="tx">Sick</span><span class="ms h">more_vert</span></div>
+            <div class="opt-row"><span class="ms h">drag_indicator</span><span class="ms">beach_access</span><span class="tx">Day off</span><span class="deftag">default</span><span class="ms h">more_vert</span></div>
+          </div>
+          <button class="btn text"><span class="ms">add</span>Add option</button>
+          <button class="btn text" style="color:var(--ink)"><span class="ms" style="color:var(--muted)">format_color_fill</span>Fill empty days…</button>
+          <p class="cdesc" style="margin:-4px 6px 0">Sets one option on every tracked day with nothing logged here. Shows the count first.</p>
+          <button class="btn text" style="color:var(--ink)"><span class="ms" style="color:var(--muted)">remove_circle_outline</span>Remove category…</button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="cap">Option menu <small>· and the fill confirmation</small></p>
+      <div class="phone">
+        <div class="appbar"><span class="ms nav-i l">arrow_back</span><b>Work</b></div>
+        <div class="body">
+          <div class="sect">Options</div>
+          <div class="card pad0" style="position:relative">
+            <div class="opt-row"><span class="ms h">drag_indicator</span><span class="ms">work</span><span class="tx">Worked normally</span><span class="ms h">more_vert</span></div>
+            <div class="opt-row"><span class="ms h">drag_indicator</span><span class="ms">work_history</span><span class="tx">Worked less</span><span class="ms h">more_vert</span></div>
+            <div class="opt-row"><span class="ms h">drag_indicator</span><span class="ms">work_alert</span><span class="tx">Long day</span><span class="ms h">more_vert</span></div>
+            <div class="opt-row"><span class="ms h">drag_indicator</span><span class="ms">sick</span><span class="tx">Sick</span><span class="ms" style="color:var(--ink)">more_vert</span></div>
+            <div class="menu" style="top:150px">
+              <div><span class="ms">star</span>Make default</div>
+              <div><span class="ms">edit</span>Rename &amp; icon</div>
+              <div><span class="ms">call_merge</span>Merge into…</div>
+              <div><span class="ms">remove_circle_outline</span>Remove…</div>
+            </div>
+            
+            <div class="opt-row"><span class="ms h">drag_indicator</span><span class="ms">beach_access</span><span class="tx">Day off</span><span class="deftag">default</span><span class="ms h">more_vert</span></div>
+          </div>
+          <div class="card" style="margin-top:70px">
+            <div class="ctitle">Fill empty days?</div>
+            <p class="cdesc" style="margin-bottom:10px"><b class="num">15 days</b> since 8 Sep have nothing logged for Work. Set them to:</p>
+            <div class="field" style="margin-bottom:10px"><span class="ms" style="color:var(--orange)">beach_access</span><span class="val">Day off</span><span class="lab" style="text-align:right"><span class="ms sm">expand_more</span></span></div>
+            <p class="cdesc">Changing the default later won't undo this — these days will say “Day off”.</p>
+            <div style="display:flex;justify-content:flex-end;gap:6px"><button class="btn text" style="color:var(--muted)">Cancel</button><button class="btn text">Fill 15 days</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="cap">Remove a category <small>· hide or delete — your call</small></p>
+      <div class="phone">
+        <div class="appbar"><span class="ms nav-i l">arrow_back</span><b>Categories &amp; options</b></div>
+        <div class="body">
+          <div class="card pad0">
+            <div class="tile"><span class="ms">work</span><div class="tx"><div class="t">Work</div><div class="s">one per day · 5 options</div></div><span class="ms" style="color:var(--muted)">drag_indicator</span></div>
+            <div class="tile"><span class="ms">fitness_center</span><div class="tx"><div class="t">Health</div><div class="s">any number · 3 options</div></div><span class="ms" style="color:var(--muted)">drag_indicator</span></div>
+            <div class="tile"><span class="ms">coffee</span><div class="tx"><div class="t">Coffee</div><div class="s">one per day · slider · 4 options</div></div><span class="ms" style="color:var(--muted)">drag_indicator</span></div>
+          </div>
+          <div class="sect">Hidden</div>
+          <div class="card pad0">
+            <div class="tile" style="opacity:.7"><span class="ms" style="color:var(--muted)">bedtime</span><div class="tx"><div class="t">Sleep</div><div class="s">tracked 1 Jun – 31 Aug · data kept</div></div><button class="btn text" style="padding:6px">Bring back</button></div>
+          </div>
+        </div>
+        <div class="scrim"></div>
+        <div class="sheet">
+          <div class="grab"></div>
+          <h3>Remove “Coffee”?</h3>
+          <p class="cdesc" style="margin:-8px 0 14px">Logged on 25 days since 18 Sep.</p>
+          <div class="choice keep"><span class="ms">visibility_off</span><div><b>Hide</b><span class="d">Gone from the entry sheet. Your 25 days stay in stats. Bring it back any time — the time in between counts as not tracked.</span></div></div>
+          <div class="choice del"><span class="ms">delete</span><div><b>Delete for good</b><span class="d">Removes Coffee and its 4 options from all 25 days. Can't be undone.</span></div></div>
+          <button class="btn text" style="width:100%;color:var(--muted)">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="cap">Merge into… <small>· irreversible, says so, red confirm</small></p>
+      <div class="phone">
+        <div class="appbar"><span class="ms nav-i l">arrow_back</span><b>Health</b></div>
+        <div class="body">
+          <div class="sect">Options</div>
+          <div class="card pad0">
+            <div class="opt-row"><span class="ms h">drag_indicator</span><span class="ms">directions_walk</span><span class="tx">Walk</span><span class="ms h">more_vert</span></div>
+            <div class="opt-row"><span class="ms h">drag_indicator</span><span class="ms">fitness_center</span><span class="tx">Gym</span><span class="ms h">more_vert</span></div>
+            <div class="opt-row"><span class="ms h">drag_indicator</span><span class="ms">sports_soccer</span><span class="tx">Sport</span><span class="ms" style="color:var(--ink)">more_vert</span></div>
+          </div>
+        </div>
+        <div class="scrim"></div>
+        <div class="sheet">
+          <div class="grab"></div>
+          <h3>Merge “Sport” into…</h3>
+          <div class="flab">Health</div>
+          <div class="chips" style="margin-bottom:10px"><span class="chip"><span class="ms">directions_walk</span>Walk</span><span class="chip on"><span class="ms">fitness_center</span>Gym</span></div>
+          <div class="flab">Other categories</div>
+          <div class="chips" style="margin-bottom:14px"><span class="chip"><span class="ms">groups</span>Friends</span><span class="chip"><span class="ms">menu_book</span>Reading</span><span class="chip">…</span></div>
+          <div class="card" style="padding:12px 14px;margin-bottom:12px">
+            <p style="margin:0;font-size:.88rem">Moves <b>1 day</b> from <b>Sport</b> to <b>Gym</b> and deletes <b>Sport</b>.</p>
+            <p class="cdesc" style="margin:6px 0 0">Can't be undone — a backup can.</p>
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:8px"><button class="btn text" style="color:var(--muted)">Cancel</button><button class="btn" style="width:auto;padding:10px 22px;background:#d03b3b;color:#fff">Merge</button></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body></html>

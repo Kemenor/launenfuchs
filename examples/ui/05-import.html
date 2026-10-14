@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Launenfuchs — Daylio import</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400..500,0..1,0&display=block" rel="stylesheet">
+<link rel="stylesheet" href="fuchsbau.css">
+<style>
+  .phone{min-height:900px}
+  .steps{display:flex;gap:4px;padding:0 16px 10px}
+  .steps span{flex:1;text-align:center;font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);padding-top:6px;border-top:3px solid var(--line)}
+  .steps span.done{color:var(--ink);border-color:color-mix(in srgb,var(--orange) 45%,transparent)}
+  .steps span.on{color:var(--orange);border-color:var(--orange)}
+  .bottom{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-top:1px solid var(--line);background:var(--card)}
+  .bottom .btn{width:auto;padding:10px 22px}
+  .mrow{padding:9px 0}
+  .mrow+.mrow{border-top:1px solid var(--line)}
+  .mtop{display:flex;align-items:center;gap:10px}
+  .mtop .ms{color:var(--orange)}
+  .mtop .nm{flex:1;min-width:0;font-weight:700;font-size:.9rem}
+  .mtop .nm small{display:block;color:var(--muted);font-weight:500;font-size:.72rem}
+  .mtop .nm s{color:var(--taupe)}
+  .kmd{display:flex;border:1px solid var(--line);border-radius:999px;padding:2px;gap:1px;flex:none}
+  .kmd span{font-size:.7rem;font-weight:800;padding:4px 8px;border-radius:999px;color:var(--muted)}
+  .kmd span.k{background:color-mix(in srgb,var(--emerald) 18%,transparent);color:var(--emerald)}
+  .kmd span.m{background:color-mix(in srgb,var(--indigo) 18%,transparent);color:var(--indigo)}
+  .kmd span.d{background:color-mix(in srgb,var(--taupe) 22%,transparent);color:var(--taupe)}
+  .msub{margin:6px 0 0 34px;font-size:.76rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+  .msub .pill2{border:1px solid var(--line);border-radius:999px;padding:2px 9px;font-weight:700;color:var(--ink);font-size:.72rem}
+  .msub .pill2.o{color:var(--orange);border-color:color-mix(in srgb,var(--orange) 40%,transparent)}
+  .msub .ren{color:var(--ink);font-weight:700}
+  .info{display:flex;gap:8px;align-items:flex-start;font-size:.76rem;color:var(--ink);background:color-mix(in srgb,var(--amber) 14%,transparent);border-radius:10px;padding:8px 10px;margin:8px 0 0}
+  .info .ms{color:var(--amber);font-size:18px}
+  .ghd{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:12px 2px 2px;display:flex;justify-content:space-between}
+  .sum{display:flex;justify-content:space-between;padding:7px 0;font-size:.86rem}
+  .sum+.sum{border-top:1px solid var(--line)}
+  .sum b{font-variant-numeric:tabular-nums;text-align:right}
+</style>
+</head>
+<body><div class="wrap">
+  <header class="pg"><h1>🦊 Launenfuchs — Daylio import</h1>
+  <button class="toggle" onclick="document.body.classList.toggle('dark')">◐ Light / dark</button></header>
+  <p class="cap" style="margin-top:10px">A full-screen stepper: File · Categories · Options · Defaults · Review. Every category and option is <b>Keep</b> (rename) · <b>Merge</b> (into another) · <b>Drop</b>. Never-used options start on Drop. The mapping is saved for the next import. Sample backup (invented).</p>
+
+  <div class="stage">
+
+    <!-- CATEGORIES -->
+    <div>
+      <p class="cap">Step 2 · Categories <small>· mode suggested from your data</small></p>
+      <div class="phone">
+        <div class="appbar"><span class="ms nav-i l">close</span><b>Import from Daylio</b></div>
+        <div class="steps"><span class="done">File</span><span class="on">Categories</span><span>Options</span><span>Defaults</span><span>Review</span></div>
+        <div class="body">
+          <p class="cdesc">37 days · 8 Sep – 14 Oct · 5 notes · no photos</p>
+          <div class="card pad0">
+            <div class="mrow"><div class="mtop"><span class="ms">work</span><div class="nm">Work<small>used on 22 days · never two on one day</small></div><div class="kmd"><span class="k">Keep</span><span>Merge</span><span>Drop</span></div></div>
+              <div class="msub"><span class="pill2 o">one per day</span><span class="pill2">chips</span></div></div>
+            <div class="mrow"><div class="mtop"><span class="ms">fitness_center</span><div class="nm">Health<small>used on 18 days · two on 1 day</small></div><div class="kmd"><span class="k">Keep</span><span>Merge</span><span>Drop</span></div></div>
+              <div class="msub"><span class="pill2 o">any number</span></div></div>
+            <div class="mrow"><div class="mtop"><span class="ms">groups</span><div class="nm">Social<small>used on 17 days · two on 3 days</small></div><div class="kmd"><span class="k">Keep</span><span>Merge</span><span>Drop</span></div></div>
+              <div class="msub"><span class="pill2 o">any number</span></div></div>
+            <div class="mrow"><div class="mtop"><span class="ms">menu_book</span><div class="nm">Hobbies<small>used on 25 days · two on 5 days</small></div><div class="kmd"><span class="k">Keep</span><span>Merge</span><span>Drop</span></div></div>
+              <div class="msub"><span class="pill2 o">any number</span></div></div>
+            <div class="mrow"><div class="mtop"><span class="ms">coffee</span><div class="nm">Coffee<small>used on 25 days · first 18 Sep</small></div><div class="kmd"><span class="k">Keep</span><span>Merge</span><span>Drop</span></div></div>
+              <div class="msub"><span class="pill2 o">one per day</span><span class="pill2 o">slider</span><span>slider chosen — the suggestion was chips</span></div></div>
+          </div>
+        </div>
+        <div class="bottom"><button class="btn text">Back</button><button class="btn primary">Next</button></div>
+      </div>
+    </div>
+
+    <!-- OPTIONS -->
+    <div>
+      <p class="cap">Step 3 · Options <small>· rename, merge, drop</small></p>
+      <div class="phone">
+        <div class="appbar"><span class="ms nav-i l">close</span><b>Import from Daylio</b></div>
+        <div class="steps"><span class="done">File</span><span class="done">Categories</span><span class="on">Options</span><span>Defaults</span><span>Review</span></div>
+        <div class="body">
+          <div class="ghd"><span>Work</span><span>5 options</span></div>
+          <div class="card pad0">
+            <div class="mrow"><div class="mtop"><span class="ms">work</span><div class="nm">Worked Normally<small>16 days</small></div><div class="kmd"><span class="k">Keep</span><span>Merge</span><span>Drop</span></div></div></div>
+            <div class="mrow"><div class="mtop"><span class="ms">work_alert</span><div class="nm">Too much<small>3 days</small></div><div class="kmd"><span class="k">Keep</span><span>Merge</span><span>Drop</span></div></div>
+              <div class="msub">renamed → <span class="ren">Long day</span></div></div>
+            <div class="mrow"><div class="mtop"><span class="ms">beach_access</span><div class="nm">Holiday<small>never used</small></div><div class="kmd"><span class="k">Keep</span><span>Merge</span><span>Drop</span></div></div>
+              <div class="msub">kept & renamed → <span class="ren">Day off</span> — becomes the default in the next step</div></div>
+          </div>
+          <div class="ghd"><span>Health</span><span>4 options</span></div>
+          <div class="card pad0">
+            <div class="mrow"><div class="mtop"><span class="ms">sports_gymnastics</span><div class="nm">workout<small>1 day</small></div><div class="kmd"><span>Keep</span><span class="m">Merge</span><span>Drop</span></div></div>
+              <div class="msub">→ <span class="pill2">Gym</span> · its 1 day moves to Gym</div></div>
+          </div>
+          <div class="ghd"><span>Hobbies</span><span>4 options</span></div>
+          <div class="card pad0">
+            <div class="mrow"><div class="mtop"><span class="ms">palette</span><div class="nm"><s>painting</s><small>never used</small></div><div class="kmd"><span>Keep</span><span>Merge</span><span class="d">Drop</span></div></div></div>
+          </div>
+          <div class="ghd"><span>Coffee</span><span>4 options</span></div>
+          <div class="card pad0">
+            <div class="mrow"><div class="mtop"><span class="ms">block</span><div class="nm">no coffee<small>4 days</small></div><div class="kmd"><span class="k">Keep</span><span>Merge</span><span>Drop</span></div></div>
+              <div class="msub">renamed → <span class="ren">None</span></div></div>
+            <div class="mrow"><div class="mtop"><span class="ms">coffee_maker</span><div class="nm">3+ cups<small>never used</small></div><div class="kmd"><span class="k">Keep</span><span>Merge</span><span>Drop</span></div></div>
+              <div class="msub">kept & renamed → <span class="ren">Three+</span> — the slider's top step</div></div>
+          </div>
+          <div class="info"><span class="ms">info</span><span>Dropping a used option removes it from those days — the count shows before you go on.</span></div>
+        </div>
+        <div class="bottom"><button class="btn text">Back</button><button class="btn primary">Next</button></div>
+      </div>
+    </div>
+
+    <!-- DEFAULTS -->
+    <div>
+      <p class="cap">Step 4 · Defaults & empty days <small>· per one-per-day category</small></p>
+      <div class="phone">
+        <div class="appbar"><span class="ms nav-i l">close</span><b>Import from Daylio</b></div>
+        <div class="steps"><span class="done">File</span><span class="done">Categories</span><span class="done">Options</span><span class="on">Defaults</span><span>Review</span></div>
+        <div class="body">
+          <div class="ghd"><span>Work</span></div>
+          <div class="card">
+            <div class="flab">Default for new entries</div>
+            <div class="field"><span class="ms" style="color:var(--orange)">beach_access</span><span class="val">Day off</span><span class="lab" style="text-align:right"><span class="ms sm">expand_more</span></span></div>
+            <div class="flab">Tracked since</div>
+            <div class="field"><span class="ms">event</span><span class="val">8 Sep 2026</span><span class="lab" style="text-align:right">first use</span></div>
+            <div class="flab"><b class="num">15 days</b> with nothing logged here</div>
+            <div class="seg" style="margin-bottom:6px"><span>Leave empty</span><span class="on">Fill with Day off</span></div>
+            <p class="cdesc" style="margin:0">Weekends and the holiday week. Filled days are saved as Day off.</p>
+          </div>
+          <div class="ghd"><span>Coffee</span></div>
+          <div class="card">
+            <div class="flab">Default for new entries</div>
+            <div class="field"><span class="ms" style="color:var(--orange)">block</span><span class="val">None</span><span class="lab" style="text-align:right"><span class="ms sm">expand_more</span></span></div>
+            <div class="flab">Tracked since</div>
+            <div class="field"><span class="ms">event</span><span class="val">18 Sep 2026</span><span class="lab" style="text-align:right">first use · 10 days before = not tracked</span></div>
+            <div class="flab"><b class="num">2 days</b> with nothing logged here</div>
+            <div class="seg" style="margin-bottom:0"><span class="on">Leave empty</span><span>Fill with None</span></div>
+          </div>
+          <div class="ghd"><span>Health · Social · Hobbies</span></div>
+          <div class="card" style="padding:10px 16px"><p class="cdesc" style="margin:0">Any number per day — no default, nothing to fill.</p></div>
+        </div>
+        <div class="bottom"><button class="btn text">Back</button><button class="btn primary">Next</button></div>
+      </div>
+    </div>
+
+    <!-- REVIEW -->
+    <div>
+      <p class="cap">Step 5 · Review <small>· one transaction, mapping saved</small></p>
+      <div class="phone">
+        <div class="appbar"><span class="ms nav-i l">close</span><b>Import from Daylio</b></div>
+        <div class="steps"><span class="done">File</span><span class="done">Categories</span><span class="done">Options</span><span class="done">Defaults</span><span class="on">Review</span></div>
+        <div class="body">
+          <div class="card" style="padding:8px 16px">
+            <div class="sum"><span>Days</span><b>37 · 8 Sep – 14 Oct</b></div>
+            <div class="sum"><span>Notes</span><b>5</b></div>
+            <div class="sum"><span>Categories</span><b>5 kept</b></div>
+            <div class="sum"><span>Options</span><b>18 kept · 1 merged · 1 dropped (unused)</b></div>
+            <div class="sum"><span>Renamed</span><b>Too much, Holiday, no coffee, 3+ cups</b></div>
+            <div class="sum"><span>Days filled</span><b>15 × Day off</b></div>
+            <div class="sum"><span>Skipped</span><b>photos 0 · goals 0</b></div>
+          </div>
+          <div class="card" style="padding:12px 16px">
+            <div class="tile" style="min-height:0;padding:0"><span class="ms">bookmark</span><div class="tx"><div class="t">Mapping saved</div><div class="s">Import a newer Daylio backup later and only new categories or options will be asked about.</div></div></div>
+          </div>
+          <p class="cdesc" style="text-align:center">Your journal is empty — nothing will be replaced.</p>
+          <button class="btn primary">Import 37 days</button>
+        </div>
+        <div class="bottom"><button class="btn text">Back</button><span></span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body></html>

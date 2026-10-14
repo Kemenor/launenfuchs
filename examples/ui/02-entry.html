@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Launenfuchs — Entry sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400..500,0..1,0&display=block" rel="stylesheet">
+<link rel="stylesheet" href="fuchsbau.css">
+<style>
+  .phone{min-height:940px}
+  .sheet{top:46px;overflow:hidden}
+  .dayhead{display:flex;align-items:center;justify-content:space-between;margin:0 0 12px}
+  .dayhead b{font-size:1.15rem}
+  .dayhead .ms{color:var(--muted)}
+  .x{position:absolute;right:16px;top:16px;color:var(--muted)}
+  .note{background:var(--field);border:1px solid var(--line);border-radius:12px;padding:11px 14px;color:var(--muted);font-size:.9rem;margin:4px 0 14px}
+</style>
+</head>
+<body><div class="wrap">
+  <header class="pg"><h1>🦊 Launenfuchs — Entry sheet</h1>
+  <button class="toggle" onclick="document.body.classList.toggle('dark')">◐ Light / dark</button></header>
+  <p class="cap" style="margin-top:10px">The 80 % action. Mood is the only required tap · categories say “one” or “any” · it's live: tap faces and chips, drag or tap the sliders, × clears a slider.</p>
+  <p class="cap" id="demo" style="font-weight:600"></p>
+
+  <div class="stage">
+
+    <div>
+      <p class="cap">New entry for today <small>· interactive — try Save, then “new entry” above</small></p>
+      <div class="phone">
+        <div class="scrim"></div>
+        <div class="sheet">
+          <div class="grab"></div>
+          <span class="ms x">close</span>
+          <div class="dayhead"><span class="ms">chevron_left</span><b>Today · Wed 14 Oct</b><span class="ms" style="opacity:.3">chevron_right</span></div>
+          <div class="moods" id="moods"></div>
+          <div id="cats"></div>
+          <div class="note">Add a note…</div>
+          <button class="btn primary" id="save">Save</button>
+        </div>
+        <div class="toast" id="toast"></div>
+      </div>
+    </div>
+
+    <div>
+      <p class="cap">After midnight <small>· defaults to yesterday until 04:00</small></p>
+      <div class="phone">
+        <div class="scrim"></div>
+        <div class="sheet">
+          <div class="grab"></div>
+          <span class="ms x">close</span>
+          <div class="dayhead"><span class="ms">chevron_left</span><b>Yesterday · Tue 13 Oct</b><span class="ms">chevron_right</span></div>
+          <p class="cdesc" style="margin:-6px 0 12px;text-align:center">It's 00:40 — logging for yesterday. Use › for today.</p>
+          <div class="moods">
+            <div class="mood dim"><span class="face f1"><span class="ms">sentiment_very_dissatisfied</span></span>awful</div>
+            <div class="mood dim"><span class="face f2"><span class="ms">sentiment_dissatisfied</span></span>bad</div>
+            <div class="mood dim"><span class="face f3"><span class="ms">sentiment_neutral</span></span>meh</div>
+            <div class="mood dim"><span class="face f4"><span class="ms">sentiment_satisfied</span></span>good</div>
+            <div class="mood dim"><span class="face f5"><span class="ms">sentiment_very_satisfied</span></span>rad</div>
+          </div>
+          <div class="cat"><div class="h">Work <small>one</small></div>
+            <div class="chips"><span class="chip"><span class="ms">work</span>Worked normally</span><span class="chip"><span class="ms">work_history</span>Worked less</span><span class="chip"><span class="ms">work_alert</span>Long day</span><span class="chip"><span class="ms">sick</span>Sick</span><span class="chip def on"><span class="ms">beach_access</span>Day off</span></div></div>
+          <p class="cdesc" style="margin-top:4px">Grey = the category's default. <b>It gets saved</b> unless you pick something else — or tap it to log nothing for Work.</p>
+          <div class="note">Add a note…</div>
+          <button class="btn primary" style="opacity:.45">Save — pick a mood first</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script>
+  const MOODS = [[1,'awful','sentiment_very_dissatisfied'],[2,'bad','sentiment_dissatisfied'],[3,'meh','sentiment_neutral'],[4,'good','sentiment_satisfied'],[5,'rad','sentiment_very_satisfied']];
+  const CATS = [
+    ['Work', 'one', [['work','Worked normally'],['work_history','Worked less'],['work_alert','Long day'],['sick','Sick'],['beach_access','Day off']]],
+    ['Health', 'any', [['directions_walk','Walk'],['fitness_center','Gym'],['sports_soccer','Sport']]],
+    ['Social', 'any', [['groups','Friends'],['family_restroom','Family'],['favorite','Partner']]],
+    ['Hobbies', 'any', [['menu_book','Reading'],['music_note','Music'],['sports_esports','Gaming']]],
+    ['Coffee', 'one', [['block','None'],['coffee','One'],['coffee','Two'],['coffee_maker','Three+']]],
+  ];
+  // per-category "Show as" (Settings › Categories); only one-per-day categories can be sliders
+  const SHOW = {Work: 'chips', Coffee: 'slider'};
+  // default option per one-per-day category — a real option, saved like any pick
+  const DEFAULTS = {Work: 'Day off', Coffee: 'None'};
+  let mood, sel, pending;
+  function newEntry() {
+    mood = 4; sel = {Work: [], Health: [], Social: [], Hobbies: [], Coffee: []}; pending = {};
+    for (const c in DEFAULTS) { sel[c] = [DEFAULTS[c]]; pending[c] = true; }
+  }
+  function touch(c) { pending[c] = false; }
+  function render() {
+    document.getElementById('moods').innerHTML = MOODS.map(([v, l, i]) =>
+      `<div class="mood ${v === mood ? 'on' : 'dim'}" data-m="${v}" style="cursor:pointer"><span class="face f${v}"><span class="ms">${i}</span></span>${l}</div>`).join('');
+    document.getElementById('cats').innerHTML = CATS.map(([c, mode, opts]) => {
+      if (SHOW[c] === 'slider') {
+        const k = opts.findIndex(([, a]) => sel[c].includes(a)), pos = j => (j / (opts.length - 1) * 100) + '%';
+        const state = k < 0 ? 'unset' : (pending[c] ? 'pending' : '');
+        return `<div class="cat"><div class="h">${c} <small>${mode}</small><span class="val ${k < 0 ? 'none' : (pending[c] ? 'def' : '')}">${k < 0 ? '–' : opts[k][1] + (pending[c] ? ' · default' : '')}</span></div>
+          <div class="sl ${state}" data-sl="${c}"><div class="track"><i class="fill" style="width:${k < 0 ? 0 : pos(k)}"></i>` +
+          opts.map((_, j) => `<i class="stop ${j <= k ? 'past' : ''}" style="left:${pos(j)}"></i>`).join('') +
+          `<b class="thumb" style="left:${k < 0 ? 0 : pos(k)}"></b></div><div class="labels">` +
+          // more than 5 steps: label only the ends (the header shows the current value)
+          opts.map(([, a], j) => (opts.length > 5 && j > 0 && j < opts.length - 1) ? '' :
+            `<span class="${j === k ? 'on' : ''}" style="left:${pos(j)}" data-c="${c}" data-a="${a}" data-set="1">${a}</span>`).join('') +
+          `</div><span class="ms clr" data-clr="${c}">close</span></div></div>`;
+      }
+      return `<div class="cat"><div class="h">${c} <small>${mode}</small></div><div class="chips">` +
+        opts.map(([i, a]) => {
+          const on = sel[c].includes(a), def = on && pending[c];
+          return `<span class="chip ${on ? 'on' : ''} ${def ? 'def' : ''}" data-c="${c}" data-a="${a}" style="cursor:pointer"><span class="ms">${i}</span>${a}</span>`;
+        }).join('') + '</div></div>';
+    }).join('');
+    document.getElementById('demo').innerHTML = '<span class="chip" data-new="1" style="cursor:pointer;padding:3px 10px">↺ new entry</span> &nbsp; Show as: ' + Object.keys(SHOW).map(c =>
+      `${c} <span class="chip ${SHOW[c] === 'chips' ? 'on' : ''}" data-show="${c}" data-v="chips" style="cursor:pointer;padding:3px 10px">chips</span> <span class="chip ${SHOW[c] === 'slider' ? 'on' : ''}" data-show="${c}" data-v="slider" style="cursor:pointer;padding:3px 10px">slider</span>`).join(' &nbsp; ');
+  }
+  function toast(msg) {
+    const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show');
+    clearTimeout(toast.h); toast.h = setTimeout(() => t.classList.remove('show'), 3200);
+  }
+  // slider: tap or drag on the track snaps to the nearest stop
+  let dragCat = null;
+  function slideTo(c, clientX) {
+    const opts = CATS.find(x => x[0] === c)[2];
+    const r = document.querySelector(`[data-sl="${c}"] .track`).getBoundingClientRect();
+    const j = Math.round(Math.min(1, Math.max(0, (clientX - r.left) / r.width)) * (opts.length - 1));
+    touch(c);
+    if (sel[c][0] !== opts[j][1]) sel[c] = [opts[j][1]];
+    render();
+  }
+  document.addEventListener('pointerdown', e => {
+    const t = e.target.closest('.track'); if (!t) return;
+    dragCat = t.closest('[data-sl]').dataset.sl; slideTo(dragCat, e.clientX);
+  });
+  document.addEventListener('pointermove', e => { if (dragCat) slideTo(dragCat, e.clientX); });
+  document.addEventListener('pointerup', () => dragCat = null);
+  document.addEventListener('click', e => {
+    if (e.target.closest('[data-new]')) { newEntry(); render(); return; }
+    if (e.target.closest('#save')) {
+      const stored = Object.entries(sel).filter(([, v]) => v.length).map(([c, v]) => `${c}: ${v.join(', ')}`).join(' · ');
+      pending = {}; render(); toast(`Saved — ${stored}. Reopening shows these as normal picks.`); return;
+    }
+    const m = e.target.closest('[data-m]'); if (m) { mood = +m.dataset.m; render(); return; }
+    const sh = e.target.closest('[data-show]'); if (sh) { SHOW[sh.dataset.show] = sh.dataset.v; render(); return; }
+    const cl = e.target.closest('[data-clr]'); if (cl) { touch(cl.dataset.clr); sel[cl.dataset.clr] = []; render(); return; }
+    const st = e.target.closest('[data-set]'); if (st) { touch(st.dataset.c); sel[st.dataset.c] = [st.dataset.a]; render(); return; }
+    const ch = e.target.closest('[data-a]'); if (!ch) return;
+    const c = ch.dataset.c, a = ch.dataset.a, one = CATS.find(x => x[0] === c)[1] === 'one';
+    const on = sel[c].includes(a);
+    touch(c);
+    sel[c] = one ? (on ? [] : [a]) : (on ? sel[c].filter(x => x !== a) : [...sel[c], a]);
+    render();
+  });
+  newEntry(); render();
+</script>
+</body></html>
