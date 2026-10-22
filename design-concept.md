@@ -155,6 +155,9 @@ these later":
 - One daily local notification at a chosen time (default 20:00). Tapping opens today's
   entry sheet. If today is already logged, it's cancelled for today. No follow-ups, no
   "you missed yesterday".
+- On Android it shows the **five moods** (worst → best, like the entry sheet): a face
+  opens today's entry with that mood picked — nothing is saved until Save, so defaults
+  and options work as always. iOS keeps the plain notification.
 
 ---
 

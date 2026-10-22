@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The reminder's collapsed view: the five moods, worst to best like the
+     entry sheet. Each face opens today's entry with that mood picked. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/mood_1"
+        style="@style/ReminderFace"
+        android:src="@drawable/mood_awful" />
+
+    <ImageView
+        android:id="@+id/mood_2"
+        style="@style/ReminderFace"
+        android:src="@drawable/mood_bad" />
+
+    <ImageView
+        android:id="@+id/mood_3"
+        style="@style/ReminderFace"
+        android:src="@drawable/mood_meh" />
+
+    <ImageView
+        android:id="@+id/mood_4"
+        style="@style/ReminderFace"
+        android:src="@drawable/mood_good" />
+
+    <ImageView
+        android:id="@+id/mood_5"
+        style="@style/ReminderFace"
+        android:src="@drawable/mood_rad" />
+</LinearLayout>

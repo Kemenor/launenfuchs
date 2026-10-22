@@ -5,12 +5,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 import '../domain/journal.dart';
+import '../domain/mood.dart';
 import '../domain/reminder.dart';
 import '../domain/starter.dart';
 import '../l10n/app_localizations.dart';
 import '../providers.dart';
 import 'entry_sheet.dart';
 import 'journal_screen.dart';
+import 'mood_style.dart';
 import 'settings_screen.dart';
 import 'stats/stats_screen.dart';
 
@@ -26,18 +28,19 @@ class HomeShell extends ConsumerStatefulWidget {
 class _HomeShellState extends ConsumerState<HomeShell> {
   int _index = 0;
   bool _seeded = false;
-  StreamSubscription<void>? _taps;
+  StreamSubscription<Mood?>? _taps;
   Timer? _syncDebounce;
 
   @override
   void initState() {
     super.initState();
     final scheduler = ref.read(reminderSchedulerProvider);
-    // A tapped reminder opens today's entry on the Journal tab.
-    _taps = scheduler.taps.listen((_) {
+    // A tapped reminder opens today's entry on the Journal tab — with the
+    // mood picked when a face was tapped.
+    _taps = scheduler.taps.listen((mood) {
       if (!mounted) return;
       setState(() => _index = 0);
-      showEntrySheet(context, day: logicalToday(ref));
+      showEntrySheet(context, day: logicalToday(ref), initialMood: mood);
     });
     scheduler.init();
   }
@@ -59,11 +62,12 @@ class _HomeShellState extends ConsumerState<HomeShell> {
       if (!s.loaded) return;
       final l10n = AppLocalizations.of(context);
       final journal = ref.read(journalProvider).value ?? Journal.empty;
+      final logged = {for (final e in journal.entries) e.day};
       final times = s.reminderOn
           ? reminderTimes(
               now: ref.read(clockProvider).now(),
               minutes: s.reminderMinutes,
-              logged: {for (final e in journal.entries) e.day},
+              logged: logged,
             )
           : const <DateTime>[];
       ref
@@ -74,6 +78,8 @@ class _HomeShellState extends ConsumerState<HomeShell> {
             body: l10n.notifBody,
             channelName: l10n.notifChannel,
             channelDescription: l10n.notifChannelDescription,
+            moods: [for (final m in Mood.values) MoodStyle.label(m, l10n)],
+            todayLogged: logged.contains(logicalToday(ref)),
           );
     });
   }
