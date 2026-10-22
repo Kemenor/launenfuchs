@@ -5,6 +5,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest_all.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
+import '../system_prompt.dart';
 
 /// The platform half of the daily reminder (design-concept §2.8; the *when*
 /// is the pure [reminderTimes]). Discrete one-off notifications, re-filled on
@@ -72,11 +73,12 @@ class ReminderScheduler {
           .resolvePlatformSpecificImplementation<
             IOSFlutterLocalNotificationsPlugin
           >();
-      final a = await android?.requestNotificationsPermission();
-      final i = await ios?.requestPermissions(
-        alert: true,
-        badge: true,
-        sound: true,
+      final a = await systemPrompt(
+        () async => android?.requestNotificationsPermission(),
+      );
+      final i = await systemPrompt(
+        () async =>
+            ios?.requestPermissions(alert: true, badge: true, sound: true),
       );
       return a ?? i ?? true;
     } catch (e) {

@@ -616,9 +616,6 @@ class _OptionsStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
-    final muted = theme.colorScheme.onSurfaceVariant;
     // Merge targets: tags that stay (kept, in a surviving group).
     final targets = [
       for (final t in analysis.backup.tags)
@@ -626,102 +623,254 @@ class _OptionsStep extends StatelessWidget {
             resolveGroup(mapping, t.groupId ?? ungroupedId) != null)
           t,
     ];
+    // One section per category the import creates, its options in order —
+    // tags of a group merged into it show up there.
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
       children: [
         for (final g in analysis.groups)
-          if (resolveGroup(mapping, g.id) != null) ...[
-            _section(context, mapping.groups[g.id]!.name),
-            for (final t in analysis.tagsIn(g.id))
-              Builder(
-                builder: (context) {
-                  final c = mapping.tags[t.id]!;
-                  final uses = analysis.tagStats[t.id]?.uses ?? 0;
-                  final others = [
-                    for (final o in targets)
-                      if (o.id != t.id) o,
-                  ];
-                  return Card(
-                    margin: const EdgeInsets.only(bottom: 8),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(
-                                optionIcon(c.icon),
-                                color: theme.colorScheme.primary,
-                              ),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                child: _NameField(
-                                  key: ValueKey('t${t.id}'),
-                                  initial: c.name,
-                                  struck: c.action == MapAction.drop,
-                                  onChanged: (v) => c.name = v,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            uses == 0
-                                ? l10n.importNeverUsed
-                                : l10n.importUsedOn(uses),
-                            style: theme.textTheme.bodySmall?.copyWith(
-                              color: muted,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          _ActionPicker(
-                            value: c.action,
-                            allowMerge: others.isNotEmpty,
-                            onChanged: (a) {
-                              c.action = a;
-                              if (a == MapAction.merge) {
-                                c.mergeInto ??= others.first.id;
-                              }
-                              onChanged();
-                            },
-                          ),
-                          if (c.action == MapAction.merge && others.isNotEmpty)
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8),
-                              child: DropdownButtonFormField<int>(
-                                initialValue:
-                                    others.any((o) => o.id == c.mergeInto)
-                                    ? c.mergeInto
-                                    : others.first.id,
-                                decoration: InputDecoration(
-                                  labelText: l10n.importMergeInto,
-                                  isDense: true,
-                                  border: const OutlineInputBorder(),
-                                ),
-                                items: [
-                                  for (final o in others)
-                                    DropdownMenuItem(
-                                      value: o.id,
-                                      child: Text(mapping.tags[o.id]!.name),
-                                    ),
-                                ],
-                                onChanged: (v) {
-                                  c.mergeInto = v;
-                                  onChanged();
-                                },
-                              ),
-                            ),
-                          if (c.action == MapAction.drop && uses > 0)
-                            _Info(l10n.importDropLoses(uses)),
-                        ],
+          if (resolveGroup(mapping, g.id) == g.id)
+            ..._category(context, g, targets),
+      ],
+    );
+  }
+
+  List<Widget> _category(
+    BuildContext context,
+    DaylioGroup g,
+    List<DaylioTag> targets,
+  ) {
+    final l10n = AppLocalizations.of(context);
+    final tags = optionsOf(analysis, mapping, g.id);
+    final kept = [
+      for (final t in tags)
+        if (resolveTag(mapping, t.id) == t.id) t,
+    ];
+    return [
+      Row(
+        crossAxisAlignment: CrossAxisAlignment.baseline,
+        textBaseline: TextBaseline.alphabetic,
+        children: [
+          Expanded(child: _section(context, mapping.groups[g.id]!.name)),
+          if (kept.length > 1)
+            TextButton.icon(
+              icon: const Icon(Symbols.swap_vert_rounded, size: 18),
+              label: Text(l10n.importReorder),
+              onPressed: () async {
+                await _ReorderSheet.show(
+                  context,
+                  title: mapping.groups[g.id]!.name,
+                  mapping: mapping,
+                  tags: kept,
+                );
+                onChanged();
+              },
+            ),
+        ],
+      ),
+      for (final t in tags)
+        _TagCard(
+          key: ValueKey('card${t.id}'),
+          analysis: analysis,
+          mapping: mapping,
+          tag: t,
+          targets: targets,
+          onChanged: onChanged,
+        ),
+    ];
+  }
+}
+
+/// One Daylio tag: name, uses, keep · merge · drop.
+class _TagCard extends StatelessWidget {
+  const _TagCard({
+    super.key,
+    required this.analysis,
+    required this.mapping,
+    required this.tag,
+    required this.targets,
+    required this.onChanged,
+  });
+
+  final DaylioAnalysis analysis;
+  final DaylioMapping mapping;
+  final DaylioTag tag;
+  final List<DaylioTag> targets;
+  final VoidCallback onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final muted = theme.colorScheme.onSurfaceVariant;
+    final t = tag;
+    final c = mapping.tags[t.id]!;
+    final uses = analysis.tagStats[t.id]?.uses ?? 0;
+    final others = [
+      for (final o in targets)
+        if (o.id != t.id) o,
+    ];
+    return Card(
+      margin: const EdgeInsets.only(bottom: 8),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                Icon(optionIcon(c.icon), color: theme.colorScheme.primary),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: _NameField(
+                    key: ValueKey('t${t.id}'),
+                    initial: c.name,
+                    struck: c.action == MapAction.drop,
+                    onChanged: (v) => c.name = v,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 4),
+            Text(
+              uses == 0 ? l10n.importNeverUsed : l10n.importUsedOn(uses),
+              style: theme.textTheme.bodySmall?.copyWith(color: muted),
+            ),
+            const SizedBox(height: 8),
+            _ActionPicker(
+              value: c.action,
+              allowMerge: others.isNotEmpty,
+              onChanged: (a) {
+                c.action = a;
+                if (a == MapAction.merge) {
+                  c.mergeInto ??= others.first.id;
+                }
+                onChanged();
+              },
+            ),
+            if (c.action == MapAction.merge && others.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: DropdownButtonFormField<int>(
+                  initialValue: others.any((o) => o.id == c.mergeInto)
+                      ? c.mergeInto
+                      : others.first.id,
+                  decoration: InputDecoration(
+                    labelText: l10n.importMergeInto,
+                    isDense: true,
+                    border: const OutlineInputBorder(),
+                  ),
+                  items: [
+                    for (final o in others)
+                      DropdownMenuItem(
+                        value: o.id,
+                        child: Text(mapping.tags[o.id]!.name),
+                      ),
+                  ],
+                  onChanged: (v) {
+                    c.mergeInto = v;
+                    onChanged();
+                  },
+                ),
+              ),
+            if (c.action == MapAction.drop && uses > 0)
+              _Info(l10n.importDropLoses(uses)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Drag the kept options of one category into the order they get.
+class _ReorderSheet extends StatefulWidget {
+  const _ReorderSheet({
+    required this.title,
+    required this.mapping,
+    required this.tags,
+  });
+
+  final String title;
+  final DaylioMapping mapping;
+  final List<DaylioTag> tags;
+
+  static Future<void> show(
+    BuildContext context, {
+    required String title,
+    required DaylioMapping mapping,
+    required List<DaylioTag> tags,
+  }) => showModalBottomSheet<void>(
+    context: context,
+    isScrollControlled: true,
+    showDragHandle: true,
+    builder: (_) => _ReorderSheet(title: title, mapping: mapping, tags: tags),
+  );
+
+  @override
+  State<_ReorderSheet> createState() => _ReorderSheetState();
+}
+
+class _ReorderSheetState extends State<_ReorderSheet> {
+  late final _ids = [for (final t in widget.tags) t.id];
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    return SafeArea(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.sizeOf(context).height * 0.8,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(24, 0, 24, 4),
+              child: Text(widget.title, style: theme.textTheme.titleLarge),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
+              child: Text(
+                l10n.importReorderHint,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
+            ),
+            Flexible(
+              child: ReorderableListView(
+                shrinkWrap: true,
+                buildDefaultDragHandles: false,
+                onReorderItem: (from, to) {
+                  setState(() => _ids.insert(to, _ids.removeAt(from)));
+                  reorderOptions(widget.mapping, _ids);
+                },
+                children: [
+                  for (var i = 0; i < _ids.length; i++)
+                    Material(
+                      key: ValueKey(_ids[i]),
+                      type: MaterialType.transparency,
+                      child: ListTile(
+                        leading: Icon(
+                          optionIcon(widget.mapping.tags[_ids[i]]!.icon),
+                          color: theme.colorScheme.primary,
+                        ),
+                        title: Text(widget.mapping.tags[_ids[i]]!.name),
+                        trailing: ReorderableDragStartListener(
+                          index: i,
+                          child: const Icon(Symbols.drag_indicator_rounded),
+                        ),
                       ),
                     ),
-                  );
-                },
+                ],
               ),
+            ),
+            const SizedBox(height: 8),
           ],
-      ],
+        ),
+      ),
     );
   }
 }

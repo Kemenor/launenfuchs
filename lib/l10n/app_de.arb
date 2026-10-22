@@ -99,6 +99,8 @@
   "importDrop": "Weglassen",
   "importUsedOn": "{count, plural, =1{an 1 Tag verwendet} other{an {count} Tagen verwendet}}",
   "importNeverUsed": "nie verwendet",
+  "importReorder": "Sortieren",
+  "importReorderHint": "Reihenfolge der Optionen im Eintrag – bei einem Schieberegler seine Stufen von links nach rechts. Zum Verschieben am Griff ziehen.",
   "importNeverTwo": "nie zwei am selben Tag",
   "importTwoOn": "{count, plural, =1{zwei an 1 Tag} other{zwei an {count} Tagen}}",
   "importMergeInto": "Zusammenführen mit",

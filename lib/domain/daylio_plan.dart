@@ -36,12 +36,17 @@ class TagChoice {
     required this.action,
     required this.name,
     required this.icon,
+    this.position = 0,
     this.mergeInto,
   });
 
   MapAction action;
   String name;
   String icon;
+
+  /// Order among the options of the category the tag ends up in (lower
+  /// first) — the entry sheet's order, and a slider's left-to-right steps.
+  int position;
 
   /// Target tag id when [action] is merge.
   int? mergeInto;
@@ -234,20 +239,42 @@ class DaylioAnalysis {
                 : CategoryMode.one,
           );
     }
+    // Daylio's order to start with; tags new since a saved mapping go last.
     final tags = <int, TagChoice>{};
-    for (final t in backup.tags) {
-      tags[t.id] =
-          saved?.tags[t.id] ??
-          TagChoice(
-            action: (tagStats[t.id]?.uses ?? 0) == 0
-                ? MapAction.drop
-                : MapAction.keep,
-            name: t.name,
-            icon: guessIcon(t.name),
-          );
+    var index = 0;
+    for (final g in this.groups) {
+      for (final t in tagsIn(g.id)) {
+        tags[t.id] =
+            saved?.tags[t.id] ??
+            TagChoice(
+              action: (tagStats[t.id]?.uses ?? 0) == 0
+                  ? MapAction.drop
+                  : MapAction.keep,
+              name: t.name,
+              icon: guessIcon(t.name),
+              position: (saved?.tags.isEmpty ?? true)
+                  ? index
+                  : _newAfter + index,
+            );
+        index++;
+      }
+    }
+    // Renumber 0…n: a mapping saved before positions existed has them all at
+    // 0, and reordering needs distinct slots. Ties keep Daylio's order.
+    final daylio = tags.keys.toList();
+    final ranked = [...daylio]
+      ..sort((x, y) {
+        final p = tags[x]!.position.compareTo(tags[y]!.position);
+        return p != 0 ? p : daylio.indexOf(x).compareTo(daylio.indexOf(y));
+      });
+    for (var i = 0; i < ranked.length; i++) {
+      tags[ranked[i]]!.position = i;
     }
     return DaylioMapping(groups: groups, tags: tags);
   }
+
+  /// Offset that puts tags new since the saved mapping after the saved ones.
+  static const _newAfter = 1 << 20;
 
   String _firstTagIcon(List<DaylioTag> tags) =>
       tags.isEmpty ? fallbackIconSlug : guessIcon(tags.first.name);
@@ -378,6 +405,29 @@ int? resolveGroup(DaylioMapping m, int groupId) {
   return null;
 }
 
+/// Every tag whose group ends up in category [groupId] — kept, merged or
+/// dropped — in the mapping's order (ties keep Daylio's order).
+List<DaylioTag> optionsOf(DaylioAnalysis a, DaylioMapping m, int groupId) {
+  final tags = [
+    for (final g in a.groups)
+      if (resolveGroup(m, g.id) == groupId) ...a.tagsIn(g.id),
+  ];
+  final daylio = {for (var i = 0; i < tags.length; i++) tags[i].id: i};
+  return tags..sort((x, y) {
+    final p = m.tags[x.id]!.position.compareTo(m.tags[y.id]!.position);
+    return p != 0 ? p : daylio[x.id]!.compareTo(daylio[y.id]!);
+  });
+}
+
+/// Puts [tagIds] (options of one category) in this order. They take over the
+/// positions they held between them, so the others keep their places.
+void reorderOptions(DaylioMapping m, List<int> tagIds) {
+  final slots = [for (final id in tagIds) m.tags[id]!.position]..sort();
+  for (var i = 0; i < tagIds.length; i++) {
+    m.tags[tagIds[i]]!.position = slots[i];
+  }
+}
+
 /// Turns [analysis] + [mapping] into the categories and entries to write.
 ImportPlan planImport(DaylioAnalysis analysis, DaylioMapping mapping) {
   // 1. Which kept tag lands in which kept category. A kept tag belongs to its
@@ -408,20 +458,19 @@ ImportPlan planImport(DaylioAnalysis analysis, DaylioMapping mapping) {
       ),
   ];
 
-  // 3. Categories in Daylio's order, options in Daylio's order.
+  // 3. Categories in Daylio's order, options in the mapping's order.
   final categories = <PlannedCategory>[];
   for (final g in analysis.groups) {
     final choice = mapping.groups[g.id];
     if (choice == null || resolveGroup(mapping, g.id) != g.id) continue;
     final options = [
-      for (final src in analysis.groups)
-        for (final t in analysis.tagsIn(src.id))
-          if (categoryOfTag[t.id] == g.id)
-            PlannedOption(
-              sourceTagId: t.id,
-              name: mapping.tags[t.id]!.name,
-              icon: mapping.tags[t.id]!.icon,
-            ),
+      for (final t in optionsOf(analysis, mapping, g.id))
+        if (categoryOfTag[t.id] == g.id)
+          PlannedOption(
+            sourceTagId: t.id,
+            name: mapping.tags[t.id]!.name,
+            icon: mapping.tags[t.id]!.icon,
+          ),
     ];
     final optionIds = {for (final o in options) o.sourceTagId};
     Day? firstUse;

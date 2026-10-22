@@ -5,16 +5,25 @@ import 'package:material_symbols_icons/symbols.dart';
 
 import '../l10n/app_localizations.dart';
 import '../providers.dart';
+import '../system_prompt.dart';
 
 /// The app lock (design-concept §2.6). Wraps the whole app:
 /// - while the app is in the background a plain cover is shown, so the
 ///   recent-apps preview never reveals the journal;
 /// - on a cold start, and on return after the chosen delay, the journal is
 ///   locked until the phone's own unlock (biometrics or device PIN) succeeds;
-/// - it waits for the settings row, so nothing flashes before the lock.
+/// - it waits for the settings row, so nothing flashes before the lock;
+/// - the app stays mounted under the lock (hidden, no input), so unlocking
+///   returns to the same tab and screen.
 class AppLockGate extends ConsumerStatefulWidget {
   const AppLockGate({super.key, required this.child});
   final Widget child;
+
+  /// Call once before `runApp`: while locked, the back button must not pop
+  /// the hidden screens under the lock. Back-button observers are asked in
+  /// the order they were added, so this one has to come before the app's.
+  static void guardBackButton() =>
+      WidgetsBinding.instance.addObserver(_BackGuard());
 
   @override
   ConsumerState<AppLockGate> createState() => _AppLockGateState();
@@ -43,8 +52,9 @@ class _AppLockGateState extends ConsumerState<AppLockGate>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    // The system's own unlock prompt pauses us — never react to that.
-    if (_authenticating) return;
+    // Our own system dialogs (the unlock prompt, the notification
+    // permission, pickers) pause us too — that isn't leaving the app.
+    if (_authenticating || systemPromptOpen) return;
     final s = ref.read(settingsProvider);
     if (!s.appLock) {
       if (_covered) setState(() => _covered = false);
@@ -111,14 +121,31 @@ class _AppLockGateState extends ConsumerState<AppLockGate>
       }
     }
     if (!s.appLock) _locked = false;
-    if (_locked) return _LockScreen(onUnlock: _unlock);
+    _lockedNow = _locked;
     return Stack(
       children: [
-        widget.child,
-        if (_covered) const Positioned.fill(child: _Cover()),
+        Offstage(
+          offstage: _locked,
+          child: TickerMode(
+            enabled: !_locked,
+            child: ExcludeFocus(excluding: _locked, child: widget.child),
+          ),
+        ),
+        if (_locked)
+          Positioned.fill(child: _LockScreen(onUnlock: _unlock))
+        else if (_covered)
+          const Positioned.fill(child: _Cover()),
       ],
     );
   }
+}
+
+/// Read by [_BackGuard]; mirrors the gate's state at its last build.
+bool _lockedNow = false;
+
+class _BackGuard with WidgetsBindingObserver {
+  @override
+  Future<bool> didPopRoute() async => _lockedNow;
 }
 
 class _Cover extends StatelessWidget {
@@ -175,7 +202,9 @@ Future<bool> confirmAppLock(BuildContext context) async {
       messenger.showSnackBar(SnackBar(content: Text(l10n.appLockUnavailable)));
       return false;
     }
-    return await auth.authenticate(localizedReason: l10n.unlockReason);
+    return await systemPrompt(
+      () => auth.authenticate(localizedReason: l10n.unlockReason),
+    );
   } catch (e) {
     messenger.showSnackBar(SnackBar(content: Text(l10n.appLockUnavailable)));
     return false;

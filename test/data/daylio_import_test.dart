@@ -153,6 +153,33 @@ void main() {
       );
     });
 
+    test('options take the order set in the mapping', () {
+      final m = a.suggestedMapping();
+      m.tags[77]!.action = MapAction.keep;
+      reorderOptions(m, [77, 61, 62]);
+      expect(planImport(a, m).categories.first.options.map((o) => o.name), [
+        'Holiday',
+        'Worked Normally',
+        'worked less',
+      ]);
+
+      // A merged group's tags join the target and move with its options;
+      // the dropped "two cups" keeps its place at the end.
+      m.groups[12]!
+        ..action = MapAction.merge
+        ..mergeInto = 3;
+      expect(optionsOf(a, m, 3).map((t) => t.id), [18, 22, 69, 73, 74, 75]);
+      reorderOptions(m, [74, 73, 18, 22, 69]);
+      expect(optionsOf(a, m, 3).map((t) => t.id), [74, 73, 18, 22, 69, 75]);
+      expect(planImport(a, m).categories[1].options.map((o) => o.name), [
+        'one cup',
+        'Nothing',
+        'walk',
+        'sport',
+        'gym',
+      ]);
+    });
+
     test('merge cycles resolve to dropped, not a hang', () {
       final m = a.suggestedMapping();
       m.tags[18]!
@@ -178,6 +205,7 @@ void main() {
           );
       final m = a.suggestedMapping();
       m.tags[77]!.action = MapAction.keep;
+      reorderOptions(m, [77, 61, 62]);
       m.defaultsFor(7)
         ..defaultTagId = 77
         ..fillTagId = 77;
@@ -193,6 +221,11 @@ void main() {
       expect(j.periods, hasLength(1), reason: 'periods survive an import');
       final work = j.categories.first;
       expect(work.defaultOption?.name, 'Holiday');
+      expect(work.options.map((o) => o.name), [
+        'Holiday',
+        'Worked Normally',
+        'worked less',
+      ]);
       expect(work.tracks(const Day(2026, 9, 8)), isTrue);
       expect(j.entryOn(const Day(2026, 9, 11))!.mood, Mood.meh);
       expect(await JournalRepository(db).onboardingDone(), isTrue);
@@ -201,7 +234,18 @@ void main() {
       expect(saved.groups[7]!.mode, CategoryMode.one);
       expect(saved.tags[77]!.action, MapAction.keep);
       // A repeat import starts from the saved choices.
-      expect(a.suggestedMapping(saved: saved).tags[77]!.action, MapAction.keep);
+      final again = a.suggestedMapping(saved: saved);
+      expect(again.tags[77]!.action, MapAction.keep);
+      expect(optionsOf(a, again, 7).map((t) => t.id), [77, 61, 62]);
+
+      // A mapping saved before positions existed (all 0) still reorders.
+      for (final t in saved.tags.values) {
+        t.position = 0;
+      }
+      final old = a.suggestedMapping(saved: saved);
+      expect(optionsOf(a, old, 7).map((t) => t.id), [61, 62, 77]);
+      reorderOptions(old, [62, 61, 77]);
+      expect(optionsOf(a, old, 7).map((t) => t.id), [62, 61, 77]);
     });
   });
 

@@ -437,6 +437,14 @@
   "@importNeverUsed": {
     "description": "A tag never used."
   },
+  "importReorder": "Reorder",
+  "@importReorder": {
+    "description": "Import › Options: button next to a category heading that opens the option-order sheet."
+  },
+  "importReorderHint": "Order of the options in the entry sheet — for a slider, its steps from left to right. Drag the handle to move one.",
+  "@importReorderHint": {
+    "description": "Import › Options › reorder sheet: what the order is for."
+  },
   "importNeverTwo": "never two on one day",
   "@importNeverTwo": {
     "description": "Group: never two tags on one day."

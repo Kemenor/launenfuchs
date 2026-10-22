@@ -99,6 +99,8 @@
   "importDrop": "Escludi",
   "importUsedOn": "{count, plural, =1{usato 1 giorno} other{usato {count} giorni}}",
   "importNeverUsed": "mai usato",
+  "importReorder": "Riordina",
+  "importReorderHint": "Ordine delle opzioni nella voce – per un cursore, i suoi passi da sinistra a destra. Trascina la maniglia per spostarne una.",
   "importNeverTwo": "mai due nello stesso giorno",
   "importTwoOn": "{count, plural, =1{due in 1 giorno} other{due in {count} giorni}}",
   "importMergeInto": "Unisci con",

@@ -47,6 +47,8 @@ dev_dependencies:
   drift_dev: ^2.34.0
   build_runner: ^2.15.0
   flutter_launcher_icons: ^0.14.4
+  # Fakes the phone's unlock prompt in the app-lock tests.
+  local_auth_platform_interface: ^1.1.0
 
 # App icon. Regenerate the layers with `python3 tool/make_icon.py
 # assets/icon/launenfuchs_art.png assets/icon`, then `dart run

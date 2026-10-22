@@ -137,7 +137,13 @@ Future<void> saveMapping(AppDatabase db, DaylioMapping m) async {
           sourceId: id,
           action: t.action.name,
           targetId: Value(t.mergeInto),
-          choice: Value(jsonEncode({'name': t.name, 'icon': t.icon})),
+          choice: Value(
+            jsonEncode({
+              'name': t.name,
+              'icon': t.icon,
+              'position': t.position,
+            }),
+          ),
         ),
     ]);
   });
@@ -171,6 +177,7 @@ Future<SavedMapping> loadSavedMapping(AppDatabase db) async {
         action: action,
         name: c['name'] as String? ?? '',
         icon: c['icon'] as String? ?? 'label',
+        position: c['position'] as int? ?? 0,
         mergeInto: r.targetId,
       );
     }

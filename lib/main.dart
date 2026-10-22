@@ -10,6 +10,8 @@ import 'ui/home_shell.dart';
 import 'ui/mood_style.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  AppLockGate.guardBackButton();
   runApp(const ProviderScope(child: LaunenfuchsApp()));
 }
 

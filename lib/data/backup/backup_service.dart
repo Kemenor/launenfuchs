@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../db/database.dart';
+import '../../system_prompt.dart';
 
 /// Backup & restore — the Fuchsbau pattern (ETHOS "Backup & device moves"),
 /// adapted from checkfuchs. The ZIP holds:
@@ -215,11 +216,13 @@ class BackupService {
     final file = File('${Directory.systemTemp.path}/$name');
     await file.writeAsBytes(bytes, flush: true);
     try {
-      final saved = await FlutterFileDialog.saveFile(
-        params: SaveFileDialogParams(
-          sourceFilePath: file.path,
-          fileName: name,
-          mimeTypesFilter: const ['application/zip'],
+      final saved = await systemPrompt(
+        () => FlutterFileDialog.saveFile(
+          params: SaveFileDialogParams(
+            sourceFilePath: file.path,
+            fileName: name,
+            mimeTypesFilter: const ['application/zip'],
+          ),
         ),
       );
       return saved != null ? bytes.length : null;
@@ -234,6 +237,8 @@ class BackupService {
 
 /// Picks a document with flutter_file_dialog (streams to EOF; no mime filter
 /// — the content check is the validator). Null when cancelled.
-Future<String?> pickDocument() => FlutterFileDialog.pickFile(
-  params: const OpenFileDialogParams(dialogType: OpenFileDialogType.document),
+Future<String?> pickDocument() => systemPrompt(
+  () => FlutterFileDialog.pickFile(
+    params: const OpenFileDialogParams(dialogType: OpenFileDialogType.document),
+  ),
 );

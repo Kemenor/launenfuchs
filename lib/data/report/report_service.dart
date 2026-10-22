@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
+import '../../system_prompt.dart';
 
 /// Writes a report through the system save dialog (the Fuchsbau export
 /// pattern: a temp file path, never bytes). Returns the saved size, or null
@@ -18,11 +19,13 @@ class ReportService {
     final file = File('${Directory.systemTemp.path}/$name');
     await file.writeAsBytes(Uint8List.fromList(bytes), flush: true);
     try {
-      final saved = await FlutterFileDialog.saveFile(
-        params: SaveFileDialogParams(
-          sourceFilePath: file.path,
-          fileName: name,
-          mimeTypesFilter: [mime],
+      final saved = await systemPrompt(
+        () => FlutterFileDialog.saveFile(
+          params: SaveFileDialogParams(
+            sourceFilePath: file.path,
+            fileName: name,
+            mimeTypesFilter: [mime],
+          ),
         ),
       );
       return saved != null ? bytes.length : null;
